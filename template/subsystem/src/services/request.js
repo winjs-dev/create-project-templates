@@ -34,7 +34,7 @@ const codeMessage = {
 // 判断接口为401状态踢出，重新登录
 function kickOut(key) {
   if (!Cookies.get('user_token')) return;
-  let params = { key: key };
+  const params = { key: key };
   if (Cookies.get('user_token')) {
     Cookies.remove('user_token');
   }
@@ -120,7 +120,7 @@ const axiosResponse = {
     // 针对 401 统一用财富中台外框架做处理
     if (checkIsHwsContainer()) {
       if (response.status === 401) {
-        let tmpKey = Cookies.get('user_token') + '#' + Cookies.get('operator_code');
+        const tmpKey = Cookies.get('user_token') + '#' + Cookies.get('operator_code');
         kickOut(tmpKey);
         return;
       }
