@@ -23,6 +23,7 @@ const build = function (builds) {
           webpack(config, function (err, stats) {
             spinner.stop();
             if (err) reject(err);
+            // console.log('stats', stats)
             process.stdout.write(
               stats.toString({
                 colors: true,

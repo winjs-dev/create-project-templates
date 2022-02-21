@@ -1,5 +1,5 @@
 const base = require('./webpack.child.conf');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const builds = {
   prod: {
     filename: '[name].js',

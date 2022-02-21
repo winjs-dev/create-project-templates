@@ -161,7 +161,7 @@ function generateSassLoader({ sourceMap }) {
 function generatePostcssLoader({ sourceMap, modules }) {
   const options = {
     sourceMap,
-    plugins: (loader) => {
+    postcssOptions: (loader) => {
       const plugins = [
         require('postcss-import')({ root: loader.resourcePath }),
         require('autoprefixer')({

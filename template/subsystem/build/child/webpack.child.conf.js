@@ -5,8 +5,8 @@ const path = require('path');
 const fse = require('fs-extra');
 const utils = require('./utils');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const TerserJSPlugin = require('terser-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
+const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const resolve = utils.resolve;
@@ -42,7 +42,9 @@ if (staticExits) {
   copyPlugin.push({
     from: resolve('src/static'),
     to: resolve('dist/' + childName + '/static'),
-    ignore: ['.*']
+    globOptions: {
+      ignore: ['.*']
+    }
   });
 }
 
@@ -69,7 +71,7 @@ if (sysVersionExits) {
 const webpackConfig = {
   mode: 'production',
   entry: entries,
-  devtool: '#source-map',
+  devtool: false,
   output: {
     path: resolve('dist'),
     publicPath: process.env.NODE_ENV === 'production' ? childName + '/' : '/',
@@ -86,21 +88,29 @@ const webpackConfig = {
   optimization: {
     minimize: true,
     minimizer: [
-      new TerserJSPlugin({
+      new TerserPlugin({
         parallel: true,
-        sourceMap: false, // Must be set to true if using source-maps in production
-        extractComments: false
+        extractComments: false,
+        terserOptions: {
+          // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+          compress: {
+            warnings: false,
+            drop_console: true,
+            drop_debugger: true,
+            pure_funcs: ['console.log']
+          }
+        }
       })
     ],
     splitChunks: {
       chunks: 'all',
       minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
+      // 在分割之前，这个代码块最小应该被引用的次数（译注：为保证代码块复用性，默认配置的策略是不需要多次引用也可以被分割）. must be greater than or equal 2. The minimum number of chunks which need to contain a module before it's moved into the commons chunk
+      minChunks: 2,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       automaticNameDelimiter: '_',
-      name: true,
+      name: '[name]', // 名称，此选项可接收 function
       cacheGroups: {
         ['vendors']: {
           test: /[\\/]node_modules[\\/]/,
@@ -117,13 +127,13 @@ const webpackConfig = {
     }
   },
   module: {
+    noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
     rules: [
       {
         test: /\.vue$/,
         use: {
           loader: 'vue-loader',
           options: {
-            prettify: false,
             cacheDirectory: resolve('node_modules/.cache/vue-loader'),
             cacheIdentifier: 'vue'
           }
@@ -137,20 +147,26 @@ const webpackConfig = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: path.posix.join(childName, utils.assetsPath('img/[name].[ext]')),
-          publicPath: './'
+        type: 'asset',
+        generator: {
+          filename: path.posix.join(childName, utils.assetsPath('img/[name].[ext]')) // 局部指定输出位置
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024 // 限制于 10kb
+          }
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: path.posix.join(childName, utils.assetsPath('fonts/[name].[hash:5].[ext]')),
-          publicPath: './'
+        type: 'asset',
+        generator: {
+          filename: path.posix.join(childName, utils.assetsPath('fonts/[name].[ext]')) // 局部指定输出位置
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024 // 限制于 10kb
+          }
         }
       },
       ...utils.generateStyleModules({
@@ -182,7 +198,7 @@ const webpackConfig = {
         ', creation time:' +
         utils.getDateTimeString() // 其值为字符串，将作为注释存在
     }),
-    new CopyWebpackPlugin(copyPlugin),
+    new CopyWebpackPlugin({ patterns: copyPlugin }),
     new WebpackManifestPlugin({
       fileName: resolve(`dist/${childName}/manifest.${Date.now()}.json`),
       generate(seed, files, entrypoints) {

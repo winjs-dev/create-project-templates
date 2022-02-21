@@ -5,19 +5,17 @@
       <p>快捷导航</p>
     </div>
     <h-drawer
-      class="quick-navigation-drawer"
       v-model="visible"
+      class="quick-navigation-drawer"
       width="250"
       title="快捷导航"
       :styles="styles"
     >
-      <template v-for="route in routes">
-        <router-link :to="route.path">
-          <p class="menu-item"
-            >{{ route.name }}<span class="menu-title">{{ route.meta && route.meta.title }}</span></p
-          >
-        </router-link>
-      </template>
+      <router-link v-for="route in routes" :key="route.path" :to="route.path">
+        <p class="menu-item">
+          {{ route.name }}<span class="menu-title">{{ route.meta && route.meta.title }}</span>
+        </p>
+      </router-link>
     </h-drawer>
   </div>
 </template>
