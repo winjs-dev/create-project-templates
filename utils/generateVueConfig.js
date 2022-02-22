@@ -333,20 +333,11 @@ module.exports = defineConfig({
       .when(process.env.NODE_ENV === 'production',
         config => {
           config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .use('script-ext-html-webpack-plugin', [{
-              // \`runtime\` must same as runtimeChunk name. default is \`runtime\`
-              inline: /runtime\\..*\\.js$/
-            }])
-            .end();
-
-          config
             .optimization
             .splitChunks({
               chunks: 'all',
               cacheGroups: {
-                vendors: {
+                defaultVendors: {
                   name: 'chunk-vendors',
                   test: /[\\\\/]node_modules[\\\\/]/,
                   priority: 10,
