@@ -37,9 +37,7 @@ exports.getGitHash = function getGitHash() {
         .toString()
         .trim();
     } catch (error) {
-      console.log(
-        chalk.red('.git/refs/heads/master 访问失败，还没有进行过第一次提交。默认取值为 guid。')
-      );
+      console.log(chalk.red('.git/refs/heads/master 访问失败，还没有进行过第一次提交。默认取值为 guid。'));
       return generateGUID().slice(0, 8);
     }
   }
