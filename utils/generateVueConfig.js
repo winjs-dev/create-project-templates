@@ -60,7 +60,7 @@ const genPlugins = () => {
       // bannerPlugin
       new webpack.BannerPlugin({
         banner:
-          \`@author: Winner FED\${
+          \`@author: Whale FE\${
   N}@version: \${pkg.version}\${
   N}@description: Build time \${formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss')}<%_ if (versionControl === 'svn') { _%> and svn version \${getSvnInfo()}<%_ } _%>
           \`
@@ -83,7 +83,7 @@ const genPlugins = () => {
         }
       })<%_ if (application !== 'offline') { _%>,
       new CompressionWebpackPlugin({
-        filename: '[path].gz[query]',
+        filename: '[path][base].gz[query]',
         algorithm: 'gzip',
         test: new RegExp(
           '\\\\.(' +
@@ -91,8 +91,7 @@ const genPlugins = () => {
           ')$'
         ),
         threshold: 10240,
-        minRatio: 0.8,
-        cache: true
+        minRatio: 0.8
       })
     <%_ } _%>
     );
@@ -161,18 +160,6 @@ module.exports = defineConfig({
     //   }
     // }
   },
-  <%_ if (needsTypeScript) { _%>
-  pwa: {
-    name: \`\${pkg.name}\`,
-    workboxPluginMode: 'InjectManifest',
-    workboxOptions: {
-      swSrc: path.resolve(__dirname, 'src/pwa/service-worker.js')
-    }
-  },
-  <%_ } _%>
-  <%_ if (needsTypeScript && framework === 'v3') { _%>
-  transpileDependencies: ['vue', 'vue-router', '@vue'],
-  <%_ } _%>
   // css相关配置
   css: {
     // 是否使用css分离插件 ExtractTextPlugin
@@ -263,7 +250,30 @@ module.exports = defineConfig({
       })
       .end();
     <%_ } _%>
-    
+    <%_ if (needsTypeScript && uiFramework === 'wui') { _%>
+    config.module
+      .rule('ts')
+      .use('ts-loader')
+      .tap(options => {
+        options = merge(options, {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [
+              tsImportPluginFactory({
+                libraryName: '@winner-fed/win-ui',
+                libraryDirectory: 'es',
+                style: true
+              })
+            ]
+          }),
+          compilerOptions: {
+            module: 'es2015'
+          }
+        });
+        return options;
+      })
+      .end();
+    <%_ } _%>
     <%_ if (needsTypeScript) { _%>
     // disable type check and let \`vue-tsc\` handles it
     config.plugins.delete('fork-ts-checker');
@@ -351,14 +361,6 @@ module.exports = defineConfig({
                 }
               }
             });
-          config.cache({
-            // 将缓存类型设置为文件系统,默认是memory
-            type: 'filesystem',
-            buildDependencies: {
-              // 更改配置文件时，重新缓存
-              config: [__filename]
-            }
-          });  
           config.optimization.runtimeChunk('single');
         }
       );

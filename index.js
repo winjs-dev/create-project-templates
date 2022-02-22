@@ -498,7 +498,7 @@ async function init() {
       if (needsTypeScript) {
         render('config/bundle/typescript');
 
-        if (uiFramework === 'vant') {
+        if (uiFramework === 'vant' || uiFramework === 'wui') {
           render('config/bundle/vant');
         }
       }
