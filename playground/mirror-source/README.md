@@ -294,7 +294,6 @@ export default {
        "prettier": "^2.4.1",
        "replace-in-file": "^6.2.0",
        "rimraf": "^3.0.2",
-       "script-ext-html-webpack-plugin": "^2.1.3",
        "svg-sprite-loader": "^6.0.11",
        "tasksfile": "^5.1.0",
        "unplugin-vue2-script-setup": "^0.9.3",
