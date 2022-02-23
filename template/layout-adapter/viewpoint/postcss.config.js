@@ -1,8 +1,6 @@
 module.exports = {
   plugins: {
-    autoprefixer: {
-      overrideBrowserslist: ['Android 5.0', 'iOS 9.0', 'Chrome > 43', 'ff > 34', 'ie >= 11']
-    },
+    autoprefixer: {},
     'postcss-px-to-viewport': {
       unitToConvert: 'px', // 要转化的单位
       viewportWidth: 375, // UI设计稿的宽度
