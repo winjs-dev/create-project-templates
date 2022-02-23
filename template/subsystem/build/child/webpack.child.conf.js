@@ -8,6 +8,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// https://github.com/antfu/unplugin-vue2-script-setup
+const ScriptSetup = require('unplugin-vue2-script-setup/webpack').default;
 
 const resolve = utils.resolve;
 const childName = process.env.npm_config_child || pkg.name;
@@ -198,6 +200,7 @@ const webpackConfig = {
         ', creation time:' +
         utils.getDateTimeString() // 其值为字符串，将作为注释存在
     }),
+    ScriptSetup({}),
     new CopyWebpackPlugin({ patterns: copyPlugin }),
     new WebpackManifestPlugin({
       fileName: resolve(`dist/${childName}/manifest.${Date.now()}.json`),

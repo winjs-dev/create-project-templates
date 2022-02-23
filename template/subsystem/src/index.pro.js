@@ -1,29 +1,19 @@
 import FUNS from '@/services';
 import { routes } from './router';
 import { filters } from './filters';
+import VueCompositionAPI from '@vue/composition-api';
 import Locales from './locales';
-
-// icons
-import SvgIcon from 'vue-svgicon';
-import './icons/svg-icon.less';
-import './icons/components';
 
 import './assets/style/app.less';
 
 const plugin = {
   install(Vue, options) {
-    // icons
-    Vue.use(SvgIcon, {
-      tagName: 'svg-icon',
-      defaultWidth: '1em',
-      defaultHeight: '1em'
-    });
-
     // register global utility filters.
     Object.keys(filters).forEach((key) => {
       Vue.filter(key, filters[key]);
     });
 
+    // register services
     Object.defineProperty(Vue.prototype, '$services', { value: FUNS });
 
     // 自动全局注入组件
@@ -36,6 +26,9 @@ const plugin = {
       const ctrl = componentConfig.default || componentConfig;
       Vue.component(ctrl.name, ctrl);
     });
+
+    // VueCompositionAPI
+    Vue.use(VueCompositionAPI);
   }
 };
 

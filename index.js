@@ -495,8 +495,14 @@ async function init() {
     if (buildTools === 'bundle') {
       render('build-tools/bundle');
 
+      // package.json
+      // tsconfig.json
       if (needsTypeScript) {
-        render('config/bundle/typescript');
+        if (framework === 'v2') {
+          render('config/bundle/typescript/v2');
+        } else {
+          render('config/bundle/typescript/v3');
+        }
 
         if (uiFramework === 'vant' || uiFramework === 'wui') {
           render('config/bundle/vant');
