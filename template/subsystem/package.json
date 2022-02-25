@@ -9,6 +9,7 @@
   "devDependencies": {
     "@vue/compiler-sfc": "^3.2.31",
     "@winner-fed/winner-deploy": "^3.0.0",
+    "cache-loader": "^4.1.0",
     "postcss-loader": "^6.2.1",
     "postcss-import": "^14.0.2",
     "postcss-url": "^10.1.3",
