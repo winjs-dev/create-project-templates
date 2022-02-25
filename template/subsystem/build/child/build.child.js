@@ -60,8 +60,13 @@ rm(path.resolve(__dirname, '../../dist'), (err) => {
             `${childPath}/default_views`
           );
         }
+        if (fs.pathExistsSync(path.resolve(__dirname, '../../dist/static'))) {
+          await fs.copy(path.resolve(__dirname, '../../dist/static'), `${childPath}/static`, () => {
+            fs.removeSync(path.resolve(__dirname, '../../dist/static'));
+          });
+        }
       } catch (err) {
-        console.error('迁移 views,vendors_views,default_views 到子产品目录下出现异常', err);
+        console.error('迁移 views,vendors_views,default_views,static 到子产品目录下出现异常', err);
       }
 
       // 1, rename 全局变量 LOCAL_CONFIG TODO 风险 如果依赖主框架的全局变量

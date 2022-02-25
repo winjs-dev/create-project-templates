@@ -108,18 +108,22 @@ const webpackConfig = {
       chunks: 'all',
       minSize: 30000,
       // 在分割之前，这个代码块最小应该被引用的次数（译注：为保证代码块复用性，默认配置的策略是不需要多次引用也可以被分割）. must be greater than or equal 2. The minimum number of chunks which need to contain a module before it's moved into the commons chunk
-      minChunks: 2,
+      minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       automaticNameDelimiter: '_',
-      name: '[name]', // 名称，此选项可接收 function
+      name(module, chunks, cacheGroupKey) {
+        const allChunksNames = chunks.map((chunk) => chunk.name).join('_');
+        const prefix = cacheGroupKey === 'defaultVendors' ? 'vendors' : cacheGroupKey;
+        return `${prefix}_${allChunksNames}`;
+      },
       cacheGroups: {
-        ['vendors']: {
+        defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'async',
           priority: -10
         },
-        ['default']: {
+        default: {
           minChunks: 2,
           priority: -20,
           chunks: 'async',
@@ -152,7 +156,7 @@ const webpackConfig = {
         type: 'asset',
         exclude: [resolve('src/icons')],
         generator: {
-          filename: path.posix.join(childName, utils.assetsPath('img/[name].[hash][ext]')) // 局部指定输出位置
+          filename: utils.assetsPath('img/[name].[hash][ext]') // 局部指定输出位置
         },
         parser: {
           dataUrlCondition: {
@@ -164,7 +168,7 @@ const webpackConfig = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: path.posix.join(childName, utils.assetsPath('fonts/[name].[hash][ext]')) // 局部指定输出位置
+          filename: utils.assetsPath('fonts/[name].[hash][ext]') // 局部指定输出位置
         },
         parser: {
           dataUrlCondition: {
