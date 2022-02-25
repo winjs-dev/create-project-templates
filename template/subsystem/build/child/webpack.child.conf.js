@@ -152,7 +152,7 @@ const webpackConfig = {
         type: 'asset',
         exclude: [resolve('src/icons')],
         generator: {
-          filename: path.posix.join(childName, utils.assetsPath('img/[name].[hash][ext][query]')) // 局部指定输出位置
+          filename: path.posix.join(childName, utils.assetsPath('img/[name].[hash][ext]')) // 局部指定输出位置
         },
         parser: {
           dataUrlCondition: {
@@ -164,7 +164,7 @@ const webpackConfig = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: path.posix.join(childName, utils.assetsPath('fonts/[name].[hash][ext][query]')) // 局部指定输出位置
+          filename: path.posix.join(childName, utils.assetsPath('fonts/[name].[hash][ext]')) // 局部指定输出位置
         },
         parser: {
           dataUrlCondition: {
