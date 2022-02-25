@@ -5,7 +5,9 @@ const childName = process.env.npm_config_child || pkg.name;
 const builds = {
   prod: {
     filename: `${childName}.js`,
-    libraryTarget: 'umd',
+    library: {
+      type: 'umd'
+    },
     env: 'production'
   }
 };
@@ -14,7 +16,7 @@ function genConfig(opts) {
   return merge({}, base, {
     output: {
       filename: opts.filename,
-      libraryTarget: opts.libraryTarget
+      library: opts.library
     }
   });
 }
