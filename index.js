@@ -369,6 +369,7 @@ async function init() {
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
             return values.framework !== 'mini' &&
+              values.framework === 'v2' &&
               values.application === 'pc' &&
               values.buildTools === 'bundle' &&
               values.needsMirrorSource === true
