@@ -1,7 +1,6 @@
 process.env.NODE_ENV = 'production';
 
 const path = require('path');
-const fs = require('fs-extra');
 const rm = require('rimraf');
 const webpack = require('webpack');
 const ora = require('ora');
@@ -46,29 +45,6 @@ rm(path.resolve(__dirname, '../../dist'), (err) => {
 
   build(builds)
     .then(async () => {
-      try {
-        await fs.move(path.resolve(__dirname, '../../dist/views'), `${childPath}/views`);
-        if (fs.pathExistsSync(path.resolve(__dirname, '../../dist/vendors_views'))) {
-          await fs.move(
-            path.resolve(__dirname, '../../dist/vendors_views'),
-            `${childPath}/vendors_views`
-          );
-        }
-        if (fs.pathExistsSync(path.resolve(__dirname, '../../dist/default_views'))) {
-          await fs.move(
-            path.resolve(__dirname, '../../dist/default_views'),
-            `${childPath}/default_views`
-          );
-        }
-        if (fs.pathExistsSync(path.resolve(__dirname, '../../dist/static'))) {
-          await fs.copy(path.resolve(__dirname, '../../dist/static'), `${childPath}/static`, () => {
-            fs.removeSync(path.resolve(__dirname, '../../dist/static'));
-          });
-        }
-      } catch (err) {
-        console.error('迁移 views,vendors_views,default_views,static 到子产品目录下出现异常', err);
-      }
-
       // 1, rename 全局变量 LOCAL_CONFIG TODO 风险 如果依赖主框架的全局变量
       // 2, rename $services,解决运行多个子包时，挂载到 Vue 实例原型命名的冲突
       const options = {

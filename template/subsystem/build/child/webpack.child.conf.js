@@ -75,12 +75,14 @@ const webpackConfig = {
   entry: entries,
   devtool: false,
   output: {
-    path: resolve('dist'),
+    path: resolve(`dist/${childName}`),
     publicPath: process.env.NODE_ENV === 'production' ? childName + '/' : '/',
     filename: '[name].[chunkhash:8].js',
     chunkFilename: utils.spJsPath(`[name].[chunkhash:8].js`),
-    library: `_${childName}`,
-    libraryTarget: 'umd'
+    library: {
+      type: 'umd',
+      name: `_${childName}`
+    }
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

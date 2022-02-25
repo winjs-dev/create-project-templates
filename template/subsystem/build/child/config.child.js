@@ -1,8 +1,10 @@
 const base = require('./webpack.child.conf');
 const { merge } = require('webpack-merge');
+const childName = process.env.npm_config_child || pkg.name;
+
 const builds = {
   prod: {
-    filename: '[name].js',
+    filename: `${childName}.js`,
     libraryTarget: 'umd',
     env: 'production'
   }
