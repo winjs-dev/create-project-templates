@@ -3,6 +3,7 @@ import { routes } from './router';
 import { filters } from './filters';
 import VueCompositionAPI from '@vue/composition-api';
 import Locales from './locales';
+import './icons';
 
 import './assets/style/app.less';
 

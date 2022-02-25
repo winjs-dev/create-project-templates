@@ -5,7 +5,7 @@ const path = require('path');
 const fse = require('fs-extra');
 const utils = require('./utils');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
+const VueLoaderPlugin = require('vue-loader/lib/plugin-webpack5');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // https://github.com/antfu/unplugin-vue2-script-setup
@@ -150,6 +150,7 @@ const webpackConfig = {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         type: 'asset',
+        exclude: [resolve('src/icons')],
         generator: {
           filename: path.posix.join(childName, utils.assetsPath('img/[name].[hash][ext][query]')) // 局部指定输出位置
         },
@@ -169,6 +170,15 @@ const webpackConfig = {
           dataUrlCondition: {
             maxSize: 10 * 1024 // 限制于 10kb
           }
+        }
+      },
+      // src/icons
+      {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader',
+        include: [resolve('src/icons')],
+        options: {
+          symbolId: 'icon-[name]'
         }
       },
       ...utils.generateStyleModules({
