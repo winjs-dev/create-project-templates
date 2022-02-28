@@ -506,11 +506,17 @@ async function init() {
         }
 
         if (uiFramework === 'vant' || uiFramework === 'wui') {
-          render('config/bundle/vant');
+          render('config/bundle/typescript/vant');
         }
       }
     } else {
       render('build-tools/bundleless');
+
+      if (framework === 'v2') {
+        render('config/bundleless/default/v2');
+      } else {
+        render('config/bundleless/default/v3');
+      }
 
       // package.json
       if (needsTypeScript) {
