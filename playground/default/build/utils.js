@@ -105,7 +105,9 @@ exports.generateSeePackageInfo = function generateSeePackageInfo({ system, type 
 
     // npm run build:see 测试包
     // npm run build:see prod 生产包
-    if (runtimeArgs[0] !== 'prod') {
+    // 兼容财富中台外框架命令
+    // npm run build:see yes 生产包
+    if (runtimeArgs[0] !== 'prod' && runtimeArgs[0] !== 'yes') {
       appVersion = `${appVersion}-${exports.transformTime()}`;
       seePackageName += `-${exports.transformTime()}`;
     }
