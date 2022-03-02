@@ -17,9 +17,9 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 // https://github.com/antfu/unplugin-vue2-script-setup
 const ScriptSetup = require('unplugin-vue2-script-setup/webpack').default;
 <%_ } _%>
-<%_ if (needsTypeScript && uiFramework === 'vant') { _%>
+<%_ if (needsTypeScript && (uiFramework === 'vant' || uiFramework === 'wui')) { _%>
 const tsImportPluginFactory = require('ts-import-plugin');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 <%_ } _%>
 <%_ if (versionControl === 'svn') { _%>
 const svnInfo = require('svn-info');
@@ -226,7 +226,7 @@ module.exports = defineConfig({
         symbolId: 'icon-[name]'
       })
       .end();
-  <%_ if (needsTypeScript && uiFramework === 'vant') { _%>
+  <%_ if (needsTypeScript) { _%>
     config.module
       .rule('ts')
       .use('ts-loader')
@@ -236,7 +236,7 @@ module.exports = defineConfig({
           getCustomTransformers: () => ({
             before: [
               tsImportPluginFactory({
-                libraryName: 'vant',
+                libraryName: <%_ if (uiFramework === 'vant') { _%>'vant'<%_ } _%><%_ if (uiFramework === 'wui') { _%>'@winner-fed/win-ui'<%_ } _%>,
                 libraryDirectory: 'es',
                 style: true
               })
@@ -249,35 +249,11 @@ module.exports = defineConfig({
         return options;
       })
       .end();
-    <%_ } _%>
-    <%_ if (needsTypeScript && uiFramework === 'wui') { _%>
-    config.module
-      .rule('ts')
-      .use('ts-loader')
-      .tap(options => {
-        options = merge(options, {
-          transpileOnly: true,
-          getCustomTransformers: () => ({
-            before: [
-              tsImportPluginFactory({
-                libraryName: '@winner-fed/win-ui',
-                libraryDirectory: 'es',
-                style: true
-              })
-            ]
-          }),
-          compilerOptions: {
-            module: 'es2015'
-          }
-        });
-        return options;
-      })
-      .end();
-    <%_ } _%>
-    <%_ if (needsTypeScript) { _%>
+      
     // disable type check and let \`vue-tsc\` handles it
     config.plugins.delete('fork-ts-checker');
     <%_ } _%>
+    
     config
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')

@@ -530,7 +530,7 @@ async function init() {
 
     // ui-framework
     if (uiFramework === 'vant') {
-      if (buildTools === 'bundle') {
+      if (buildTools === 'bundle' && !needsTypeScript) {
         render('config/bundle/default');
       }
       if (framework === 'v2') {
@@ -554,7 +554,7 @@ async function init() {
       }
     } else {
       // default
-      if (buildTools === 'bundle') {
+      if (buildTools === 'bundle' && !needsTypeScript) {
         render('config/bundle/default');
       }
       if (framework === 'v2') {
@@ -624,8 +624,13 @@ async function init() {
         })
       );
 
-      // babel.config.js
-      fs.writeFileSync(path.resolve(root, 'babel.config.js'), generateBabelConfig({ uiFramework }));
+      if (!needsTypeScript) {
+        // babel.config.js
+        fs.writeFileSync(
+          path.resolve(root, 'babel.config.js'),
+          generateBabelConfig({ uiFramework })
+        );
+      }
     } else {
       // vite
 

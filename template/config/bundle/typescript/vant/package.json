@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "ts-import-plugin": "^2.0.0"
+    "ts-import-plugin": "^2.0.0",
+    "webpack-merge": "^5.8.0"
   }
 }
