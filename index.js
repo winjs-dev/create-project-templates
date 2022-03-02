@@ -624,13 +624,11 @@ async function init() {
         })
       );
 
-      if (!needsTypeScript) {
-        // babel.config.js
-        fs.writeFileSync(
-          path.resolve(root, 'babel.config.js'),
-          generateBabelConfig({ uiFramework })
-        );
-      }
+      // babel.config.js
+      fs.writeFileSync(
+        path.resolve(root, 'babel.config.js'),
+        generateBabelConfig({ uiFramework, needsTypeScript })
+      );
     } else {
       // vite
 

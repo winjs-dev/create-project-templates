@@ -249,9 +249,6 @@ module.exports = defineConfig({
         return options;
       })
       .end();
-      
-    // disable type check and let \`vue-tsc\` handles it
-    config.plugins.delete('fork-ts-checker');
     <%_ } _%>
     
     config

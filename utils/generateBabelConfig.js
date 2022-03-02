@@ -1,7 +1,9 @@
 import ejs from 'ejs';
 
-const babelConfig = `<%_ if (uiFramework === 'vant') { _%>
-const plugins = [
+const babelConfig = `const plugins = [];
+<%_ if (!needsTypeScript) { _%>
+<%_ if (uiFramework === 'vant') { _%>
+plugins.push(
   [
     'import',
     {
@@ -11,9 +13,9 @@ const plugins = [
     },
     'vant'
   ]
-];
+);
 <%_ } else if (uiFramework === 'wui') { _%>
-const plugins = [
+plugins.push(
   [
     'import',
     {
@@ -23,9 +25,8 @@ const plugins = [
     },
     '@winner-fed/win-ui'
   ]
-];
-<%_ } else { _%>
-const plugins = [];
+);
+<%_ } _%>
 <%_ } _%>
 module.exports = {
   presets: [
@@ -40,8 +41,9 @@ module.exports = {
 };
 `;
 
-export default function generateBabelConfig({ uiFramework }) {
+export default function generateBabelConfig({ uiFramework, needsTypeScript }) {
   return ejs.render(babelConfig, {
-    uiFramework
+    uiFramework,
+    needsTypeScript
   });
 }
