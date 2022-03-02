@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "build": "vue-tsc --noEmit && node build/index.js",
-    "typecheck": "vue-tsc --noEmit"
+    "build": "node build/index.js"
   },
   "devDependencies": {
     "@types/node": "^10.14.17",
