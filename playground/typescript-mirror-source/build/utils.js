@@ -1,4 +1,3 @@
-'use strict';
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const path = require('path');
@@ -125,4 +124,24 @@ exports.generateSeePackageInfo = function generateSeePackageInfo({ system, type 
     seePackageOptions,
     seePackageName
   };
+};
+
+/**
+ * 构建 docker 包时，拷贝 dist 目录里的内容到 docker/html 目录
+ * 1. 先移除 docker/html 文件夹
+ * 2. 拷贝 dist 目录里的内容到 docker/html 目录下
+ * cp -r dist docker/html 命令的 js 版本
+ */
+exports.copyDistToDocker = function copyDistToDocker() {
+  const dockerHtmlPath = path.resolve(__dirname, '../docker/html');
+
+  fs.remove(dockerHtmlPath, (err) => {
+    if (err) return console.error(err);
+    fs.copy(path.resolve(__dirname, '../dist'), dockerHtmlPath, (err) => {
+      if (err) {
+        console.error(err);
+        console.error('拷贝 dist 至 docker/html 失败！！！');
+      }
+    });
+  });
 };
