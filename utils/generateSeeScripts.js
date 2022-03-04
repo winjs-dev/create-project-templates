@@ -2,7 +2,7 @@ import ejs from 'ejs';
 
 const seeScriptsConfig = `const fs = require('fs-extra');
 const { generateSeePackageZip } = require('@winner-fed/winner-deploy');
-const { generateSeePackageInfo } = require('../utils');
+const { generateSeePackageInfo, copyDistToDocker } = require('../utils');
 
 // 系统分类，必须按照实际项目要求填写
 const system = 'winner-front';
@@ -31,11 +31,15 @@ async function init() {
         seePackageName
       },
       function () {
+        // 拷贝dist 目录里的内容到 docker/html 目录下
+        // cp -r dist docker/html 命令的 js 版本
+        copyDistToDocker();
+        
         generateSeePackageZip({
           ...seePackageOptions,
           seePackageType: 'web',
           configName,
-          seePackageName: seePackageName.replace('-docker', '')<%_ if (buildTools === 'bundle') { _%>,     scriptsType: 'bash' <%_ } _%>
+          seePackageName: seePackageName.replace('-docker', '')<%_ if (buildTools === 'bundleless') { _%>, scriptsType: 'bash' <%_ } _%>
         });
       }
     );
@@ -46,7 +50,7 @@ async function init() {
   generateSeePackageZip({
     ...seePackageOptions,
     configName,
-    seePackageName<%_ if (buildTools === 'bundle') { _%>,     
+    seePackageName<%_ if (buildTools === 'bundleless') { _%>,     
     scriptsType: 'bash' <%_ } _%>
   });
 }
