@@ -714,10 +714,11 @@ async function init() {
   // 如果版本管理工具选择了 Git
   // 则进行 Git 初始化
   if (versionControl === 'git') {
+    console.log();
     await cmdIgnore('git', ['init']);
     await cmdIgnore('git', ['add .']);
     await cmdIgnore('git', ['commit -m "initialize commit"']);
-    console.log(`${green('Successfully initialization Git repository!')}`);
+    console.log(`  ${green('Successfully initialization Git repository!')}`);
   }
   // Instructions:
   // Supported package managers: pnpm > yarn > npm
@@ -730,7 +731,7 @@ async function init() {
   if (root !== cwd) {
     console.log(`  ${bold(green(`cd ${path.relative(cwd, root)}`))}`);
   }
-  console.log(`  ${bold(green(getCommand(packageManager, 'install')))}`);
+  console.log(`  ${bold(green(getCommand(packageManager, 'bootstrap')))}`);
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`);
   console.log();
 }
