@@ -8,6 +8,8 @@ import minimist from 'minimist';
 import prompts from 'prompts';
 import { red, yellow, cyan, magenta, green, bold } from 'kolorist';
 
+import createSpawnCmd from './utils/createSpawnCmd';
+
 import renderTemplate from './utils/renderTemplate.js';
 import {
   postOrderDirectoryTraverse,
@@ -413,6 +415,8 @@ async function init() {
 
   const root = path.join(cwd, targetDir);
 
+  const cmdIgnore = createSpawnCmd(root, 'ignore');
+
   if (shouldOverwrite) {
     emptyDir(root);
   } else if (!fs.existsSync(root)) {
@@ -707,6 +711,14 @@ async function init() {
     }
   }
 
+  // 如果版本管理工具选择了 Git
+  // 则进行 Git 初始化
+  if (versionControl === 'git') {
+    await cmdIgnore('git', ['init']);
+    await cmdIgnore('git', ['add .']);
+    await cmdIgnore('git', ['commit -m "initialize commit"']);
+    console.log(`${green('Successfully initialization Git repository!')}`);
+  }
   // Instructions:
   // Supported package managers: pnpm > yarn > npm
   // Note: until <https://github.com/pnpm/pnpm/issues/3505> is resolved,
