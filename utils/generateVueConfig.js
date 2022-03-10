@@ -54,7 +54,16 @@ const genPlugins = () => {
     ])
   <%_ } _%>
   <%_ if (framework === 'v3') { _%>
-    require('unplugin-auto-import/webpack')({ /* options */ })
+    require('unplugin-auto-import/webpack')({ 
+      include: [
+        /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\\.vue$/,
+        /\\.vue\\?vue/, // .vue
+        /\\.md$/, // .md
+      ],
+      dts: true,
+      imports: ['vue', 'vue-router']
+    })
    <%_ } _%>
   ];
 

@@ -45,7 +45,16 @@ export function createVitePlugins(viteEnv, isBuild) {
     vue(),
     vueJsx(),
     vueSetupExtend(),
-    AutoImport(),
+    AutoImport({
+      include: [
+        /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\\.vue$/,
+        /\\.vue\\?vue/, // .vue
+        /\\.md$/, // .md
+      ],
+      dts: true,
+      imports: ['vue', 'vue-router']
+    }),
     <%_ } _%>
     svgLoader()
   ];
