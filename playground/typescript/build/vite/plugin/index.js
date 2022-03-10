@@ -1,4 +1,5 @@
 import legacy from '@vitejs/plugin-legacy';
+import Components from 'unplugin-vue-components/vite';
 import svgLoader from 'vite-svg-loader';
 
 import { configHtmlPlugin } from './html';
@@ -17,6 +18,7 @@ export function createVitePlugins(viteEnv, isBuild) {
   } = viteEnv;
 
   const vitePlugins = [
+    Components({});
     svgLoader()
   ];
 

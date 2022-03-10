@@ -54,6 +54,7 @@
     "rimraf": "^3.0.2",
     "rollup-plugin-visualizer": "^4.2.0",
     "tasksfile": "^5.1.0",
+    "unplugin-vue-components": "^0.17.21",
     "unplugin-vue2-script-setup": "^0.9.3",
     "vite": "^2.8.3",
     "vite-plugin-compression": "^0.5.1",
