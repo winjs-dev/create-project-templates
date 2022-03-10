@@ -11,6 +11,7 @@ import scriptSetup from 'unplugin-vue2-script-setup/vite';
 <%_ if (framework === 'v3') { _%>
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 <%_ } _%>
 import svgLoader from 'vite-svg-loader';
 
@@ -42,6 +43,7 @@ export function createVitePlugins(viteEnv, isBuild) {
     <%_ if (framework === 'v3') { _%>
     vue(),
     vueJsx(),
+    vueSetupExtend(),
     <%_ } _%>
     svgLoader()
   ];
