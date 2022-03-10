@@ -14,6 +14,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import AutoImport from 'unplugin-auto-import/vite';
 <%_ } _%>
+import Components from 'unplugin-vue-components/vite';
 import svgLoader from 'vite-svg-loader';
 
 import { configHtmlPlugin } from './html';
@@ -56,6 +57,7 @@ export function createVitePlugins(viteEnv, isBuild) {
       imports: ['vue', 'vue-router']
     }),
     <%_ } _%>
+    Components({});
     svgLoader()
   ];
 

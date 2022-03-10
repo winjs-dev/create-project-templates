@@ -11,6 +11,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 <%_ } _%>
 const WebpackBar = require('webpackbar');
+const Components = require('unplugin-vue-components/webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 <%_ if (framework === 'v2') { _%>
@@ -43,6 +44,7 @@ const getSvnInfo = () => {
 <%_ } _%>
 const genPlugins = () => {
   const plugins = [
+    Components({}),
     new WebpackBar()<%_ if (framework === 'v2') { _%>,
     ScriptSetup({})<%_ } _%><%_ if (application !== 'pc') { _%>,
     // 为静态资源文件添加 hash，防止缓存

@@ -27,7 +27,8 @@
     "rimraf": "^3.0.2",
     "es-check": "^5.2.3",
     "prettier": "^2.4.1",
-    "tasksfile": "^5.1.0"
+    "tasksfile": "^5.1.0",
+    "unplugin-vue-components": "^0.17.21"
   },
   "scripts-info": {
     "serve": "运行开发服务器",
