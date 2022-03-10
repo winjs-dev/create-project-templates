@@ -61,8 +61,7 @@ const genPlugins = () => {
       ],
       dts: true,
       imports: ['vue', 'vue-router']
-    }),
-    require('unplugin-vue-script-name/webpack').default({})
+    })
    <%_ } _%>
   ];
 

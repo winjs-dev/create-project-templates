@@ -5,7 +5,6 @@
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
-    "unplugin-auto-import": "^0.6.1",
-    "unplugin-vue-script-name": "^0.1.5"
+    "unplugin-auto-import": "^0.6.1"
   }
 }
