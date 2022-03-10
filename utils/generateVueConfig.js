@@ -51,9 +51,7 @@ const genPlugins = () => {
         filepath: path.resolve(__dirname, './public/console.js'),
         hash: true,
       }
-    ])
-  <%_ } _%>
-  <%_ if (framework === 'v3') { _%>
+    ])<%_ } _%><%_ if (framework === 'v3') { _%>,
     require('unplugin-auto-import/webpack')({ 
       include: [
         /\\.[tj]sx?$/, // .ts, .tsx, .js, .jsx

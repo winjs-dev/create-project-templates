@@ -3,8 +3,6 @@
 </template>
 
 <script>
-  import { reactive, onMounted, onUnmounted, watch } from 'vue';
-
   export default {
     name: 'SendCode',
     props: {

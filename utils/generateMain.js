@@ -89,6 +89,7 @@ new Vue({
 const mainV3 = `<%_ if (buildTools === 'bundle') { _%>import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 <%_ } _%>
+import 'vue-global-api';
 <%_ if ((application === 'mobile' || application === 'offline') && layoutAdapter !== 'vw') { _%>
 import 'amfe-flexible';
 <%_ } _%>
