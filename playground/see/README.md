@@ -324,20 +324,19 @@ export default {
 # 安装依赖
 yarn install
 
+# or
+yarn run bootstrap
+
 # 可以通过如下操作解决 yarn 下载速度慢的问题
 yarn install --registry=https://registry.npm.taobao.org
 
 # 启动服务
-## vue-cli
 yarn run serve
-## vite
+## or
 yarn run dev
 
 # 构建生产环境
 yarn run build
-
-# 压缩 dist 文件夹，生成 zip 包
-yarn run zip
 
 # see 包，注意：不是运行在主框架里
 # 构建带时间串和gitcommitid的包
@@ -372,20 +371,11 @@ npm run build:see:child
 ## 其他
 
 ```shell
-# --svgo svg精简压缩
-yarn run svgo
 
-# --analyz 基于 webpack-bundle-analyzer 插件分析打包的文件构成及大小
-yarn run analyz
+# 压缩 dist 文件夹，生成 zip 包
+yarn run zip
 
 # --report 生成静态报告文件
 yarn run report
 
 ```
-
-## 相关链接
-
-- [vue-cli4 官方文档](https://cli.vuejs.org/zh/)
-- [vue-cli4.0 配置](https://blog.csdn.net/qq_35844177/article/details/81099492)
-- [chainWebpack](https://github.com/neutrinojs/webpack-chain#getting-started)
-- [[Vue CLI 4] 配置 webpack-bundle-analyzer 插件](https://segmentfault.com/a/1190000016247872)

@@ -6,8 +6,9 @@ const { name, version, buildVersion, description = '发布物描述测试' } = r
 const runtimeArgs = process.argv.slice(2);
 // 构建 docker 容器化发布物
 // windows 不区分大小写
-// npm run build:see -dockerSeePack
-const isDocker = process.env.npm_config_dockerseepack === 'true';
+// mac 与 liunx 只认小写
+// npm run build:see -dockerSeePack=true
+const isDocker = process.env.npm_config_dockerseepack === 'true' || process.env.npm_config_dockerSeePack === 'true';
 
 // 判断是否是 git
 exports.isGitSync = function isGitSync(dir) {
