@@ -53,6 +53,9 @@ const genPlugins = () => {
       }
     ])
   <%_ } _%>
+  <%_ if (framework === 'v3') { _%>
+    require('unplugin-auto-import/webpack')({ /* options */ })
+   <%_ } _%>
   ];
 
   if (isProd()) {

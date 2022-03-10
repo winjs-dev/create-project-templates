@@ -2,5 +2,8 @@
   "dependencies": {
     "vue": "^3.2.29",
     "vue-router": "^4.0.3"
+  },
+  "devDependencies": {
+    "unplugin-auto-import": "^0.6.1"
   }
 }
