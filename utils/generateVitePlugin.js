@@ -12,6 +12,7 @@ import scriptSetup from 'unplugin-vue2-script-setup/vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueSetupExtend from 'vite-plugin-vue-setup-extend';
+import AutoImport from 'unplugin-auto-import/vite';
 <%_ } _%>
 import svgLoader from 'vite-svg-loader';
 
@@ -44,6 +45,7 @@ export function createVitePlugins(viteEnv, isBuild) {
     vue(),
     vueJsx(),
     vueSetupExtend(),
+    AutoImport(),
     <%_ } _%>
     svgLoader()
   ];
