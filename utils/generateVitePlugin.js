@@ -11,7 +11,7 @@ import scriptSetup from 'unplugin-vue2-script-setup/vite';
 <%_ if (framework === 'v3') { _%>
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import vueSetupExtend from 'vite-plugin-vue-setup-extend';
+import vueSetupExtend from '@winner-fed/unplugin-vue-setup-extend';
 import AutoImport from 'unplugin-auto-import/vite';
 <%_ } _%>
 import Components from 'unplugin-vue-components/vite';

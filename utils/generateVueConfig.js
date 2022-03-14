@@ -63,7 +63,8 @@ const genPlugins = () => {
       ],
       dts: true,
       imports: ['vue', 'vue-router']
-    })
+    }),
+    require('@winner-fed/unplugin-vue-setup-extend/webpack').default({}),
    <%_ } _%>
   ];
 

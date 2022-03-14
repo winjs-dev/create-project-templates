@@ -5,6 +5,7 @@
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
+    "@winner-fed/unplugin-vue-setup-extend": "^0.0.3",
     "unplugin-auto-import": "^0.6.1"
   }
 }
