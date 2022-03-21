@@ -4,7 +4,8 @@
   "description": "An easy way to start a project",
   "type": "module",
   "bin": {
-    "create-project": "outfile.cjs"
+    "create-project": "outfile.cjs",
+    "cpa": "outfile.cjs"
   },
   "files": [
     "outfile.cjs",
@@ -16,7 +17,7 @@
   "scripts": {
     "prepare": "husky install",
     "format": "prettier --write .",
-    "build": "esbuild --bundle index.js --format=cjs --platform=node --outfile=outfile.cjs",
+    "build": "zx ./scripts/build.mjs",
     "snapshot": "zx ./scripts/snapshot.mjs",
     "pretest": "run-s build snapshot",
     "test": "zx ./scripts/test.mjs",
@@ -33,7 +34,10 @@
     "vue3",
     "create-project"
   ],
-  "author": "winner fed",
+  "author": {
+    "name": "whaleFE",
+    "email": "cloudbroker@126.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cloud-templates/create-project/issues"
@@ -41,7 +45,8 @@
   "homepage": "https://github.com/cloud-templates/create-project#readme",
   "devDependencies": {
     "ejs": "^3.1.6",
-    "esbuild": "^0.13.15",
+    "esbuild": "^0.14.23",
+    "esbuild-plugin-license": "^1.2.2",
     "gradient-string": "^2.0.0",
     "husky": "^7.0.4",
     "kolorist": "^1.5.1",
@@ -52,7 +57,7 @@
     "prettier": "^2.5.1",
     "prompts": "^2.4.2",
     "yaml-front-matter": "^4.1.1",
-    "zx": "^4.2.0"
+    "zx": "^5.1.0"
   },
   "lint-staged": {
     "*.{js,ts,vue,json}": [

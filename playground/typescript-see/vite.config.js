@@ -82,6 +82,7 @@ export default defineConfig(({ command, mode }) => {
     plugins: createVitePlugins(viteEnv, isBuild),
 
     optimizeDeps: {
+      include: ['vue', 'vue-router'],
       exclude: ['vue-demi']
     }
   };
