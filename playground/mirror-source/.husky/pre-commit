@@ -4,4 +4,5 @@
 
 [ -n "$CI" ] && exit 0
 
+npm run lint:lint-staged
 npx f2elint commit-file-scan
