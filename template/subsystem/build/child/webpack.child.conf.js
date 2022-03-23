@@ -222,10 +222,7 @@ const webpackConfig = {
       fileName: resolve(`dist/${childName}/manifest.${Date.now()}.json`),
       generate(seed, files, entrypoints) {
         return files.reduce((manifest, { name, path: manifestFilePath }) => {
-          let { root, dir, base } = path.parse(manifestFilePath);
-          dir = utils.appendPrefixViews(dir);
-          name = utils.appendPrefixViews(name);
-          manifestFilePath = utils.appendPrefixViews(manifestFilePath);
+          const { root, dir, base } = path.parse(manifestFilePath);
 
           return {
             ...manifest,

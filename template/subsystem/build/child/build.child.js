@@ -10,7 +10,6 @@ const { camelize, removeVersion } = require('./utils');
 const builds = require('./config.child').getAllBuilds();
 const replace = require('replace-in-file');
 const childName = process.env.npm_config_child || pkg.name;
-const childPath = path.resolve(__dirname, '../../dist', `${childName}`);
 
 const spinner = ora('building for production...');
 const build = function (builds) {
