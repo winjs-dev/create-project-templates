@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "prepare": "npm run prettier"
+    "prepare": "npm run format"
   },
   "devDependencies": {
     "svn-info": "^1.0.0"
