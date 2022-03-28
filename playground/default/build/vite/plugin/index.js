@@ -18,7 +18,7 @@ export function createVitePlugins(viteEnv, isBuild) {
   } = viteEnv;
 
   const vitePlugins = [
-    Components({});
+    Components({}),
     svgLoader()
   ];
 
