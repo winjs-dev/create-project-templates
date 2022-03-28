@@ -639,7 +639,7 @@ async function init() {
       // build/vite/plugin/styleImport.js
       fs.writeFileSync(
         path.resolve(root, 'build/vite/plugin/styleImport.js'),
-        generateViteStyleImport({ uiFramework })
+        generateViteStyleImport({ uiFramework, framework })
       );
 
       // build/vite/plugin/index.js

@@ -57,7 +57,7 @@ export function createVitePlugins(viteEnv, isBuild) {
       imports: ['vue', 'vue-router']
     }),
     <%_ } _%>
-    Components({});
+    Components({}),
     svgLoader()
   ];
 
