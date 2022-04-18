@@ -10,6 +10,9 @@ import { requestByRPC } from '@/utils/mpaasBridges';
 
 /**
  * 基于 mpaas 的 rpc 请求
+ * 这里统一做接口拦截的处理
+ * 比如 请求前 requestParams 的处理，
+ * 接收到响应后针对 response 的数据处理
  * @param url
  * @param method
  * @param prefix 用来拼接url地址
