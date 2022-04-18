@@ -63,12 +63,12 @@ const initVue = () => {
   new Vue({
     el: '#app',
     router,
-    store,
     // use Runtime-only
     // https://vuejs.org/v2/guide/installation.html
     render: (h) => h(App)
   });
 };
+
 <%_ if (mobileDevPlatform === 'gmu') { _%>
 if (isLightOS()) {
   nativeReady().then(() => {
@@ -77,9 +77,6 @@ if (isLightOS()) {
 <%_ } else { _%>
 if (ismPaaSOS()) {
   nativeReady(initVue);
-} else {
-  initVue();
-}
 <%_ } _%> 
 } else {
   initVue();

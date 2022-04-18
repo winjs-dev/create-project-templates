@@ -7,6 +7,8 @@ const vueConfig = `import router from './index';
 import { isLightOS, navigateTo } from '@winner-fed/native-bridge-methods';
 <%_ } else { _%>
 import { ismPaaSOS, nativeNavigate } from '@/utils/mpaasBridges';  
+
+const params = {};
 <%_ } _%>
 <%_ } _%>
 
@@ -20,7 +22,7 @@ router.beforeEach((to, from, next) => {
   }
   <%_ } else { _%>
   if (from.name && ismPaaSOS()) {
-   nativeNavigate({ url: \`\${window.location.href.split('#')[0]}#\${to.fullPath}\`, param });
+   nativeNavigate({ url: \`\${window.location.href.split('#')[0]}#\${to.fullPath}\`, params });
   } else {
     next();
   }

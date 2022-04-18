@@ -6,7 +6,7 @@ const archiver = require('archiver');
 
 const DEST_DIR = path.join(__dirname, '../dist');
 const DEST_ZIP_DIR = path.join(__dirname, '../dist-zip');
-const { id: offlineId } = require('./offlinePackage.json');
+const { id: offlineId } = require('../offlinePackage.json');
 
 const removeDir = function removeDir(dir) {
   let files = fs.readdirSync(dir);
