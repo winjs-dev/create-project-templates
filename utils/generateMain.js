@@ -35,10 +35,14 @@ import './plugins/composition.js';
 import 'virtual:svg-icons-register';
 <%_ } _%>
 <%_ if (application === 'offline') { _%>
+<%_ if (mobileDevPlatform === 'gmu') { _%>
 import {isLightOS, nativeReady} from '@winner-fed/native-bridge-methods';
 import LightSDK from 'light-sdk/dist/index.umd';
 
 window.LightSDK = LightSDK;
+<%_ } else { _%>
+import { ismPaaSOS, nativeReady } from '@/utils/mpaasBridges';
+<%_ } _%>
 <%_ } _%>
 import './assets/style/app.less';
 <%_ if (needsTypeScript) { _%>
@@ -54,25 +58,31 @@ Component.registerHooks([
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 <%_ if (application === 'offline') { _%>
-if (isLightOS()) {
-  nativeReady().then(() => {
-    new Vue({
-      el: '#app',
-      router,
-      // use Runtime-only
-      // https://vuejs.org/v2/guide/installation.html
-      render: (h) => h(App)
-    });
-  });
-} else {
+const initVue = () => {
   /* eslint-disable no-new */
   new Vue({
     el: '#app',
     router,
+    store,
     // use Runtime-only
     // https://vuejs.org/v2/guide/installation.html
     render: (h) => h(App)
   });
+};
+<%_ if (mobileDevPlatform === 'gmu') { _%>
+if (isLightOS()) {
+  nativeReady().then(() => {
+    initVue();
+  });
+<%_ } else { _%>
+if (ismPaaSOS()) {
+  nativeReady(initVue);
+} else {
+  initVue();
+}
+<%_ } _%> 
+} else {
+  initVue();
 }
 <%_ } else { _%>
 /* eslint-disable no-new */
@@ -116,10 +126,14 @@ import setupVendor from './vendor/wui';
 import 'virtual:svg-icons-register';
 <%_ } _%>
 <%_ if (application === 'offline') { _%>
+<%_ if (mobileDevPlatform === 'gmu') { _%>
 import {isLightOS, nativeReady} from '@winner-fed/native-bridge-methods';
 import LightSDK from 'light-sdk/dist/index.umd';
 
 window.LightSDK = LightSDK;
+<%_ } else { _%>
+import { ismPaaSOS, nativeReady } from '@/utils/mpaasBridges';
+<%_ } _%>
 <%_ } _%>
 import './assets/style/app.less';
 
@@ -137,10 +151,17 @@ async function bootstrap() {
   // https://next.router.vuejs.org/api/#isready
   await router.isReady();
 <%_ if (application === 'offline') { _%>
+<%_ if (mobileDevPlatform === 'gmu') { _%>
   if (isLightOS()) {
     nativeReady().then(() => {
       app.mount('#app');
     });
+<%_ } else { _%>
+  if (ismPaaSOS()) {
+    nativeReady(() => {
+      app.mount('#app');
+    ));
+<%_ } _%>
   } else {
     app.mount('#app', true);
   }
@@ -160,14 +181,16 @@ export function generateMain({
   uiFramework,
   layoutAdapter,
   needsTypeScript,
-  buildTools
+  buildTools,
+  mobileDevPlatform
 }) {
   return ejs.render(mainV2, {
     application,
     layoutAdapter,
     uiFramework,
     needsTypeScript,
-    buildTools
+    buildTools,
+    mobileDevPlatform
   });
 }
 
@@ -176,13 +199,15 @@ export function generateMainV3({
   uiFramework,
   layoutAdapter,
   needsTypeScript,
-  buildTools
+  buildTools,
+  mobileDevPlatform
 }) {
   return ejs.render(mainV3, {
     application,
     layoutAdapter,
     uiFramework,
     needsTypeScript,
-    buildTools
+    buildTools,
+    mobileDevPlatform
   });
 }

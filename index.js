@@ -207,13 +207,36 @@ async function init() {
           initial: 0
         },
         {
+          name: 'mobileDevPlatform',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed) return null;
+            return values.framework !== 'mini' && values.application === 'offline'
+              ? 'select'
+              : null;
+          },
+          message: 'Select a mobile development platform?',
+          choices: [
+            {
+              title: cyan('GMU'),
+              value: 'gmu'
+            },
+            {
+              title: magenta('mPaaS'),
+              value: 'mpaas'
+            }
+          ],
+          initial: 0
+        },
+        {
           name: 'offlineId',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.application === 'offline' ? 'text' : null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'gmu'
+              ? 'text'
+              : null;
           },
           message: 'Fill in the offline package ID',
-          validate: function (val) {
+          validate: (val) => {
             return /^[0-9a-z]{4,8}$/.test(val)
               ? true
               : '请输入4-8位的小写英文字母或数字，注意唯一性';
@@ -224,14 +247,40 @@ async function init() {
           name: 'offlineName',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.application === 'offline' ? 'text' : null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'gmu'
+              ? 'text'
+              : null;
           },
           message: 'Fill in the offline package name',
-          validate: function (val) {
+          validate: (val) => {
             return /^[\u4e00-\u9fa5a-zA-Z0-9]{1,10}$/.test(val)
               ? true
               : '请输入1-10位的中英文字符或数字';
           }
+        },
+        {
+          name: 'mpaasOfflineId',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed) return null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'mpaas'
+              ? 'text'
+              : null;
+          },
+          message: 'Fill in the offline package ID',
+          validate: (val) => {
+            return /^(\d{8})/.test(val) ? true : '请输入8位的数字，注意唯一性';
+          },
+          initial: '离线包 ID'
+        },
+        {
+          name: 'mpaasOfflineName',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed) return null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'mpaas'
+              ? 'text'
+              : null;
+          },
+          message: 'Fill in the offline package name'
         },
         {
           name: 'needsTypeScript',
@@ -402,8 +451,11 @@ async function init() {
     framework = argv.framework,
     needsTypeScript = argv.typescript,
     application = argv.application,
+    mobileDevPlatform = argv.mobileDevPlatform,
     offlineId = argv.offlineId,
     offlineName = argv.offlineName,
+    mpaasOfflineId = argv.mpaasOfflineId,
+    mpaasOfflineName = argv.mpaasOfflineName,
     buildTools = argv.buildTools,
     uiFramework = argv.uiFramework,
     layoutAdapter = argv.layoutAdapter,
@@ -428,7 +480,6 @@ async function init() {
   const pkg = { name: packageName, version: '0.0.0' };
   fs.writeFileSync(path.resolve(root, 'package.json'), JSON.stringify(pkg, null, 2));
 
-  // todo:
   // work around the esbuild issue that `import.meta.url` cannot be correctly transpiled
   // when bundling for node and the format is cjs
   // const templateRoot = new URL('./template', import.meta.url).pathname
@@ -437,8 +488,11 @@ async function init() {
     packageName,
     framework,
     application,
+    mobileDevPlatform,
     offlineId,
     offlineName,
+    mpaasOfflineId,
+    mpaasOfflineName,
     buildTools,
     uiFramework,
     layoutAdapter,
@@ -486,7 +540,11 @@ async function init() {
       render('application/default');
 
       if (application === 'offline') {
-        render('application/offline');
+        if (mobileDevPlatform === 'gmu') {
+          render('application/offline/gmu');
+        } else {
+          render('application/offline/mpaas');
+        }
       }
 
       if (layoutAdapter === 'vw') {
@@ -601,7 +659,8 @@ async function init() {
       uiFramework,
       layoutAdapter,
       needsTypeScript,
-      buildTools
+      buildTools,
+      mobileDevPlatform
     });
     if (framework === 'v3') {
       mainContent = generateMainV3({
@@ -609,7 +668,8 @@ async function init() {
         uiFramework,
         layoutAdapter,
         needsTypeScript,
-        buildTools
+        buildTools,
+        mobileDevPlatform
       });
     }
     fs.writeFileSync(path.resolve(root, 'src/main.js'), mainContent);
@@ -653,7 +713,8 @@ async function init() {
     fs.writeFileSync(
       path.resolve(root, 'src/router/router.interceptor.js'),
       generateRouterInterceptor({
-        application
+        application,
+        mobileDevPlatform
       })
     );
 
@@ -662,8 +723,11 @@ async function init() {
       fs.writeFileSync(
         path.resolve(root, 'offlinePackage.json'),
         generateOfflinePackage({
+          mobileDevPlatform,
           offlineId,
-          offlineName
+          offlineName,
+          mpaasOfflineId,
+          mpaasOfflineName
         })
       );
     }
