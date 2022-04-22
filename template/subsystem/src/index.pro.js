@@ -1,5 +1,5 @@
 import FUNS from '@/services';
-import { routes } from './router';
+import { routes } from './router/routes';
 import { filters } from './filters';
 import VueCompositionAPI from '@vue/composition-api';
 import Locales from './locales';
