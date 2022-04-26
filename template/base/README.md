@@ -297,7 +297,7 @@ export default {
        "svg-sprite-loader": "^6.0.11",
        "tasksfile": "^5.1.0",
        "unplugin-vue2-script-setup": "^0.9.3",
-       "vue-template-babel-compiler": "1.1.3",
+       "vue-template-babel-compiler": "^1.2.0",
        "vue-template-compiler": "^2.6.14",
        "webpack-manifest-plugin": "^4.1.1",
        "webpackbar": "^5.0.2"
