@@ -55,6 +55,7 @@ export default defineConfig(({ command, mode }) => {
       target: 'es2015',
       outDir: 'dist',
       polyfillDynamicImport: VITE_LEGACY,
+      minify: 'terser',
       terserOptions: {
         compress: {
           keep_infinity: true,
