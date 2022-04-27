@@ -65,17 +65,7 @@ export default defineConfig(({ command, mode }) => {
       },
       // Turning off brotliSize display can slightly reduce packaging time
       brotliSize: false,
-      chunkSizeWarningLimit: 1200,
-
-      rollupOptions: {
-        output: {
-          // manualChunks 配置
-          manualChunks: {
-            // 将 vue 相关库打包成单独的 chunk 中
-            'vue-vendor': ['vue', 'vue-router']
-          }
-        }
-      }
+      chunkSizeWarningLimit: 1200
     },
     css: {
       preprocessorOptions: {
