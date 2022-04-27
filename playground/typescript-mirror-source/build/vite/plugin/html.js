@@ -11,7 +11,7 @@ export function configHtmlPlugin(env, isBuild) {
   const suffix = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? '.ts' : '.js';
   const htmlPlugin = createHtmlPlugin({
     minify: isBuild,
-    entry: `src/main${suffix}`,
+    entry: `/src/main${suffix}`,
     inject: {
       // Inject data into ejs template
       data: {
