@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import { routes } from '@/router';
+  import { routes } from '@/router/routes';
 
   /* istanbul ignore next */
   export const off = (function () {
