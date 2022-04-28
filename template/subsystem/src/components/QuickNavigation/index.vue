@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { routes } from '@/router';
+  import { routes } from '@/router/routes';
 
   export default {
     name: 'QuickNavigation',
