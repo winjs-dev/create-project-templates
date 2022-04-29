@@ -35,8 +35,9 @@ export function nativeGetSystemInfo() {
 
 /**
  * 修改状态栏
+ *
+ * @param {string} color 字体颜色 black｜white
  * @param {string} alpha 透明度
- * @param {string} statusBarStyle 字体颜色 black｜white
  */
 export function nativeSetStatusBarStyle(color, alpha) {
   const params = {
@@ -270,27 +271,6 @@ export function onPageAppear(cb) {
 }
 
 /**
- * 打开思迪业务办理
- * @param {string} url 业务办理地址
- * @param {Object|string} reservedFiled 保留传参字段
- */
-export function jumpThinkive(url = '', reservedFiled = '') {
-  if (isLightOS()) {
-    lightSDK.native.callNative(
-      'winner_route.startThinkivePalmHall',
-      {
-        params: {
-          url: url,
-          reservedFiled:
-            typeof reservedFiled === 'object' ? JSON.stringify(reservedFiled) : reservedFiled
-        }
-      },
-      () => {}
-    );
-  }
-}
-
-/**
  * 跳转app当日申请查询
  */
 export function goToAppTodayEntrustList() {
@@ -332,26 +312,4 @@ export function goToBusinessHanding(business) {
       () => {}
     );
   }
-}
-
-// 获取IFAToken
-export function getIFAToken() {
-  return new Promise((resolve, reject) => {
-    if (isLightOS()) {
-      lightSDK.native.callNative('winner_rxzq.getIFAToken', {}, (res) => {
-        resolve(res);
-      });
-    }
-  });
-}
-
-// 重新获取token
-export function getIFATokenInvalid() {
-  return new Promise((resolve, reject) => {
-    if (isLightOS()) {
-      lightSDK.native.callNative('winner_rxzq.IFATokenInvalid', {}, (res) => {
-        resolve(res);
-      });
-    }
-  });
 }
