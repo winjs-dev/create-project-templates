@@ -11,7 +11,7 @@ import Qs from 'qs';
 import axios from 'axios';
 import autoMatchBaseUrl from './autoMatchBaseUrl';
 import { TIMEOUT } from '@/constant';
-import { ismPaaSOS, requestByRPC } from '@/utils/mpaasBridges';
+import { ismPaaSOS, requestByRPC } from '@winner-fed/mpaas-jsapi';
 
 export const requestInstance = axios.create({});
 

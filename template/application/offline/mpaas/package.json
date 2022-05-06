@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@winner-fed/mpaas-jsapi": "*"
+  }
+}

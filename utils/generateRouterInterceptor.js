@@ -6,7 +6,7 @@ const vueConfig = `import router from './index';
 <%_ if (mobileDevPlatform === 'gmu') { _%>
 import { isLightOS, navigateTo } from '@winner-fed/native-bridge-methods';
 <%_ } else { _%>
-import { ismPaaSOS, nativeNavigate } from '@/utils/mpaasBridges';  
+import { ismPaaSOS, nativeNavigate } from '@winner-fed/mpaas-jsapi';  
 
 const params = {};
 <%_ } _%>

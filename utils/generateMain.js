@@ -41,7 +41,7 @@ import LightSDK from 'light-sdk/dist/index.umd';
 
 window.LightSDK = LightSDK;
 <%_ } else { _%>
-import { ismPaaSOS, nativeReady } from '@/utils/mpaasBridges';
+import { ismPaaSOS, nativeReady } from '@winner-fed/mpaas-jsapi';
 <%_ } _%>
 <%_ } _%>
 import './assets/style/app.less';
@@ -129,7 +129,7 @@ import LightSDK from 'light-sdk/dist/index.umd';
 
 window.LightSDK = LightSDK;
 <%_ } else { _%>
-import { ismPaaSOS, nativeReady } from '@/utils/mpaasBridges';
+import { ismPaaSOS, nativeReady } from '@winner-fed/mpaas-jsapi';
 <%_ } _%>
 <%_ } _%>
 import './assets/style/app.less';
