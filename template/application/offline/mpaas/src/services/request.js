@@ -11,7 +11,8 @@ import Qs from 'qs';
 import axios from 'axios';
 import autoMatchBaseUrl from './autoMatchBaseUrl';
 import { TIMEOUT } from '@/constant';
-import { ismPaaSOS, requestByRPC } from '@winner-fed/mpaas-jsapi';
+import { ismPaaSOS } from '@winner-fed/mpaas-jsapi';
+import { request as requestInApp } from './requestByRPC';
 
 export const requestInstance = axios.create({});
 
@@ -142,36 +143,40 @@ export default function request(
   url,
   { method = 'post', timeout = TIMEOUT, prefix = '', data = {}, headers = {}, dataType = 'json' }
 ) {
+  let defaultConfig = {};
+
+  // 站内请求
   if (ismPaaSOS()) {
-    // 基于 mpaas 的 rpc 请求
-    // 这里可以统一做接口拦截的处理
-    // 比如 请求前 requestParams 的处理，
-    // 接收到响应后针对 response 的数据处理
-    return requestByRPC(url, {
+    return requestInApp(url, {
       method,
-      data
+      data,
+      prefix,
+      headers
     }).then((res) => {
       return res;
     });
   } else {
-    const baseURL = autoMatchBaseUrl(prefix);
+    // 站外请求
+    // 不走 mPaaS 移动网关MGW
+    if (process.env.VUE_APP_SERVICE_MODE === 'NOMGW') {
+      const baseURL = autoMatchBaseUrl(prefix);
+      const formatHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        ...headers
+      };
 
-    const formatHeaders = {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      ...headers
-    };
-
-    const defaultConfig = {
-      baseURL,
-      url,
-      method,
-      params: data,
-      data,
-      timeout,
-      headers: formatHeaders,
-      responseType: dataType,
+      defaultConfig = {
+        baseURL,
+        url,
+        method,
+        params: data,
+        data,
+        timeout,
+        headers: formatHeaders,
+        responseType: dataType
+      };
       // 这里将 response.data 为 string 做了 JSON.parse 的转换处理
-      transformResponse: axios.defaults.transformResponse.concat(function (data) {
+      defaultConfig.transformResponse = axios.defaults.transformResponse.concat(function (data) {
         if (typeof data === 'string' && data.length) {
           try {
             return JSON.parse(data);
@@ -181,33 +186,76 @@ export default function request(
           }
         }
         return data;
-      })
-    };
+      });
 
-    if (method === 'get') {
-      defaultConfig.data = {};
-    } else {
-      defaultConfig.params = {};
+      if (method === 'get') {
+        defaultConfig.data = {};
+      } else {
+        defaultConfig.params = {};
 
-      const contentType = formatHeaders['Content-Type'];
+        const contentType = formatHeaders['Content-Type'];
 
-      if (typeof contentType !== 'undefined') {
-        if (contentType.indexOf('multipart') !== -1) {
-          // 类型 `multipart/form-data;`
-          defaultConfig.data = data;
-        } else if (contentType.indexOf('json') !== -1) {
-          // 类型 `application/json`
-          // 服务器收到的raw body(原始数据) '{name:'jhon',sex:'man'}'（普通字符串）
-          defaultConfig.data = JSON.stringify(data);
-        } else {
-          // 类型 `application/x-www-form-urlencoded`
-          // 服务器收到的raw body(原始数据) name=homeway&key=nokey
-          defaultConfig.data = Qs.stringify(data);
+        if (typeof contentType !== 'undefined') {
+          if (contentType.indexOf('multipart') !== -1) {
+            // 类型 `multipart/form-data;`
+            defaultConfig.data = data;
+          } else if (contentType.indexOf('json') !== -1) {
+            // 类型 `application/json`
+            // 服务器收到的raw body(原始数据) '{name:'jhon',sex:'man'}'（普通字符串）
+            defaultConfig.data = JSON.stringify(data);
+          } else {
+            // 类型 `application/x-www-form-urlencoded`
+            // 服务器收到的raw body(原始数据) name=homeway&key=nokey
+            defaultConfig.data = Qs.stringify(data);
+          }
         }
       }
+    } else {
+      // 走 mPaaS 移动网关MGW
+      const requestData = [
+        {
+          _requestBody: data
+        }
+      ];
+
+      // 举个例子
+      // fq/recommend/getRecommendExt => com.hundsun.hspf.fq.recommend.getRecommendExt
+      const formatUrl = `com.hundsun.hspf.${url.replaceAll('/', '.')}`;
+
+      // 本地开发环境，跨域处理
+      if (process.env.NODE_ENV === 'development') {
+        defaultConfig.url = '/mgw/api';
+      }
+
+      defaultConfig = {
+        baseURL: window.LOCAL_CONFIG.API_HOME,
+        headers: {
+          // 对应移动网关配置的 operationType
+          'Operation-Type': formatUrl,
+          // 应用 ID
+          // 这里可以在 config.local.js 定义成常量，便于修改
+          // window.LOCAL_CONFIG.APP_ID
+          AppId: 'ALIPUB2166ED4030837',
+          // 工作空间标识
+          // 这里可以在 config.local.js 定义成常量，便于修改
+          WorkspaceId: 'default',
+          // 固定值
+          Platform: 'ANDROID',
+          // 固定值
+          Version: '2.0',
+          'Content-Type': 'application/json'
+        },
+        // 固定值
+        // 默认 post
+        method: 'post',
+        data: requestData,
+        ...defaultConfig
+      };
     }
 
-    return requestInstance(defaultConfig);
+    return requestInstance(defaultConfig).then((res) => {
+      return res;
+    });
   }
 }
 

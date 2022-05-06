@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "serve:nomgw": "vue-cli-service serve --mode nomgw"
+  },
   "dependencies": {
     "@winner-fed/mpaas-jsapi": "*"
   }
