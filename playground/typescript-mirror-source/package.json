@@ -60,7 +60,7 @@
     "tasksfile": "^5.1.0",
     "unplugin-vue-components": "^0.17.21",
     "unplugin-vue2-script-setup": "^0.9.3",
-    "vite": "2.8.6",
+    "vite": "^2.9.9",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-html": "^3.0.6",
     "vite-plugin-imagemin": "^0.6.1",
