@@ -8,4 +8,9 @@ src/assets/
 **/*.bundle.js
 RESTFULURL.js
 RESTFULURL.ts
+postcss.config.js
+.eslintrc.js
+.stylelintrc.js
+f2elint.config.js
+prettier.config.js
 
