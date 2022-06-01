@@ -1,6 +1,6 @@
-import FUNS from '@/services';
+import FUNS from './services/services';
 import { routes } from './router/routes';
-import { filters } from './filters';
+import { filters } from './filters/filters';
 import VueCompositionAPI from '@vue/composition-api';
 import Locales from './locales';
 import './icons';
@@ -15,7 +15,9 @@ const plugin = {
     });
 
     // register services
-    Object.defineProperty(Vue.prototype, '$services', { value: FUNS });
+    if (!Vue.prototype['$services']) {
+      Object.defineProperty(Vue.prototype, '$services', { value: FUNS });
+    }
 
     // 自动全局注入组件
     // 自动加载 global 目录下的 .vue 结尾的文件
