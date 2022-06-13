@@ -84,7 +84,6 @@ const genPlugins = () => {
           'dist',
           \`manifest.\${Date.now()}.json\`
         ),
-        filter: ({name, path}) => !name.includes('runtime'),
         generate (seed, files, entries) {
           return files.reduce((manifest, {name, path: manifestFilePath}) => {
             const {root, dir, base} = path.parse(manifestFilePath);
