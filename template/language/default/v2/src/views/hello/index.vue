@@ -2,10 +2,14 @@
   <div class="page page-hello">
     <div class="page-content">
       <!-- 静态资源路径写法事例 -->
-      <img src="@/assets/img/logo.png" />
-      <h1 v-text="msg"></h1>
-      <h2 v-text="message"></h2>
-      <svg-icon icon-name="dog"></svg-icon>
+      <img class="logo" src="@/assets/img/logo.png" alt="logo" />
+      <h1>{{ title }}</h1>
+      <p>
+        有关自定义配置指引， 请前往
+        <a href="https://cloud-templates.github.io/create-project/" target="_blank" rel="noopener"
+          >create-project 文档</a
+        >.
+      </p>
       <div class="demo">
         <h3>方法示例</h3>
         <pre>
@@ -68,14 +72,10 @@
   /**
    * 以下仅为事例代码，可以随意扩展修改
    */
-  // 工具类
-  import { formatDate } from 'utils';
-
   export default {
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App',
-        message: '现在时间是：' + formatDate(Date.now())
+        title: 'Welcome to Your Vue.js App'
       };
     },
 
