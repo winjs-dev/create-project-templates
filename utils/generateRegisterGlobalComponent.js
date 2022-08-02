@@ -32,7 +32,7 @@ export default function setupGlobalComponent(app) {
 import Vue from 'vue';
 
 // 自动加载 global 目录下的 .vue 结尾的文件
-const componentsContext = import.meta.globEager('/src/components/global/**/*.vue');
+const componentsContext = import.meta.glob('/src/components/global/**/*.vue', { eager: true });
 
 for (const componentConfig in componentsContext) {
   if (componentsContext.hasOwnProperty(componentConfig)) {
