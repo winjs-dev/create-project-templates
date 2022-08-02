@@ -64,7 +64,7 @@ export default defineConfig(({ command, mode }) => {
         }
       },
       // Turning off brotliSize display can slightly reduce packaging time
-      brotliSize: false,
+      reportCompressedSize: false,
       chunkSizeWarningLimit: 1200
     },
     css: {
