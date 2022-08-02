@@ -208,7 +208,7 @@ export default {
         "serve": "vue-cli-service serve",
         # 构建打包
         "build": "node build/index.js --no-module",
-        # .js、.vue、.jsx 文件的编码规范检测，自带修复。基于 @winner-fed/vue-cli-plugin-eslint 实现
+        # .js、.vue、.jsx 文件的编码规范检测，自带修复。基于 @vue/cli-plugin-eslint 实现
         "lint": "vue-cli-service lint",
         # 生成部署包，并且压缩成 zip 包
         "deploy": "npm run build && npm run zip",
@@ -275,7 +275,6 @@ export default {
        "@vue/compiler-sfc": "^3.2.31",
        "@vue/runtime-dom": "^3.2.31",
        "@winner-fed/f2elint": "^1.0.4",
-       "@winner-fed/vue-cli-plugin-eslint": "^1.0.2",
        "@winner-fed/vue-cli-plugin-stylelint": "^1.0.2",
        "@winner-fed/winner-deploy": "^4.0.0",
        "add-asset-html-webpack-plugin": "^3.1.3",
