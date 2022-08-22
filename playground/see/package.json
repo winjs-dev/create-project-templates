@@ -57,7 +57,7 @@
     "postcss-pxtorem": "^5.1.1",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
-    "rollup-plugin-visualizer": "^4.2.0",
+    "rollup-plugin-visualizer": "^5.7.1",
     "tasksfile": "^5.1.0",
     "unplugin-vue-components": "^0.17.21",
     "unplugin-vue2-script-setup": "^0.9.3",
