@@ -37,9 +37,6 @@ import 'virtual:svg-icons-register';
 <%_ if (application === 'offline') { _%>
 <%_ if (mobileDevPlatform === 'gmu') { _%>
 import {isLightOS, nativeReady} from '@winner-fed/native-bridge-methods';
-import LightSDK from 'light-sdk/dist/index.umd';
-
-window.LightSDK = LightSDK;
 <%_ } else { _%>
 import { ismPaaSOS, nativeReady } from '@winner-fed/mpaas-jsapi';
 <%_ } _%>
@@ -125,9 +122,6 @@ import 'virtual:svg-icons-register';
 <%_ if (application === 'offline') { _%>
 <%_ if (mobileDevPlatform === 'gmu') { _%>
 import {isLightOS, nativeReady} from '@winner-fed/native-bridge-methods';
-import LightSDK from 'light-sdk/dist/index.umd';
-
-window.LightSDK = LightSDK;
 <%_ } else { _%>
 import { ismPaaSOS, nativeReady } from '@winner-fed/mpaas-jsapi';
 <%_ } _%>
