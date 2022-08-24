@@ -152,6 +152,9 @@ module.exports = defineConfig({
   productionSourceMap: false,
   // webpack-dev-server 相关配置
   devServer: {
+  headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     port: 3000,
     https: false,
     client: {
@@ -214,7 +217,14 @@ module.exports = defineConfig({
     },
     plugins: genPlugins(),
     // https://github.com/cklwblove/vue-cli3-template/issues/12
-    optimization: getOptimization()
+    optimization: getOptimization(),
+    <%_ if (needsQiankunMicroFrontend) { _%>
+    output: {
+      library: \`\${pkg.name}\`,
+      libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+      chunkLoadingGlobal: \`webpackJsonp_\${pkg.name}\`
+    }
+    <%_ } _%>
   }),
   // webpack配置
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
@@ -297,6 +307,9 @@ module.exports = defineConfig({
           minifyCSS: true,
           minifyURLs: true
         };
+        <%_ if (needsQiankunMicroFrontend) { _%>
+        args[0].inject = 'body';
+        <%_ } _%>
         return args;
       });
 
@@ -353,13 +366,15 @@ export default function generateVueConfig({
   application,
   versionControl,
   needsTypeScript,
-  uiFramework
+  uiFramework,
+  needsQiankunMicroFrontend
 }) {
   return ejs.render(vueConfig, {
     framework,
     application,
     versionControl,
     needsTypeScript,
-    uiFramework
+    uiFramework,
+    needsQiankunMicroFrontend
   });
 }

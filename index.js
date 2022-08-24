@@ -431,6 +431,20 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsQiankunMicroFrontend',
+          type: (prev, values) => {
+            return values.framework === 'v2' &&
+              values.application === 'pc' &&
+              values.buildTools === 'bundle'
+              ? 'toggle'
+              : null;
+          },
+          message: 'Add qiankun microFrontend Support?',
+          inital: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -462,7 +476,8 @@ async function init() {
     versionControl = argv.versionControl,
     needsMirrorSource = argv.ms,
     needsSeePackage = argv.see,
-    needsSubsystem = argv.subsystem
+    needsSubsystem = argv.subsystem,
+    needsQiankunMicroFrontend = argv.qiankunMicroFrontend
   } = result;
 
   const root = path.join(cwd, targetDir);
@@ -496,7 +511,8 @@ async function init() {
     buildTools,
     uiFramework,
     layoutAdapter,
-    versionControl
+    versionControl,
+    needsQiankunMicroFrontend
   };
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName);
@@ -653,6 +669,10 @@ async function init() {
       render('subsystem');
     }
 
+    if (needsQiankunMicroFrontend) {
+      render('qiankun-micro-frontend');
+    }
+
     // Main generation
     let mainContent = generateMain({
       application,
@@ -660,7 +680,8 @@ async function init() {
       layoutAdapter,
       needsTypeScript,
       buildTools,
-      mobileDevPlatform
+      mobileDevPlatform,
+      needsQiankunMicroFrontend
     });
     if (framework === 'v3') {
       mainContent = generateMainV3({
@@ -684,7 +705,8 @@ async function init() {
           application,
           uiFramework,
           needsTypeScript,
-          versionControl
+          versionControl,
+          needsQiankunMicroFrontend
         })
       );
 
