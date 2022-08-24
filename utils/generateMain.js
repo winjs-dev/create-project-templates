@@ -1,4 +1,5 @@
 import ejs from 'ejs';
+import { parseStr } from './commonTools.js';
 
 const mainV2 = `<%_ if (needsQiankunMicroFrontend) { _%>import './publicPath';
 import { checkIsQiankunMicroService } from '@/utils';
@@ -104,7 +105,7 @@ function render(props = {}) {
     // use Runtime-only
     // https://vuejs.org/v2/guide/installation.html
     render: (h) => h(App)
-  }).$mount(container ? container.querySelector(\`#app\`) : '#app');
+  }).$mount(container ? container.querySelector('#<%= parseStr(packageName) %>') : '#<%= parseStr(packageName) %>');
 }
 
 if (!checkIsQiankunMicroService()) {
@@ -205,6 +206,7 @@ bootstrap();
 `;
 
 export function generateMain({
+  packageName,
   application,
   uiFramework,
   layoutAdapter,
@@ -214,6 +216,8 @@ export function generateMain({
   needsQiankunMicroFrontend
 }) {
   return ejs.render(mainV2, {
+    parseStr,
+    packageName,
     application,
     layoutAdapter,
     uiFramework,

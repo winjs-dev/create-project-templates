@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+import ejs from 'ejs';
+import { parseStr } from './commonTools.js';
+
+const indexHTML = `<!DOCTYPE html>
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
@@ -13,22 +16,16 @@
     <meta content="telephone=no" name="format-detection" />
     <meta content="email=no" name="format-detection" />
     <title>projectName</title>
-    <style>
-      html,
-      body,
-      #app {
-        width: 100%;
-        height: 100%;
-        margin: 0 auto;
-        overflow-x: hidden;
-      }
-    </style>
+    <%_ if (needsSubsystem) { _%>
+    <link rel="stylesheet" href="./frame/vendors_frame/app.css?023f36e8c430b35e6d18">
+    <link rel="stylesheet" href="./frame/app.css?023f36e8c430b35e6d18">
+    <%_ } _%>
   </head>
   <body>
     <noscript>
       <strong>很抱歉，如果没有启用JavaScript，此项目将无法正常运行。请启用它。</strong>
     </noscript>
-    <div id="app">
+    <div id="<%= parseStr(packageName) %>">
       <style>
         .app-loading {
           display: flex;
@@ -144,6 +141,14 @@
         writable: false
       });
     </script>
-    <!-- built files will be auto injected -->
   </body>
 </html>
+`;
+
+export default function generateIndexHTML({ packageName, needsSubsystem }) {
+  return ejs.render(indexHTML, {
+    parseStr,
+    packageName,
+    needsSubsystem
+  });
+}

@@ -20,6 +20,7 @@ import generateVueConfig from './utils/generateVueConfig.js';
 import getCommand from './utils/getCommand.js';
 import generateOfflinePackage from './utils/generateOfflinePackage.js';
 import generateRouterInterceptor from './utils/generateRouterInterceptor.js';
+import generateIndexHTML from './utils/generateIndexHTML.js';
 import banner from './utils/banner.js';
 import generateBabelConfig from './utils/generateBabelConfig';
 import generateViteStyleImport from './utils/generateViteStyleImport';
@@ -675,6 +676,7 @@ async function init() {
 
     // Main generation
     let mainContent = generateMain({
+      packageName,
       application,
       uiFramework,
       layoutAdapter,
@@ -762,6 +764,16 @@ async function init() {
         framework
       })
     );
+
+    if (needsQiankunMicroFrontend) {
+      fs.writeFileSync(
+        path.resolve(root, 'public/index.html'),
+        generateIndexHTML({
+          packageName,
+          needsSubsystem
+        })
+      );
+    }
 
     // Cleanup.
 
