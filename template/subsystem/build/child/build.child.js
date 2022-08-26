@@ -4,12 +4,10 @@ const path = require('path');
 const rm = require('rimraf');
 const webpack = require('webpack');
 const ora = require('ora');
-const pkg = require('../../package');
 const chalk = require('chalk');
-const { camelize, removeVersion } = require('./utils');
+const { camelize, removeVersion, childName } = require('./utils');
 const builds = require('./config.child').getAllBuilds();
 const replace = require('replace-in-file');
-const childName = process.env.npm_config_child || pkg.name;
 
 const spinner = ora('building for production...');
 const build = function (builds) {

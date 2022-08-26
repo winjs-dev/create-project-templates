@@ -1,7 +1,6 @@
 const base = require('./webpack.child.conf');
-const pkg = require('../../package.json');
 const { merge } = require('webpack-merge');
-const childName = process.env.npm_config_child || pkg.name;
+const { childName } = require('./utils');
 
 const builds = {
   prod: {

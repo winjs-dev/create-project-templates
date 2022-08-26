@@ -1,5 +1,4 @@
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
-const pkg = require('../../package');
 const webpack = require('webpack');
 const path = require('path');
 const fse = require('fs-extra');
@@ -12,7 +11,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ScriptSetup = require('unplugin-vue2-script-setup/webpack').default;
 
 const resolve = utils.resolve;
-const childName = process.env.npm_config_child || pkg.name;
+const childName = utils.childName;
 let entries = {};
 let aliasMap = {
   vue$: 'vue/dist/vue.esm.js',
