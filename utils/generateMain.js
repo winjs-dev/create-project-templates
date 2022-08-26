@@ -1,5 +1,4 @@
 import ejs from 'ejs';
-import { parseStr } from './commonTools.js';
 
 const mainV2 = `<%_ if (needsQiankunMicroFrontend) { _%>import './publicPath';
 import { checkIsQiankunMicroService } from '@/utils';
@@ -64,7 +63,7 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production';
 const initVue = () => {
   /* eslint-disable no-new */
   new Vue({
-    el: '#app',
+    el: '#<%= appContainerName %>',
     router,
     // use Runtime-only
     // https://vuejs.org/v2/guide/installation.html
@@ -87,7 +86,7 @@ if (ismPaaSOS()) {
 <%_ } else { _%>
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#<%= appContainerName %>',
   router,
   // use Runtime-only
   // https://vuejs.org/v2/guide/installation.html
@@ -105,7 +104,7 @@ function render(props = {}) {
     // use Runtime-only
     // https://vuejs.org/v2/guide/installation.html
     render: (h) => h(App)
-  }).$mount(container ? container.querySelector('#<%= parseStr(packageName) %>') : '#<%= parseStr(packageName) %>');
+  }).$mount(container ? container.querySelector('#<%= appContainerName %>') : '#<%= appContainerName %>');
 }
 
 if (!checkIsQiankunMicroService()) {
@@ -183,19 +182,19 @@ async function bootstrap() {
 <%_ if (mobileDevPlatform === 'gmu') { _%>
   if (isLightOS()) {
     nativeReady().then(() => {
-      app.mount('#app');
+      app.mount('#<%= appContainerName %>');
     });
 <%_ } else { _%>
   if (ismPaaSOS()) {
     nativeReady(() => {
-      app.mount('#app');
+      app.mount('#<%= appContainerName %>');
     ));
 <%_ } _%>
   } else {
-    app.mount('#app', true);
+    app.mount('#<%= appContainerName %>', true);
   }
 <%_ } else { _%>
-  app.mount('#app', true);
+  app.mount('#<%= appContainerName %>', true);
 <%_ } _%>
 
   setApp(app);
@@ -213,10 +212,10 @@ export function generateMain({
   needsTypeScript,
   buildTools,
   mobileDevPlatform,
-  needsQiankunMicroFrontend
+  needsQiankunMicroFrontend,
+  appContainerName
 }) {
   return ejs.render(mainV2, {
-    parseStr,
     packageName,
     application,
     layoutAdapter,
@@ -224,7 +223,8 @@ export function generateMain({
     needsTypeScript,
     buildTools,
     mobileDevPlatform,
-    needsQiankunMicroFrontend
+    needsQiankunMicroFrontend,
+    appContainerName
   });
 }
 
@@ -234,7 +234,8 @@ export function generateMainV3({
   layoutAdapter,
   needsTypeScript,
   buildTools,
-  mobileDevPlatform
+  mobileDevPlatform,
+  appContainerName
 }) {
   return ejs.render(mainV3, {
     application,
@@ -242,6 +243,7 @@ export function generateMainV3({
     uiFramework,
     needsTypeScript,
     buildTools,
-    mobileDevPlatform
+    mobileDevPlatform,
+    appContainerName
   });
 }

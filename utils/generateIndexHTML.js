@@ -1,5 +1,4 @@
 import ejs from 'ejs';
-import { parseStr } from './commonTools.js';
 
 const indexHTML = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -15,7 +14,7 @@ const indexHTML = `<!DOCTYPE html>
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
     <meta content="email=no" name="format-detection" />
-    <title>projectName</title>
+    <title><%= packageName %></title>
     <%_ if (needsSubsystem) { _%>
     <link rel="stylesheet" href="./frame/vendors_frame/app.css?023f36e8c430b35e6d18">
     <link rel="stylesheet" href="./frame/app.css?023f36e8c430b35e6d18">
@@ -25,9 +24,9 @@ const indexHTML = `<!DOCTYPE html>
     <noscript>
       <strong>很抱歉，如果没有启用JavaScript，此项目将无法正常运行。请启用它。</strong>
     </noscript>
-    <div id="<%= parseStr(packageName) %>">
+    <div id="<%= appContainerName %>">
       <style>
-        .app-loading {
+       #<%= appContainerName %> .app-loading {
           display: flex;
           width: 100%;
           height: 100%;
@@ -36,7 +35,7 @@ const indexHTML = `<!DOCTYPE html>
           flex-direction: column;
         }
 
-        .app-loading .app-loading-wrap {
+       #<%= appContainerName %> .app-loading .app-loading-wrap {
           position: absolute;
           top: 50%;
           left: 50%;
@@ -48,7 +47,7 @@ const indexHTML = `<!DOCTYPE html>
           flex-direction: column;
         }
 
-        .dot {
+       #<%= appContainerName %> .dot {
           position: relative;
           display: inline-block;
           width: 48px;
@@ -60,7 +59,7 @@ const indexHTML = `<!DOCTYPE html>
           animation: antRotate 1.2s infinite linear;
         }
 
-        .dot i {
+       #<%= appContainerName %> .dot i {
           position: absolute;
           display: block;
           width: 20px;
@@ -73,26 +72,26 @@ const indexHTML = `<!DOCTYPE html>
           transform-origin: 50% 50%;
         }
 
-        .dot i:nth-child(1) {
+       #<%= appContainerName %> .dot i:nth-child(1) {
           top: 0;
           left: 0;
         }
 
-        .dot i:nth-child(2) {
+       #<%= appContainerName %> .dot i:nth-child(2) {
           top: 0;
           right: 0;
           -webkit-animation-delay: 0.4s;
           animation-delay: 0.4s;
         }
 
-        .dot i:nth-child(3) {
+       #<%= appContainerName %> .dot i:nth-child(3) {
           right: 0;
           bottom: 0;
           -webkit-animation-delay: 0.8s;
           animation-delay: 0.8s;
         }
 
-        .dot i:nth-child(4) {
+       #<%= appContainerName %> .dot i:nth-child(4) {
           bottom: 0;
           left: 0;
           -webkit-animation-delay: 1.2s;
@@ -133,7 +132,28 @@ const indexHTML = `<!DOCTYPE html>
         </div>
       </div>
     </div>
+    <%_ if (mobileDevPlatform === 'gmu') { _%>
+    <script>
+      // 在页面初始化的时候，一旦优先调用了 LightSDK 的方法，会触发 deviceready 事件，而这个事件只会执行一遍，会导致 new Vue({...}) 不会执行，在壳子里就会出现白屏现象
+      // __LIGHT__IS_READY 在 main.js 文件里的 nativeReady() 也有使用
+      document.addEventListener('deviceready', function () {
+        window.__LIGHT__IS_READY = true;
+      });
+    </script>
+    <%_ } _%>
+    <%_ if (needsQiankunMicroFrontend) { _%>
     <script src="./config.local.js"></script>
+    <%_ } else { _%>
+    <script>
+      document.write(
+        unescape(
+          "%3Cscript src='./config.local.js?_t=" +
+            Math.random() +
+            "' type='text/javascript'%3E%3C/script%3E"
+        )
+      );
+    </script>
+    <%_ } _%>
     <script>
       Object.freeze(window.LOCAL_CONFIG);
       Object.defineProperty(window, 'LOCAL_CONFIG', {
@@ -145,10 +165,18 @@ const indexHTML = `<!DOCTYPE html>
 </html>
 `;
 
-export default function generateIndexHTML({ packageName, needsSubsystem }) {
+export default function generateIndexHTML({
+  packageName,
+  needsSubsystem,
+  needsQiankunMicroFrontend,
+  mobileDevPlatform,
+  appContainerName
+}) {
   return ejs.render(indexHTML, {
-    parseStr,
     packageName,
-    needsSubsystem
+    needsSubsystem,
+    needsQiankunMicroFrontend,
+    mobileDevPlatform,
+    appContainerName
   });
 }

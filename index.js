@@ -27,6 +27,7 @@ import generateViteStyleImport from './utils/generateViteStyleImport';
 import generateSeeScriptsConfig from './utils/generateSeeScripts';
 import generateRegisterGlobalComponent from './utils/generateRegisterGlobalComponent';
 import generateVitePlugin from './utils/generateVitePlugin';
+import { generateOnlyContainer } from './utils/commonTools.js';
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
@@ -42,10 +43,26 @@ function toValidPackageName(projectName) {
 }
 
 function canSafelyOverwrite(dir) {
-  return !fs.existsSync(dir) || fs.readdirSync(dir).length === 0;
+  if (!fs.existsSync(dir)) {
+    return true;
+  }
+
+  const files = fs.readdirSync(dir);
+  if (files.length === 0) {
+    return true;
+  }
+  if (files.length === 1 && files[0] === '.git') {
+    return true;
+  }
+
+  return false;
 }
 
 function emptyDir(dir) {
+  if (!fs.existsSync(dir)) {
+    return;
+  }
+
   postOrderDirectoryTraverse(
     dir,
     (dir) => fs.rmdirSync(dir),
@@ -85,7 +102,7 @@ async function init() {
 
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support
-  const isFeatureFlagsUsed = typeof (argv.default || argv.ts || argv.see || argv.ms) === 'boolean';
+  const isFeatureFlagsUsed = typeof (argv.default ?? argv.ts ?? argv.see ?? argv.ms) === 'boolean';
 
   let targetDir = argv._[0];
   const defaultProjectName = !targetDir ? 'winner-project' : targetDir;
@@ -461,7 +478,8 @@ async function init() {
   // `initial` won't take effect if the prompt type is null
   // so we still have to assign the default values here
   const {
-    packageName = toValidPackageName(defaultProjectName),
+    projectName,
+    packageName = projectName ?? defaultProjectName,
     shouldOverwrite,
     framework = argv.framework,
     needsTypeScript = argv.typescript,
@@ -480,6 +498,9 @@ async function init() {
     needsSubsystem = argv.subsystem,
     needsQiankunMicroFrontend = argv.qiankunMicroFrontend
   } = result;
+
+  // app 容器name
+  const appContainerName = generateOnlyContainer(packageName);
 
   const root = path.join(cwd, targetDir);
 
@@ -501,6 +522,7 @@ async function init() {
   // const templateRoot = new URL('./template', import.meta.url).pathname
   const templateRoot = path.resolve(__dirname, 'template');
   const options = {
+    projectName,
     packageName,
     framework,
     application,
@@ -683,7 +705,8 @@ async function init() {
       needsTypeScript,
       buildTools,
       mobileDevPlatform,
-      needsQiankunMicroFrontend
+      needsQiankunMicroFrontend,
+      appContainerName
     });
     if (framework === 'v3') {
       mainContent = generateMainV3({
@@ -692,7 +715,8 @@ async function init() {
         layoutAdapter,
         needsTypeScript,
         buildTools,
-        mobileDevPlatform
+        mobileDevPlatform,
+        appContainerName
       });
     }
     fs.writeFileSync(path.resolve(root, 'src/main.js'), mainContent);
@@ -765,15 +789,17 @@ async function init() {
       })
     );
 
-    if (needsQiankunMicroFrontend) {
-      fs.writeFileSync(
-        path.resolve(root, 'public/index.html'),
-        generateIndexHTML({
-          packageName,
-          needsSubsystem
-        })
-      );
-    }
+    // generate index.html
+    fs.writeFileSync(
+      path.resolve(root, 'public/index.html'),
+      generateIndexHTML({
+        packageName,
+        needsSubsystem,
+        needsQiankunMicroFrontend,
+        mobileDevPlatform,
+        appContainerName
+      })
+    );
 
     // Cleanup.
 

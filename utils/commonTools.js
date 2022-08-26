@@ -8,3 +8,14 @@ export function parseStr(str) {
     return $1.toUpperCase();
   });
 }
+
+/**
+ * 生成一个用不重复的ID
+ */
+export function getUUID() {
+  return Number(Math.random().toString().substr(2)).toString(36);
+}
+
+export function generateOnlyContainer(str) {
+  return `${parseStr(str)}${getUUID()}`;
+}
