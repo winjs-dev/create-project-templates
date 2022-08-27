@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev:microFront": "vue-cli-service serve --mode=microFront"
+  },
   "devDependencies": {
     "replace-in-file": "^6.2.0"
   }

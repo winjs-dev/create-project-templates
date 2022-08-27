@@ -28,6 +28,7 @@ import generateSeeScriptsConfig from './utils/generateSeeScripts';
 import generateRegisterGlobalComponent from './utils/generateRegisterGlobalComponent';
 import generateVitePlugin from './utils/generateVitePlugin';
 import { generateOnlyContainer } from './utils/commonTools.js';
+import generateAppVue from './utils/generateAppVue.js';
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
@@ -800,6 +801,17 @@ async function init() {
         appContainerName
       })
     );
+
+    if (application === 'pc') {
+      fs.writeFileSync(
+        path.resolve(root, 'src/App.vue'),
+        generateAppVue({
+          needsQiankunMicroFrontend,
+          appContainerName,
+          packageName
+        })
+      );
+    }
 
     // Cleanup.
 
