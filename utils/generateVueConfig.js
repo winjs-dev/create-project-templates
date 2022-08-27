@@ -97,6 +97,11 @@ const genPlugins = () => {
         generate (seed, files, entries) {
           return files.reduce((manifest, {name, path: manifestFilePath}) => {
             const {root, dir, base} = path.parse(manifestFilePath);
+            <%_ if (application === 'pc') { _%>
+             if (['frame', 'frame/vendors_frame'].includes(dir)) {
+              return { ...manifest };
+            }
+            <%_ } _%>
             return {
               ...manifest,
               [name + '-' + base]: {path: manifestFilePath, root, dir}
