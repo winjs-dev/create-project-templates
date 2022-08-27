@@ -802,7 +802,7 @@ async function init() {
       })
     );
 
-    if (application === 'pc') {
+    if (application === 'pc' && framework === 'v2' && buildTools === 'bundle') {
       fs.writeFileSync(
         path.resolve(root, 'src/App.vue'),
         generateAppVue({
