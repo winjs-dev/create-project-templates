@@ -3,6 +3,7 @@
     "dev:microFront": "vue-cli-service serve --mode=microFront"
   },
   "devDependencies": {
-    "replace-in-file": "^6.2.0"
+    "replace-in-file": "^6.2.0",
+    "html-webpack-tags-plugin": "^3.0.2"
   }
 }

@@ -15,10 +15,6 @@ const indexHTML = `<!DOCTYPE html>
     <meta content="telephone=no" name="format-detection" />
     <meta content="email=no" name="format-detection" />
     <title><%= packageName %></title>
-    <%_ if (needsSubsystem) { _%>
-    <link rel="stylesheet" href="./frame/vendors_frame/app.css?023f36e8c430b35e6d18">
-    <link rel="stylesheet" href="./frame/app.css?023f36e8c430b35e6d18">
-    <%_ } _%>
   </head>
   <body>
     <noscript>

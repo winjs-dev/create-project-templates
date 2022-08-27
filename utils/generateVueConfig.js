@@ -25,6 +25,9 @@ const { merge } = require('webpack-merge');
 <%_ if (versionControl === 'svn') { _%>
 const svnInfo = require('svn-info');
 <%_ } _%>
+<%_ if (needsQiankunMicroFrontend) { _%>
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+<%_ } _%>
 const N = '\\n';
 const resolve = (dir) => {
   return path.join(__dirname, './', dir);
@@ -33,6 +36,11 @@ const resolve = (dir) => {
 const isProd = () => {
   return process.env.NODE_ENV === 'production';
 };
+<%_ if (needsQiankunMicroFrontend) { _%>
+const isMicroFront = () => {
+  return process.env.VUE_APP_IS_QIANKUN;
+}
+<%_ } _%>
 <%_ if (versionControl === 'svn') { _%>
   // 获取 svn 信息
 const getSvnInfo = () => {
@@ -107,7 +115,15 @@ const genPlugins = () => {
       })
     <%_ } _%>
     );
+  }<%_ if (needsQiankunMicroFrontend) { _%> else {
+    if (!isMicroFront()) {
+      plugins.push(new HtmlWebpackTagsPlugin({
+        links: ['./frame/app.css', './frame/vendors_frame/app.css'],
+        append: false
+      }))
+    }
   }
+  <%_ } _%>
 
   return plugins;
 };
