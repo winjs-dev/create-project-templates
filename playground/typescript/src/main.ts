@@ -9,11 +9,7 @@ import './services';
 import './plugins/composition.js';
 import './assets/style/app.less';
 // 注册钩子函数
-Component.registerHooks([
-  'beforeRouteEnter',
-  'beforeRouteLeave',
-  'beforeRouteUpdate'
-]);
+Component.registerHooks(['beforeRouteEnter', 'beforeRouteLeave', 'beforeRouteUpdate']);
 
 /* eslint-disable */
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
