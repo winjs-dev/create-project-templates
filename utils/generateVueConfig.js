@@ -36,11 +36,13 @@ const resolve = (dir) => {
 const isProd = () => {
   return process.env.NODE_ENV === 'production';
 };
+
 <%_ if (needsQiankunMicroFrontend) { _%>
 const isMicroFront = () => {
   return process.env.VUE_APP_IS_QIANKUN;
-}
+};
 <%_ } _%>
+
 <%_ if (versionControl === 'svn') { _%>
   // 获取 svn 信息
 const getSvnInfo = () => {

@@ -7,6 +7,7 @@ const rawArgv = process.argv.slice(2);
 const args = rawArgv.join(' ');
 const replace = require('replace-in-file');
 const { name } = require('../package.json');
+const rm = require('rimraf');
 
 const resolve = (dir) => {
   return path.join(__dirname, '../', dir);
@@ -40,7 +41,10 @@ function command() {
       };
 
       replace.sync(options);
-      console.log(chalk.cyan(output || ''));
+      rm(path.resolve(__dirname, '../dist/frame'), (err) => {
+        if (err) throw err;
+        console.log(chalk.cyan(output || ''));
+      });
     })
     .catch((err) => {
       console.error('\n');
