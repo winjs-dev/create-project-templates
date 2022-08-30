@@ -33,10 +33,7 @@ function command() {
           path.resolve(path.resolve(__dirname, '../dist'), '**/*.html')
         ],
         from: [/LOCAL_CONFIG/g, /\$services/g],
-        to: [
-          'LOCAL_CONFIG' + '_' + camelize(name),
-          '$services' + '_' + camelize(name)
-        ]
+        to: ['LOCAL_CONFIG' + '_' + camelize(name), '$services' + '_' + camelize(name)]
       };
 
       replace.sync(options);
