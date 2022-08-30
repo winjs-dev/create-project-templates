@@ -21,7 +21,7 @@
     "prepare": "npm run format && husky install",
     "gen:log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "lint:ls-lint": "ls-lint",
-    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js"
+    "lint:lint-staged": "./node_modules/.bin/nano-staged -c .husky/nano-staged.js"
   },
   "dependencies": {
     "@vue/composition-api": "^1.4.6",
@@ -55,7 +55,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "fs-extra": "^10.0.0",
     "less": "^4.1.2",
-    "lint-staged": "^11.2.6",
+    "nano-staged": "^0.8.0",
     "postcss-pxtorem": "^5.1.1",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",

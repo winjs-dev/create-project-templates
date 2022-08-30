@@ -13,4 +13,5 @@ postcss.config.js
 .stylelintrc.js
 f2elint.config.js
 prettier.config.js
-
+.husky/**
+components.d.ts
