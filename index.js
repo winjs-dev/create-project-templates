@@ -676,7 +676,7 @@ async function init() {
     }
 
     if (microFrontType.length) {
-      render('subsystemBase');
+      render('subsystem/subsystemBase');
     }
 
     if (microFrontType.includes(microFrontTypeEnum.hui1)) {
