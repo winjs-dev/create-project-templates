@@ -1,0 +1,30 @@
+{
+  "brand": "uniappTemplate",
+  "miniprogramRoot": "dist/alipay",
+  "scripts": {
+    "beforeCompile": "npm run dev:mp-alipay",
+    "beforePreview": "npm run build:mp-alipay",
+    "beforeUpload": "npm run build:mp-alipay"
+  },
+  "exclude": [
+    "src/**",
+    "node_modules",
+    "node_modules/**",
+    "app.json",
+    "babel.config.js",
+    "package-lock.json",
+    "package.json",
+    "postcss.config.js"
+  ],
+  "precompileWatch": {
+    "selfWatch": true,
+    "restart": true,
+    "exclude": ["dist/alipay/**", "*.md"],
+    "ignoreBuiltInExts": false
+  },
+  "enableAppxNg": false,
+  "enableHMR": true,
+  "enableNodeModuleBabelTransform": true,
+  "component2": true,
+  "axmlStrictCheck": false
+}
