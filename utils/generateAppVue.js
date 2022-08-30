@@ -1,8 +1,9 @@
 import ejs from 'ejs';
 import { microFrontTypeEnum } from './dictionary.js';
 
-const appVue = `<template>
+const appVueV2 = `<template>
   <div id="<%= appContainerName %>" class="<%= packageName %>-container">
+    <%_ if (application === 'pc' && microFrontType.length) {_%>
     <template v-if="isFrame">
       <frame-layout>
         <div class="pages">
@@ -22,9 +23,18 @@ const appVue = `<template>
         <router-view v-if="!$route.meta.keepAlive" />
       </div>
     </template>
+    <%_ } else { _%>
+    <div class="pages">
+      <keep-alive v-if="$route.meta.keepAlive">
+        <router-view />
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive" />
+    </div>
+    <%_ } _%>
   </div>
 </template>
 
+<%_ if (application === 'pc' && microFrontType.length) { _%>
 <script>
   import { QuickNavigation, FrameLayout } from '@/components';
 
@@ -37,11 +47,12 @@ const appVue = `<template>
     data() {
       return {
         // 是否使用财富中台外框架
-        isFrame: !process.env.VUE_APP_MICRO_MODE === 'qiankun'
+        isFrame: !(process.env.VUE_APP_MICRO_MODE === 'qiankun')
       };
     }
   };
 </script>
+
 <style lang="less">
 .<%= packageName %>-container {
   .iconfont {
@@ -51,14 +62,77 @@ const appVue = `<template>
   }
 }
 </style>
+<%_ } else if (needsTypeScript) { _%>
+<script lang="ts">
+  import { Vue, Component } from 'vue-property-decorator';
+
+  @Component({
+    name: 'App'
+  })
+  export default class App extends Vue {}
+</script>
+<%_ } else { _%>
+<script>
+  export default {
+    name: 'App'
+  };
+</script>
+<%_ } _%>
 `;
 
-export default function generateAppVue({ microFrontType, appContainerName, packageName }) {
-  const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
+const appVueV3 = `<template>
+  <div class="pages">
+    <keep-alive v-if="$route.meta.keepAlive">
+      <router-view />
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive" />
+  </div>
+</template>
+<%_ if (!needsTypeScript) { _%>
+<script>
+  export default {
+    name: 'App'
+  };
+</script>
+<%_ } else { _%>
+<script lang="ts">
+  import { defineComponent } from 'vue';
 
-  return ejs.render(appVue, {
-    needsQiankunMicroFrontend,
+  export default defineComponent({
+    name: 'App'
+  });
+</script>
+<%_ } _%>
+`;
+
+export function generateAppVue({
+  microFrontType,
+  appContainerName,
+  packageName,
+  needsTypeScript,
+  application
+}) {
+  return ejs.render(appVueV2, {
+    microFrontType,
     appContainerName,
-    packageName
+    packageName,
+    needsTypeScript,
+    application
+  });
+}
+
+export function generateAppVueV3({
+  microFrontType,
+  appContainerName,
+  packageName,
+  needsTypeScript,
+  application
+}) {
+  return ejs.render(appVueV3, {
+    microFrontType,
+    appContainerName,
+    packageName,
+    needsTypeScript,
+    application
   });
 }

@@ -30,7 +30,7 @@ import generateSeeScriptsConfig from './utils/generateSeeScripts';
 import generateRegisterGlobalComponent from './utils/generateRegisterGlobalComponent';
 import generateVitePlugin from './utils/generateVitePlugin';
 import { generateOnlyContainer } from './utils/commonTools.js';
-import generateAppVue from './utils/generateAppVue.js';
+import { generateAppVue, generateAppVueV3 } from './utils/generateAppVue.js';
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
@@ -675,12 +675,16 @@ async function init() {
       );
     }
 
-    if (microFrontType.includes(microFrontTypeEnum.hui1)) {
+    if (microFrontType.length) {
       render('subsystem');
     }
 
+    if (microFrontType.includes(microFrontTypeEnum.hui1)) {
+      render('hui1');
+    }
+
     if (microFrontType.includes(microFrontTypeEnum.qiankun)) {
-      render('qiankun-micro-frontend');
+      render('qiankun');
     }
 
     // Main generation
@@ -722,6 +726,41 @@ async function init() {
           microFrontType
         })
       );
+
+      //  index.html
+      fs.writeFileSync(
+        path.resolve(root, 'public/index.html'),
+        generateIndexHTML({
+          packageName,
+          microFrontType,
+          mobileDevPlatform,
+          appContainerName
+        })
+      );
+
+      // App.vue
+      fs.writeFileSync(
+        path.resolve(root, 'src/App.vue'),
+        generateAppVue({
+          microFrontType,
+          appContainerName,
+          packageName,
+          needsTypeScript,
+          application
+        })
+      );
+      if (framework === 'v3') {
+        fs.writeFileSync(
+          path.resolve(root, 'src/App.vue'),
+          generateAppVueV3({
+            microFrontType,
+            appContainerName,
+            packageName,
+            needsTypeScript,
+            application
+          })
+        );
+      }
 
       // babel.config.js
       fs.writeFileSync(
@@ -775,28 +814,6 @@ async function init() {
         framework
       })
     );
-
-    // generate index.html
-    fs.writeFileSync(
-      path.resolve(root, 'public/index.html'),
-      generateIndexHTML({
-        packageName,
-        microFrontType,
-        mobileDevPlatform,
-        appContainerName
-      })
-    );
-
-    if (application === 'pc' && framework === 'v2' && buildTools === 'bundle') {
-      fs.writeFileSync(
-        path.resolve(root, 'src/App.vue'),
-        generateAppVue({
-          microFrontType,
-          appContainerName,
-          packageName
-        })
-      );
-    }
 
     // Cleanup.
 

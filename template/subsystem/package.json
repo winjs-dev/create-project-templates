@@ -1,18 +1,11 @@
 {
   "scripts": {
-    "child": "node --max_old_space_size=4096 build/child/build.child.js",
-    "build:see:child": "npm run child && node build/package/see.child.js"
-  },
-  "dependencies": {
-    "js-cookie": "^3.0.1"
+    "build:see": "npm run build && node build/package/see.js"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.2.31",
     "@winner-fed/winner-deploy": "^4.0.0",
     "cache-loader": "^4.1.0",
-    "postcss-loader": "^6.2.1",
-    "postcss-import": "^14.0.2",
-    "postcss-url": "^10.1.3",
     "replace-in-file": "^6.2.0",
     "vue-loader": "^15.9.8"
   }

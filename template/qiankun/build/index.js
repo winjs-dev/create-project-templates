@@ -32,11 +32,10 @@ function command() {
           path.resolve(path.resolve(__dirname, '../dist'), '**/*.js'),
           path.resolve(path.resolve(__dirname, '../dist'), '**/*.html')
         ],
-        from: [/LOCAL_CONFIG/g, /\$services/g, /LOCAL_HWS_CONFIG/g],
+        from: [/LOCAL_CONFIG/g, /\$services/g],
         to: [
           'LOCAL_CONFIG' + '_' + camelize(name),
-          '$services' + '_' + camelize(name),
-          'LOCAL_CONFIG'
+          '$services' + '_' + camelize(name)
         ]
       };
 

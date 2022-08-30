@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "child": "node --max_old_space_size=4096 build/child/build.child.js",
+    "build:see:child": "npm run child && node build/package/see.child.js"
+  },
+  "dependencies": {
+    "js-cookie": "^3.0.1"
+  },
+  "devDependencies": {
+    "postcss-loader": "^6.2.1",
+    "postcss-import": "^14.0.2",
+    "postcss-url": "^10.1.3"
+  }
+}

@@ -16,6 +16,18 @@ const indexHTML = `<!DOCTYPE html>
     <meta content="telephone=no" name="format-detection" />
     <meta content="email=no" name="format-detection" />
     <title><%= packageName %></title>
+    <%_ if(!microFrontType.length) { _%>
+    <style>
+      html,
+      body,
+      #<%= appContainerName %> {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        overflow-x: hidden;
+      }
+    </style>
+     <%_ } _%>
   </head>
   <body>
     <noscript>
@@ -173,6 +185,7 @@ export default function generateIndexHTML({
   return ejs.render(indexHTML, {
     packageName,
     needsQiankunMicroFrontend,
+    microFrontType,
     mobileDevPlatform,
     appContainerName
   });
