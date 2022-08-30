@@ -1,4 +1,5 @@
 import ejs from 'ejs';
+import { microFrontTypeEnum } from './dictionary.js';
 
 const mainV2 = `<%_ if (needsQiankunMicroFrontend) { _%>import './publicPath';
 import { checkIsQiankunMicroService } from '@/utils';
@@ -212,9 +213,10 @@ export function generateMain({
   needsTypeScript,
   buildTools,
   mobileDevPlatform,
-  needsQiankunMicroFrontend,
+  microFrontType,
   appContainerName
 }) {
+  const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
   return ejs.render(mainV2, {
     packageName,
     application,

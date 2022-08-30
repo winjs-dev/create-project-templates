@@ -1,4 +1,5 @@
 import ejs from 'ejs';
+import { microFrontTypeEnum } from './dictionary.js';
 
 const indexHTML = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -163,14 +164,14 @@ const indexHTML = `<!DOCTYPE html>
 
 export default function generateIndexHTML({
   packageName,
-  needsSubsystem,
-  needsQiankunMicroFrontend,
+  microFrontType,
   mobileDevPlatform,
   appContainerName
 }) {
+  const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
+
   return ejs.render(indexHTML, {
     packageName,
-    needsSubsystem,
     needsQiankunMicroFrontend,
     mobileDevPlatform,
     appContainerName

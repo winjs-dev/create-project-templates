@@ -10,6 +10,8 @@ import { red, yellow, cyan, magenta, green, bold } from 'kolorist';
 
 import createSpawnCmd from './utils/createSpawnCmd';
 
+import { microFrontTypeEnum } from './utils/dictionary.js';
+
 import renderTemplate from './utils/renderTemplate.js';
 import {
   postOrderDirectoryTraverse,
@@ -425,9 +427,7 @@ async function init() {
           name: 'needsSeePackage',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.needsMirrorSource === true
-              ? 'toggle'
-              : null;
+            return values.framework !== 'mini' ? 'toggle' : null;
           },
           message: 'Add See Package Support?',
           initial: false,
@@ -435,35 +435,22 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsSubsystem',
+          name: 'microFrontType',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
             return values.framework !== 'mini' &&
               values.framework === 'v2' &&
               values.application === 'pc' &&
-              values.buildTools === 'bundle' &&
-              values.needsMirrorSource === true
-              ? 'toggle'
-              : null;
-          },
-          message: 'Add Subsystem Support?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
-        },
-        {
-          name: 'needsQiankunMicroFrontend',
-          type: (prev, values) => {
-            return values.framework === 'v2' &&
-              values.application === 'pc' &&
               values.buildTools === 'bundle'
-              ? 'toggle'
+              ? 'multiselect'
               : null;
           },
-          message: 'Add qiankun microFrontend Support?',
-          inital: false,
-          active: 'Yes',
-          inactive: 'No'
+          message: 'Select Subsystem Type?',
+          choices: [
+            { title: 'h_ui 1.0 subsystem', value: microFrontTypeEnum.hui1 },
+            { title: 'qiankun subsystem', value: microFrontTypeEnum.qiankun }
+          ],
+          hint: '- Space to select, Return to submit'
         }
       ],
       {
@@ -496,8 +483,7 @@ async function init() {
     versionControl = argv.versionControl,
     needsMirrorSource = argv.ms,
     needsSeePackage = argv.see,
-    needsSubsystem = argv.subsystem,
-    needsQiankunMicroFrontend = argv.qiankunMicroFrontend
+    microFrontType = argv.microFrontType || []
   } = result;
 
   // app 容器name
@@ -536,7 +522,7 @@ async function init() {
     uiFramework,
     layoutAdapter,
     versionControl,
-    needsQiankunMicroFrontend
+    microFrontType
   };
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName);
@@ -689,11 +675,11 @@ async function init() {
       );
     }
 
-    if (needsSubsystem) {
+    if (microFrontType.includes(microFrontTypeEnum.hui1)) {
       render('subsystem');
     }
 
-    if (needsQiankunMicroFrontend) {
+    if (microFrontType.includes(microFrontTypeEnum.qiankun)) {
       render('qiankun-micro-frontend');
     }
 
@@ -706,7 +692,7 @@ async function init() {
       needsTypeScript,
       buildTools,
       mobileDevPlatform,
-      needsQiankunMicroFrontend,
+      microFrontType,
       appContainerName
     });
     if (framework === 'v3') {
@@ -733,7 +719,7 @@ async function init() {
           uiFramework,
           needsTypeScript,
           versionControl,
-          needsQiankunMicroFrontend
+          microFrontType
         })
       );
 
@@ -795,8 +781,7 @@ async function init() {
       path.resolve(root, 'public/index.html'),
       generateIndexHTML({
         packageName,
-        needsSubsystem,
-        needsQiankunMicroFrontend,
+        microFrontType,
         mobileDevPlatform,
         appContainerName
       })
@@ -806,7 +791,7 @@ async function init() {
       fs.writeFileSync(
         path.resolve(root, 'src/App.vue'),
         generateAppVue({
-          needsQiankunMicroFrontend,
+          microFrontType,
           appContainerName,
           packageName
         })

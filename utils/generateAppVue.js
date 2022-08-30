@@ -1,4 +1,5 @@
 import ejs from 'ejs';
+import { microFrontTypeEnum } from './dictionary.js';
 
 const appVue = `<template>
   <div id="<%= appContainerName %>" class="<%= packageName %>-container">
@@ -36,7 +37,7 @@ const appVue = `<template>
     data() {
       return {
         // 是否使用财富中台外框架
-        isFrame: !process.env.VUE_APP_IS_QIANKUN
+        isFrame: !process.env.VUE_APP_MICRO_MODE === 'qiankun'
       };
     }
   };
@@ -52,11 +53,9 @@ const appVue = `<template>
 </style>
 `;
 
-export default function generateAppVue({
-  needsQiankunMicroFrontend,
-  appContainerName,
-  packageName
-}) {
+export default function generateAppVue({ microFrontType, appContainerName, packageName }) {
+  const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
+
   return ejs.render(appVue, {
     needsQiankunMicroFrontend,
     appContainerName,
