@@ -445,10 +445,10 @@ async function init() {
               ? 'multiselect'
               : null;
           },
-          message: 'Select Subsystem Type?',
+          message: 'Select a collection of subsystem types?',
           choices: [
-            { title: 'h_ui 1.0 subsystem', value: microFrontTypeEnum.hui1 },
-            { title: 'qiankun subsystem', value: microFrontTypeEnum.qiankun }
+            { title: 'hui pro 1.0', value: microFrontTypeEnum.hui1 },
+            { title: 'qiankun', value: microFrontTypeEnum.qiankun }
           ],
           hint: '- Space to select, Return to submit'
         }
