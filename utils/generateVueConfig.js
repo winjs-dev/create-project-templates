@@ -26,7 +26,7 @@ const { merge } = require('webpack-merge');
 <%_ if (versionControl === 'svn') { _%>
 const svnInfo = require('svn-info');
 <%_ } _%>
-<%_ if (needsQiankunMicroFrontend && needsHui1) { _%>
+<%_ if (microFrontType.length) { _%>
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 <%_ } _%>
 const N = '\\n';
@@ -38,11 +38,9 @@ const isProd = () => {
   return process.env.NODE_ENV === 'production';
 };
 
-<%_ if (needsQiankunMicroFrontend) { _%>
 const isMicroFront = () => {
   return process.env.VUE_APP_MICRO_MODE === 'qiankun';
 };
-<%_ } _%>
 
 <%_ if (versionControl === 'svn') { _%>
   // 获取 svn 信息
@@ -123,7 +121,7 @@ const genPlugins = () => {
       })
     <%_ } _%>
     );
-  }<%_ if (needsQiankunMicroFrontend && needsHui1) { _%> else {
+  }<%_ if (needsHui1) { _%> else {
     if (!isMicroFront()) {
       plugins.push(new HtmlWebpackTagsPlugin({
         links: ['./frame/app.css', './frame/vendors_frame/app.css'],
@@ -402,6 +400,7 @@ export default function generateVueConfig({
     needsTypeScript,
     needsHui1,
     uiFramework,
+    microFrontType,
     needsQiankunMicroFrontend
   });
 }

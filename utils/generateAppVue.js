@@ -4,24 +4,34 @@ import { microFrontTypeEnum } from './dictionary.js';
 const appVueV2 = `<template>
   <div id="<%= appContainerName %>" class="<%= packageName %>-container">
     <%_ if (application === 'pc' && microFrontType.length) {_%>
-    <template v-if="isFrame">
-      <frame-layout>
-        <div class="pages">
-          <keep-alive v-if="$route.meta.keepAlive">
-            <router-view />
-          </keep-alive>
-          <router-view v-if="!$route.meta.keepAlive" />
-        </div>
-      </frame-layout>
-    </template>
-    <template v-else>
-      <QuickNavigation />
+    <template v-if="isProd">
       <div class="pages">
         <keep-alive v-if="$route.meta.keepAlive">
           <router-view />
         </keep-alive>
         <router-view v-if="!$route.meta.keepAlive" />
       </div>
+    </template>
+    <template v-else>
+      <template v-if="isFrame">
+        <frame-layout>
+          <div class="pages">
+            <keep-alive v-if="$route.meta.keepAlive">
+              <router-view />
+            </keep-alive>
+            <router-view v-if="!$route.meta.keepAlive" />
+          </div>
+        </frame-layout>
+      </template>
+      <template v-else>
+        <QuickNavigation />
+        <div class="pages">
+          <keep-alive v-if="$route.meta.keepAlive">
+            <router-view />
+          </keep-alive>
+          <router-view v-if="!$route.meta.keepAlive" />
+        </div>
+      </template>
     </template>
     <%_ } else { _%>
     <div class="pages">
@@ -47,7 +57,8 @@ const appVueV2 = `<template>
     data() {
       return {
         // 是否使用财富中台外框架
-        isFrame: !(process.env.VUE_APP_MICRO_MODE === 'qiankun')
+        isFrame: !(process.env.VUE_APP_MICRO_MODE === 'qiankun'),
+        isProd: process.env.NODE_ENV === 'production'
       };
     }
   };
