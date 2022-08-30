@@ -1,0 +1,58 @@
+{
+  "name": "hola-template",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A miniprogram template of hola.",
+  "templateInfo": {
+    "name": "default",
+    "typescript": false,
+    "css": "less"
+  },
+  "scripts": {
+    "build:weapp": "light release --type weapp",
+    "build:h5": "light release --type h5",
+    "build:gmump": "light release --type gmump",
+    "build:gmuapp": "light release --type gmuapp",
+    "build:alipay": "light release --type alipay",
+    "dev:weapp": "light release --type weapp --watch",
+    "dev:h5": "light release --type h5 --watch",
+    "dev:gmump": "light release --type gmump --watch",
+    "dev:gmuapp": "light release --type gmuapp --watch",
+    "dev:alipay": "light release --type alipay --watch"
+  },
+  "browserslist": [
+    "last 3 versions",
+    "Android >= 4.1",
+    "ios >= 8"
+  ],
+  "author": "whaleFE",
+  "dependencies": {
+    "@babel/runtime": "^7.7.7",
+    "@holajs/hola": "latest",
+    "@holajs/plugin-platform-gmump": "^0.1.5",
+    "@holajs/preset-gmu": "latest",
+    "@tarojs/components": "3.4.2",
+    "@tarojs/plugin-framework-vue2": "3.4.2",
+    "@tarojs/runtime": "3.4.2",
+    "@tarojs/taro": "3.4.2",
+    "@winner-fed/cloud-utils": "^1.1.1",
+    "vue": "^2.5.0",
+    "vue-template-compiler": "^2.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.0",
+    "@tarojs/mini-runner": "3.4.2",
+    "@tarojs/webpack-runner": "3.4.2",
+    "@types/webpack-env": "^1.13.6",
+    "babel-preset-taro": "3.4.2",
+    "colors": "^1.4.0",
+    "eslint": "^6.8.0",
+    "eslint-config-taro": "3.4.2",
+    "eslint-plugin-vue": "^6.x",
+    "fs-extra": "^10.0.1",
+    "minimist": "^1.2.5",
+    "shelljs": "^0.8.5",
+    "stylelint": "9.3.0",
+    "vue-loader": "^15.9.2"
+  }
+}

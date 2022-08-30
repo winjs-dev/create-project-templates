@@ -1,20 +1,26 @@
 const path = require('path');
+const yargsParser = require('yargs-parser');
+
+let designWidth = 750;
+
+if (process.env.TARO_ENV === 'h5') {
+  designWidth = 375;
+}
+
+const argv = yargsParser(process.argv.slice(2));
 
 const config = {
-  projectName: 'myApp',
-  date: '2021-3-23',
+  projectName: 'holaTemplate',
   designWidth: 750,
   deviceRatio: {
     640: 2.34 / 2,
     750: 1,
-    828: 1.81 / 2,
-    375: 2 / 1
+    828: 1.81 / 2
   },
   sourceRoot: 'src',
-  // 达到多端同步调试的目的
-  // 微信小程序编译后的目录就会是 dist/weapp，H5 编译后目录就会是 dist/h5。
   outputRoot: `dist/${process.env.TARO_ENV}`,
-  plugins: [],
+  presets: ['@holajs/preset-gmu'],
+  plugins: ['@holajs/plugin-platform-gmump'],
   defineConstants: {
     IS_H5: process.env.TARO_ENV === 'h5',
     IS_RN: process.env.TARO_ENV === 'rn',
@@ -32,16 +38,40 @@ const config = {
     variables: path.resolve(__dirname, '..', 'src/assets/style/variables.scss')
   },
   copy: {
-    patterns: [{ from: 'sitemap.json', to: 'dist/sitemap.json' }],
+    patterns: [{ from: 'sitemap.json', to: `dist/${process.env.TARO_ENV}/sitemap.json` }],
     options: {}
   },
   framework: 'vue',
-  mini: {
+  weapp: {
     postcss: {
       autoprefixer: {
         enable: true,
         config: {}
       },
+      pxtransform: {
+        enable: true,
+        config: {}
+      },
+      url: {
+        enable: true,
+        config: {
+          limit: 10240 // 设定转换尺寸上限
+        }
+      },
+      cssModules: {
+        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        config: {
+          namingPattern: 'module', // 转换模式，取值为 global/module
+          generateScopedName: '[name]__[local]___[hash:base64:5]'
+        }
+      }
+    },
+    lessLoaderOption: {
+      additionalData: `@import '@/assets/style/variables.less'; @import '@/assets/style/mixins.less';`
+    }
+  },
+  mini: {
+    postcss: {
       pxtransform: {
         enable: true,
         config: {}
@@ -61,23 +91,50 @@ const config = {
       }
     },
     lessLoaderOption: {
-      additionalData: `@import '@/assets/style/variables.less'; @import '@winner-fed/magicless/magicless.less'; @import '@/assets/style/mixins.less';`
+      additionalData: `@import '@/assets/style/variables.less'; @import '@/assets/style/mixins.less';`
+    }
+  },
+  gmu: {
+    devServer: {
+      port: 3000
+    },
+    postcss: {
+      pxtransform: {
+        enable: true,
+        config: {}
+      },
+      url: {
+        enable: true,
+        config: {
+          limit: 1024 // 设定转换尺寸上限
+        }
+      },
+      cssModules: {
+        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        config: {
+          namingPattern: 'module', // 转换模式，取值为 global/module
+          generateScopedName: '[name]__[local]___[hash:base64:5]'
+        }
+      }
+    },
+    lessLoaderOption: {
+      additionalData: `@import '@/assets/style/variables.less'; @import '@/assets/style/mixins.less';`
     }
   },
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
     output: {
-      filename: 'static/js/[name].[hash].js',
-      chunkFilename: 'static/js/[name].[chunkhash].js'
+      filename: 'js/[name].[hash].js',
+      chunkFilename: 'js/[name].[chunkhash].js'
     },
     imageUrlLoaderOption: {
       limit: 5000,
-      name: 'static/img/[name].[hash].[ext]'
+      name: 'static/images/[name].[hash].[ext]'
     },
     miniCssExtractPluginOption: {
-      filename: 'static/css/[name].[hash].css',
-      chunkFilename: 'static/css/[name].[chunkhash].css'
+      filename: 'css/[name].[hash].css',
+      chunkFilename: 'css/[name].[chunkhash].css'
     },
     postcss: {
       autoprefixer: {
@@ -94,10 +151,10 @@ const config = {
     },
     devServer: {
       host: '0.0.0.0',
-      port: 4145
+      port: 4146
     },
     lessLoaderOption: {
-      additionalData: `@import '@/assets/style/variables.less'; @import '@winner-fed/magicless/magicless.less'; @import '@/assets/style/mixins.less';`
+      additionalData: `@import '@/assets/style/variables.less'; @import '@/assets/style/mixins.less';`
     }
   }
 };

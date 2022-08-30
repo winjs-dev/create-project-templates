@@ -184,6 +184,29 @@ async function init() {
           initial: 0
         },
         {
+          name: 'miniFramework',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed) return null;
+            return values.framework === 'mini' ? 'select' : null;
+          },
+          message: 'Select a small program development framework?',
+          choices: [
+            {
+              title: yellow('Taro'),
+              value: 'taro'
+            },
+            {
+              title: cyan('uni-app'),
+              value: 'uniapp'
+            },
+            {
+              title: magenta('Hola'),
+              value: 'hola'
+            }
+          ],
+          initial: 0
+        },
+        {
           name: 'application',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
@@ -449,6 +472,7 @@ async function init() {
     packageName = toValidPackageName(defaultProjectName),
     shouldOverwrite,
     framework = argv.framework,
+    miniFramework,
     needsTypeScript = argv.typescript,
     application = argv.application,
     mobileDevPlatform = argv.mobileDevPlatform,
@@ -503,9 +527,15 @@ async function init() {
     renderTemplate(templateDir, root, options);
   };
 
-  // mini 小程序
+  // mini 小程序开发框架
   if (framework === 'mini') {
-    render('framework/miniprogram');
+    if (miniFramework === 'taro') {
+      render('framework/miniprogram/taro');
+    } else if (miniFramework === 'uniapp') {
+      render('framework/miniprogram/uniapp');
+    } else if (miniFramework === 'hola') {
+      render('framework/miniprogram/hola');
+    }
   } else {
     // vue2 vue3
     // Render base template
