@@ -10,6 +10,8 @@ import { red, yellow, cyan, magenta, green, bold } from 'kolorist';
 
 import createSpawnCmd from './utils/createSpawnCmd';
 
+import { microFrontTypeEnum } from './utils/dictionary.js';
+
 import renderTemplate from './utils/renderTemplate.js';
 import {
   postOrderDirectoryTraverse,
@@ -20,12 +22,15 @@ import generateVueConfig from './utils/generateVueConfig.js';
 import getCommand from './utils/getCommand.js';
 import generateOfflinePackage from './utils/generateOfflinePackage.js';
 import generateRouterInterceptor from './utils/generateRouterInterceptor.js';
+import generateIndexHTML from './utils/generateIndexHTML.js';
 import banner from './utils/banner.js';
 import generateBabelConfig from './utils/generateBabelConfig';
 import generateViteStyleImport from './utils/generateViteStyleImport';
 import generateSeeScriptsConfig from './utils/generateSeeScripts';
 import generateRegisterGlobalComponent from './utils/generateRegisterGlobalComponent';
 import generateVitePlugin from './utils/generateVitePlugin';
+import { generateOnlyContainer } from './utils/commonTools.js';
+import { generateAppVue, generateAppVueV3 } from './utils/generateAppVue.js';
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
@@ -41,10 +46,26 @@ function toValidPackageName(projectName) {
 }
 
 function canSafelyOverwrite(dir) {
-  return !fs.existsSync(dir) || fs.readdirSync(dir).length === 0;
+  if (!fs.existsSync(dir)) {
+    return true;
+  }
+
+  const files = fs.readdirSync(dir);
+  if (files.length === 0) {
+    return true;
+  }
+  if (files.length === 1 && files[0] === '.git') {
+    return true;
+  }
+
+  return false;
 }
 
 function emptyDir(dir) {
+  if (!fs.existsSync(dir)) {
+    return;
+  }
+
   postOrderDirectoryTraverse(
     dir,
     (dir) => fs.rmdirSync(dir),
@@ -84,7 +105,7 @@ async function init() {
 
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support
-  const isFeatureFlagsUsed = typeof (argv.default || argv.ts || argv.see || argv.ms) === 'boolean';
+  const isFeatureFlagsUsed = typeof (argv.default ?? argv.ts ?? argv.see ?? argv.ms) === 'boolean';
 
   let targetDir = argv._[0];
   const defaultProjectName = !targetDir ? 'winner-project' : targetDir;
@@ -429,9 +450,7 @@ async function init() {
           name: 'needsSeePackage',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.needsMirrorSource === true
-              ? 'toggle'
-              : null;
+            return values.framework !== 'mini' ? 'toggle' : null;
           },
           message: 'Add See Package Support?',
           initial: false,
@@ -439,21 +458,22 @@ async function init() {
           inactive: 'No'
         },
         {
-          name: 'needsSubsystem',
+          name: 'microFrontType',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
             return values.framework !== 'mini' &&
               values.framework === 'v2' &&
               values.application === 'pc' &&
-              values.buildTools === 'bundle' &&
-              values.needsMirrorSource === true
-              ? 'toggle'
+              values.buildTools === 'bundle'
+              ? 'multiselect'
               : null;
           },
-          message: 'Add Subsystem Support?',
-          initial: false,
-          active: 'Yes',
-          inactive: 'No'
+          message: 'Select a collection of subsystem types?',
+          choices: [
+            { title: 'hui pro 1.0', value: microFrontTypeEnum.hui1 },
+            { title: 'qiankun', value: microFrontTypeEnum.qiankun }
+          ],
+          hint: '- Space to select, Return to submit'
         }
       ],
       {
@@ -469,7 +489,8 @@ async function init() {
   // `initial` won't take effect if the prompt type is null
   // so we still have to assign the default values here
   const {
-    packageName = toValidPackageName(defaultProjectName),
+    projectName,
+    packageName = projectName ?? defaultProjectName,
     shouldOverwrite,
     framework = argv.framework,
     miniFramework,
@@ -486,8 +507,11 @@ async function init() {
     versionControl = argv.versionControl,
     needsMirrorSource = argv.ms,
     needsSeePackage = argv.see,
-    needsSubsystem = argv.subsystem
+    microFrontType = argv.microFrontType || []
   } = result;
+
+  // app 容器name
+  const appContainerName = generateOnlyContainer(packageName);
 
   const root = path.join(cwd, targetDir);
 
@@ -509,6 +533,7 @@ async function init() {
   // const templateRoot = new URL('./template', import.meta.url).pathname
   const templateRoot = path.resolve(__dirname, 'template');
   const options = {
+    projectName,
     packageName,
     framework,
     application,
@@ -520,7 +545,8 @@ async function init() {
     buildTools,
     uiFramework,
     layoutAdapter,
-    versionControl
+    versionControl,
+    microFrontType
   };
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName);
@@ -679,18 +705,29 @@ async function init() {
       );
     }
 
-    if (needsSubsystem) {
-      render('subsystem');
+    if (microFrontType.length) {
+      render('subsystem/base');
+    }
+
+    if (microFrontType.includes(microFrontTypeEnum.hui1)) {
+      render('subsystem/hui1');
+    }
+
+    if (microFrontType.includes(microFrontTypeEnum.qiankun)) {
+      render('subsystem/qiankun');
     }
 
     // Main generation
     let mainContent = generateMain({
+      packageName,
       application,
       uiFramework,
       layoutAdapter,
       needsTypeScript,
       buildTools,
-      mobileDevPlatform
+      mobileDevPlatform,
+      microFrontType,
+      appContainerName
     });
     if (framework === 'v3') {
       mainContent = generateMainV3({
@@ -699,7 +736,8 @@ async function init() {
         layoutAdapter,
         needsTypeScript,
         buildTools,
-        mobileDevPlatform
+        mobileDevPlatform,
+        appContainerName
       });
     }
     fs.writeFileSync(path.resolve(root, 'src/main.js'), mainContent);
@@ -714,9 +752,45 @@ async function init() {
           application,
           uiFramework,
           needsTypeScript,
-          versionControl
+          versionControl,
+          microFrontType
         })
       );
+
+      //  index.html
+      fs.writeFileSync(
+        path.resolve(root, 'public/index.html'),
+        generateIndexHTML({
+          packageName,
+          microFrontType,
+          mobileDevPlatform,
+          appContainerName
+        })
+      );
+
+      // App.vue
+      fs.writeFileSync(
+        path.resolve(root, 'src/App.vue'),
+        generateAppVue({
+          microFrontType,
+          appContainerName,
+          packageName,
+          needsTypeScript,
+          application
+        })
+      );
+      if (framework === 'v3') {
+        fs.writeFileSync(
+          path.resolve(root, 'src/App.vue'),
+          generateAppVueV3({
+            microFrontType,
+            appContainerName,
+            packageName,
+            needsTypeScript,
+            application
+          })
+        );
+      }
 
       // babel.config.js
       fs.writeFileSync(

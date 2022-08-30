@@ -1,6 +1,11 @@
 import ejs from 'ejs';
+import { microFrontTypeEnum } from './dictionary.js';
 
-const mainV2 = `<%_ if (buildTools === 'bundle') { _%>import 'core-js/stable';
+const mainV2 = `<%_ if (needsQiankunMicroFrontend) { _%>import './publicPath';
+import { checkIsQiankunMicroService } from '@/utils';
+<%_ } _%>
+<%_ if (buildTools === 'bundle') { _%>
+import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 <%_ } _%>
 <%_ if ((application === 'mobile' || application === 'offline') && layoutAdapter !== 'vw') { _%>
@@ -30,7 +35,7 @@ import './vendor/vant';
 <%_ } else if (uiFramework === 'wui') { _%>
 import './vendor/wui';
 <%_ } _%>
-import './plugins/composition.js';
+import './plugins/composition';
 <%_ if (buildTools === 'bundleless') { _%>
 import 'virtual:svg-icons-register';
 <%_ } _%>
@@ -54,11 +59,12 @@ Component.registerHooks([
 /* eslint-disable */
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
+<%_ if (!needsQiankunMicroFrontend) { _%>
 <%_ if (application === 'offline') { _%>
 const initVue = () => {
   /* eslint-disable no-new */
   new Vue({
-    el: '#app',
+    el: '#<%= appContainerName %>',
     router,
     // use Runtime-only
     // https://vuejs.org/v2/guide/installation.html
@@ -81,12 +87,44 @@ if (ismPaaSOS()) {
 <%_ } else { _%>
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#<%= appContainerName %>',
   router,
   // use Runtime-only
   // https://vuejs.org/v2/guide/installation.html
   render: (h) => h(App)
 });
+<%_ } _%>
+<%_ } else { _%>
+let instance = null;
+
+/* eslint-disable no-new */
+function render(props = {}) {
+  const { container } = props;
+  instance = new Vue({
+    router,
+    // use Runtime-only
+    // https://vuejs.org/v2/guide/installation.html
+    render: (h) => h(App)
+  }).$mount(container ? container.querySelector('#<%= appContainerName %>') : '#<%= appContainerName %>');
+}
+
+if (!checkIsQiankunMicroService()) {
+  render();
+}
+
+//  qiankun 导出相关生命周期函数
+export async function bootstrap() {
+  console.log('[vue] vue app bootstraped');
+}
+export async function mount(props) {
+  console.log('[vue] props from main framework', props);
+  render(props);
+}
+export async function unmount() {
+  instance.$destroy();
+  instance.$el.innerHTML = '';
+  instance = null;
+}
 <%_ } _%>
 `;
 
@@ -145,19 +183,19 @@ async function bootstrap() {
 <%_ if (mobileDevPlatform === 'gmu') { _%>
   if (isLightOS()) {
     nativeReady().then(() => {
-      app.mount('#app');
+      app.mount('#<%= appContainerName %>');
     });
 <%_ } else { _%>
   if (ismPaaSOS()) {
     nativeReady(() => {
-      app.mount('#app');
+      app.mount('#<%= appContainerName %>');
     ));
 <%_ } _%>
   } else {
-    app.mount('#app', true);
+    app.mount('#<%= appContainerName %>', true);
   }
 <%_ } else { _%>
-  app.mount('#app', true);
+  app.mount('#<%= appContainerName %>', true);
 <%_ } _%>
 
   setApp(app);
@@ -168,20 +206,27 @@ bootstrap();
 `;
 
 export function generateMain({
+  packageName,
   application,
   uiFramework,
   layoutAdapter,
   needsTypeScript,
   buildTools,
-  mobileDevPlatform
+  mobileDevPlatform,
+  microFrontType,
+  appContainerName
 }) {
+  const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
   return ejs.render(mainV2, {
+    packageName,
     application,
     layoutAdapter,
     uiFramework,
     needsTypeScript,
     buildTools,
-    mobileDevPlatform
+    mobileDevPlatform,
+    needsQiankunMicroFrontend,
+    appContainerName
   });
 }
 
@@ -191,7 +236,8 @@ export function generateMainV3({
   layoutAdapter,
   needsTypeScript,
   buildTools,
-  mobileDevPlatform
+  mobileDevPlatform,
+  appContainerName
 }) {
   return ejs.render(mainV3, {
     application,
@@ -199,6 +245,7 @@ export function generateMainV3({
     uiFramework,
     needsTypeScript,
     buildTools,
-    mobileDevPlatform
+    mobileDevPlatform,
+    appContainerName
   });
 }

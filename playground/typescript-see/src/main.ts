@@ -6,7 +6,7 @@ import './router/router.interceptor';
 import './components/global';
 import './filters';
 import './services';
-import './plugins/composition.js';
+import './plugins/composition';
 import './assets/style/app.less';
 // 注册钩子函数
 Component.registerHooks([
@@ -20,7 +20,7 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#typescriptSee1723gptfnop',
   router,
   // use Runtime-only
   // https://vuejs.org/v2/guide/installation.html

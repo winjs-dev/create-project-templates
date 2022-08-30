@@ -1,4 +1,5 @@
 import ejs from 'ejs';
+import { microFrontTypeEnum } from './dictionary';
 
 // 模板字符串中需要 ${} 原样输出，需要对 $ 进行转义处理
 const vueConfig = `const { defineConfig } = require('@vue/cli-service');
@@ -25,6 +26,9 @@ const { merge } = require('webpack-merge');
 <%_ if (versionControl === 'svn') { _%>
 const svnInfo = require('svn-info');
 <%_ } _%>
+<%_ if (microFrontType.length) { _%>
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+<%_ } _%>
 const N = '\\n';
 const resolve = (dir) => {
   return path.join(__dirname, './', dir);
@@ -33,6 +37,11 @@ const resolve = (dir) => {
 const isProd = () => {
   return process.env.NODE_ENV === 'production';
 };
+
+const isMicroFront = () => {
+  return process.env.VUE_APP_MICRO_MODE === 'qiankun';
+};
+
 <%_ if (versionControl === 'svn') { _%>
   // 获取 svn 信息
 const getSvnInfo = () => {
@@ -87,6 +96,11 @@ const genPlugins = () => {
         generate (seed, files, entries) {
           return files.reduce((manifest, {name, path: manifestFilePath}) => {
             const {root, dir, base} = path.parse(manifestFilePath);
+            <%_ if (application === 'pc') { _%>
+             if (['frame', 'frame/vendors_frame'].includes(dir)) {
+              return { ...manifest };
+            }
+            <%_ } _%>
             return {
               ...manifest,
               [name + '-' + base]: {path: manifestFilePath, root, dir}
@@ -107,7 +121,15 @@ const genPlugins = () => {
       })
     <%_ } _%>
     );
+  }<%_ if (needsHui1) { _%> else {
+    if (!isMicroFront()) {
+      plugins.push(new HtmlWebpackTagsPlugin({
+        links: ['./frame/app.css', './frame/vendors_frame/app.css'],
+        append: false
+      }))
+    }
   }
+  <%_ } _%>
 
   return plugins;
 };
@@ -152,6 +174,9 @@ module.exports = defineConfig({
   productionSourceMap: false,
   // webpack-dev-server 相关配置
   devServer: {
+  headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     port: 3000,
     https: false,
     client: {
@@ -214,7 +239,14 @@ module.exports = defineConfig({
     },
     plugins: genPlugins(),
     // https://github.com/cklwblove/vue-cli3-template/issues/12
-    optimization: getOptimization()
+    optimization: getOptimization(),
+    <%_ if (needsQiankunMicroFrontend) { _%>
+    output: {
+      library: \`\${pkg.name}\`,
+      libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+      chunkLoadingGlobal: \`webpackJsonp_\${pkg.name}\`
+    }
+    <%_ } _%>
   }),
   // webpack配置
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
@@ -297,6 +329,9 @@ module.exports = defineConfig({
           minifyCSS: true,
           minifyURLs: true
         };
+        <%_ if (needsQiankunMicroFrontend) { _%>
+        args[0].inject = 'body';
+        <%_ } _%>
         return args;
       });
 
@@ -353,13 +388,19 @@ export default function generateVueConfig({
   application,
   versionControl,
   needsTypeScript,
-  uiFramework
+  uiFramework,
+  microFrontType
 }) {
+  const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
+  const needsHui1 = microFrontType?.includes(microFrontTypeEnum.hui1);
   return ejs.render(vueConfig, {
     framework,
     application,
     versionControl,
     needsTypeScript,
-    uiFramework
+    needsHui1,
+    uiFramework,
+    microFrontType,
+    needsQiankunMicroFrontend
   });
 }
