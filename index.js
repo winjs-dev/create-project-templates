@@ -676,15 +676,15 @@ async function init() {
     }
 
     if (microFrontType.length) {
-      render('subsystem');
+      render('subsystemBase');
     }
 
     if (microFrontType.includes(microFrontTypeEnum.hui1)) {
-      render('hui1');
+      render('subsystem/hui1');
     }
 
     if (microFrontType.includes(microFrontTypeEnum.qiankun)) {
-      render('qiankun');
+      render('subsystem/qiankun');
     }
 
     // Main generation
