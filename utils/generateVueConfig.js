@@ -26,7 +26,7 @@ const { merge } = require('webpack-merge');
 <%_ if (versionControl === 'svn') { _%>
 const svnInfo = require('svn-info');
 <%_ } _%>
-<%_ if (needsQiankunMicroFrontend) { _%>
+<%_ if (needsQiankunMicroFrontend && needsHui1) { _%>
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 <%_ } _%>
 const N = '\\n';
@@ -40,7 +40,7 @@ const isProd = () => {
 
 <%_ if (needsQiankunMicroFrontend) { _%>
 const isMicroFront = () => {
-  return process.env.VUE_APP_IS_QIANKUN;
+  return process.env.VUE_APP_MICRO_MODE === 'qiankun';
 };
 <%_ } _%>
 
@@ -123,7 +123,7 @@ const genPlugins = () => {
       })
     <%_ } _%>
     );
-  }<%_ if (needsQiankunMicroFrontend) { _%> else {
+  }<%_ if (needsQiankunMicroFrontend && needsHui1) { _%> else {
     if (!isMicroFront()) {
       plugins.push(new HtmlWebpackTagsPlugin({
         links: ['./frame/app.css', './frame/vendors_frame/app.css'],
@@ -394,11 +394,13 @@ export default function generateVueConfig({
   microFrontType
 }) {
   const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
+  const needsHui1 = microFrontType?.includes(microFrontTypeEnum.hui1);
   return ejs.render(vueConfig, {
     framework,
     application,
     versionControl,
     needsTypeScript,
+    needsHui1,
     uiFramework,
     needsQiankunMicroFrontend
   });

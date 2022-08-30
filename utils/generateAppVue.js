@@ -88,19 +88,19 @@ const appVueV3 = `<template>
     <router-view v-if="!$route.meta.keepAlive" />
   </div>
 </template>
-<%_ if (!needsTypeScript) { _%>
-<script>
-  export default {
-    name: 'App'
-  };
-</script>
-<%_ } else { _%>
+<%_ if (needsTypeScript) { _%>
 <script lang="ts">
   import { defineComponent } from 'vue';
 
   export default defineComponent({
     name: 'App'
   });
+</script>
+<%_ } else { _%>
+<script>
+  export default {
+    name: 'App'
+  };
 </script>
 <%_ } _%>
 `;
