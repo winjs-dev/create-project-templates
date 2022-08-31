@@ -3,6 +3,7 @@
   "version": "2.3.0",
   "description": "An easy way to start a project",
   "type": "module",
+  "main": "outfile.cjs",
   "bin": {
     "create-project": "outfile.cjs",
     "cpa": "outfile.cjs"
