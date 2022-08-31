@@ -5,9 +5,11 @@ const rm = require('rimraf');
 const webpack = require('webpack');
 const ora = require('ora');
 const chalk = require('chalk');
-const { camelize, removeVersion, childName } = require('./utils');
+const { camelize, removeVersion, getChildName } = require('./utils');
 const builds = require('./config.child').getAllBuilds();
 const replace = require('replace-in-file');
+
+const childName = getChildName();
 
 const spinner = ora('building for production...');
 const build = function (builds) {

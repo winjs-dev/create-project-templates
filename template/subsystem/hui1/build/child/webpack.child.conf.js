@@ -11,7 +11,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ScriptSetup = require('unplugin-vue2-script-setup/webpack').default;
 
 const resolve = utils.resolve;
-const childName = utils.childName;
+const childName = utils.getChildName();
 let entries = {};
 let aliasMap = {
   vue$: 'vue/dist/vue.esm.js',

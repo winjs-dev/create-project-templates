@@ -1,6 +1,8 @@
 const base = require('./webpack.child.conf');
 const { merge } = require('webpack-merge');
-const { childName } = require('./utils');
+const { getChildName } = require('./utils');
+
+const childName = getChildName();
 
 const builds = {
   prod: {

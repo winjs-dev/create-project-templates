@@ -1,5 +1,4 @@
 import ejs from 'ejs';
-import { microFrontTypeEnum } from './dictionary.js';
 
 const appVueV2 = `<template>
   <div id="<%= appContainerName %>" class="<%= packageName %>-container">
@@ -66,6 +65,11 @@ const appVueV2 = `<template>
 
 <style lang="less">
 .<%= packageName %>-container {
+  .pages {
+    overflow: auto;
+    height: 100%;
+  }
+
   .iconfont {
     position: relative;
     display: inline-block;

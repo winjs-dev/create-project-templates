@@ -4,7 +4,12 @@ const pkg = require('../../package.json');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const context = process.cwd();
-export const childName = process.env.npm_config_child || pkg.name;
+
+exports.getChildName = function () {
+  return process.env.npm_config_child || pkg.name;
+};
+
+const childName = exports.getChildName();
 
 exports.resolve = function (dir) {
   return path.resolve(context, dir);
