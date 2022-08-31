@@ -718,29 +718,61 @@ async function init() {
     }
 
     // Main generation
-    let mainContent = generateMain({
-      packageName,
-      application,
-      uiFramework,
-      layoutAdapter,
-      needsTypeScript,
-      buildTools,
-      mobileDevPlatform,
-      microFrontType,
-      appContainerName
-    });
-    if (framework === 'v3') {
-      mainContent = generateMainV3({
-        application,
-        uiFramework,
-        layoutAdapter,
-        needsTypeScript,
-        buildTools,
+    fs.writeFileSync(
+      path.resolve(root, 'src/main.js'),
+      framework === 'v3'
+        ? generateMainV3({
+            application,
+            uiFramework,
+            layoutAdapter,
+            needsTypeScript,
+            buildTools,
+            mobileDevPlatform,
+            appContainerName
+          })
+        : generateMain({
+            packageName,
+            application,
+            uiFramework,
+            layoutAdapter,
+            needsTypeScript,
+            buildTools,
+            mobileDevPlatform,
+            microFrontType,
+            appContainerName
+          })
+    );
+
+    //  index.html
+    fs.writeFileSync(
+      path.resolve(root, buildTools === 'bundle' ? 'public/index.html' : 'index.html'),
+      generateIndexHTML({
+        packageName,
+        microFrontType,
         mobileDevPlatform,
         appContainerName
-      });
-    }
-    fs.writeFileSync(path.resolve(root, 'src/main.js'), mainContent);
+      })
+    );
+
+    // App.vue
+    fs.writeFileSync(
+      path.resolve(root, 'src/App.vue'),
+      framework === 'v3'
+        ? generateAppVueV3({
+            microFrontType,
+            appContainerName,
+            packageName,
+            needsTypeScript,
+            application
+          })
+        : generateAppVue({
+            microFrontType,
+            appContainerName,
+            packageName,
+            needsTypeScript,
+            application
+          })
+    );
 
     // webpack
     if (buildTools === 'bundle') {
@@ -756,41 +788,6 @@ async function init() {
           microFrontType
         })
       );
-
-      //  index.html
-      fs.writeFileSync(
-        path.resolve(root, 'public/index.html'),
-        generateIndexHTML({
-          packageName,
-          microFrontType,
-          mobileDevPlatform,
-          appContainerName
-        })
-      );
-
-      // App.vue
-      fs.writeFileSync(
-        path.resolve(root, 'src/App.vue'),
-        generateAppVue({
-          microFrontType,
-          appContainerName,
-          packageName,
-          needsTypeScript,
-          application
-        })
-      );
-      if (framework === 'v3') {
-        fs.writeFileSync(
-          path.resolve(root, 'src/App.vue'),
-          generateAppVueV3({
-            microFrontType,
-            appContainerName,
-            packageName,
-            needsTypeScript,
-            application
-          })
-        );
-      }
 
       // babel.config.js
       fs.writeFileSync(

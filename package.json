@@ -23,7 +23,7 @@
     "test": "zx ./scripts/test.mjs",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "prepublishOnly": "zx ./scripts/prepublish.mjs",
-    "release": "np --no-release-draft"
+    "release": "np --no-tests --no-release-draft"
   },
   "repository": {
     "type": "git",
