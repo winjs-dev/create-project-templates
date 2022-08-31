@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="seeMirrorSourceaeq9ckrkxmo" class="see-mirror-source-container">
     <div class="pages">
       <keep-alive v-if="$route.meta.keepAlive">
         <router-view />
