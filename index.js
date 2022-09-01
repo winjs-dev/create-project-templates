@@ -142,7 +142,7 @@ async function init() {
     // - Framework: default(vue2) / vue3 / miniprogram
     // - Application: default(mobile) / pc / offline
     // - Add Typescript Support? no
-    // - BuildTools: default(bundle(webpack)) / bundleless(vite)
+    // - BuildTools: default(bundle(webpack)) / bundless(vite)
     // - UI Framework: default(wui) / vant / hui / element-ui / ant-design-vue ...
     // - Layout Adapter: default(rem) / vw
     // - Version Control: default(git) / svn
@@ -350,8 +350,8 @@ async function init() {
               value: 'bundle'
             },
             {
-              title: cyan('bundleless(vite)'),
-              value: 'bundleless'
+              title: cyan('bundless(vite)'),
+              value: 'bundless'
             }
           ],
           initial: 0
@@ -628,20 +628,20 @@ async function init() {
         }
       }
     } else {
-      render('build-tools/bundleless');
+      render('build-tools/bundless');
 
       if (framework === 'v2') {
-        render('config/bundleless/default/v2');
+        render('config/bundless/default/v2');
       } else {
-        render('config/bundleless/default/v3');
+        render('config/bundless/default/v3');
       }
 
       // package.json
       if (needsTypeScript) {
         if (framework === 'v2') {
-          render('config/bundleless/typescript/v2');
+          render('config/bundless/typescript/v2');
         } else {
-          render('config/bundleless/typescript/v3');
+          render('config/bundless/typescript/v3');
         }
       }
     }
