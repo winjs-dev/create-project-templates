@@ -1,5 +1,7 @@
 outfile.cjs
 
+.DS_Store
+
 # Logs
 logs
 *.log
