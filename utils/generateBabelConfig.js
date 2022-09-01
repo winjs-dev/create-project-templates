@@ -37,7 +37,9 @@ module.exports = {
       }
     ]
   ],
-  plugins
+  plugins,
+  // 添加忽略 babel 编译的文件
+  exclude: []
 };
 `;
 
