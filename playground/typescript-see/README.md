@@ -4,7 +4,7 @@
 
 - 支持 svg icons（svg 雪碧图）
     - bundle 使用 svg-sprite-loader
-    - bundleless 使用 vite-plugin-svg-icons/vite-svg-loader
+    - bundless 使用 vite-plugin-svg-icons/vite-svg-loader
 
 - CSS 预编译语言：[Less](http://lesscss.org/)
 
