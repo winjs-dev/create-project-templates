@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "prepare": "npm run format",
     "serve": "npm run dev:h5",
     "build": "npm run build:h5",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,ts,tsx,css,less,scss,vue,html,md}\"",
     "build:app-plus": "cross-env NODE_ENV=production UNI_PLATFORM=app-plus vue-cli-service uni-build",
     "build:custom": "cross-env NODE_ENV=production uniapp-cli custom",
     "build:h5": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build",
@@ -40,12 +42,7 @@
     "dev:quickapp-webview-huawei": "cross-env NODE_ENV=development UNI_PLATFORM=quickapp-webview-huawei vue-cli-service uni-build --watch",
     "dev:quickapp-webview-union": "cross-env NODE_ENV=development UNI_PLATFORM=quickapp-webview-union vue-cli-service uni-build --watch",
     "info": "node node_modules/@dcloudio/vue-cli-plugin-uni/commands/info.js",
-    "serve:quickapp-native": "node node_modules/@dcloudio/uni-quickapp-native/bin/serve.js",
-    "test:android": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=android jest -i",
-    "test:h5": "cross-env UNI_PLATFORM=h5 jest -i",
-    "test:ios": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=ios jest -i",
-    "test:mp-baidu": "cross-env UNI_PLATFORM=mp-baidu jest -i",
-    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i"
+    "serve:quickapp-native": "node node_modules/@dcloudio/uni-quickapp-native/bin/serve.js"
   },
   "dependencies": {
     "@dcloudio/uni-app-plus": "^2.0.1-34720220422002",
@@ -72,6 +69,7 @@
     "axios": "^0.26.1",
     "core-js": "^3.6.5",
     "es6-promise": "^4.2.8",
+    "lodash-es": "^4.17.21",
     "regenerator-runtime": "^0.12.1",
     "qs": "^6.10.3",
     "vue": "^2.6.11",
@@ -94,10 +92,10 @@
     "@vue/cli-service": "~4.5.17",
     "babel-plugin-import": "^1.11.0",
     "cross-env": "^7.0.2",
-    "jest": "^25.4.0",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
     "postcss-comment": "^2.0.0",
+    "prettier": "^2.4.1",
     "sass": "^1.49.9",
     "sass-loader": "^10.1.1",
     "vue-template-compiler": "^2.6.11"

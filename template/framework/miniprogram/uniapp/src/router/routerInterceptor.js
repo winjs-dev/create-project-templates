@@ -1,7 +1,7 @@
 import routes from './index';
 import MinRouter from './router';
 import Vue from 'vue';
-import { debounce } from '@/utils/common';
+import { debounce } from 'lodash-es';
 
 // 实例化 MinRouter
 const routerInterceptor = new MinRouter({

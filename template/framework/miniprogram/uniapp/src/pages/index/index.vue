@@ -1,6 +1,6 @@
 <template>
-  <view class="content">
-    <image class="logo" src="~@/static/logo.png" @click="testGoWithQuery"></image>
+  <view class="page page-index">
+    <image class="logo" src="/static/img/logo.png" @click="testGoWithQuery"></image>
     <view>
       <text class="title" @click="testGo">{{ title }}</text>
     </view>
@@ -15,31 +15,8 @@
       };
     },
     onLoad() {},
-    getSDKVersion() {
-      my.alert({
-        content: my.SDKVersion
-      });
-    },
     onReady() {
-      // this.testRequest();
-
-      my.getSystemInfo({
-        success: (res) => {
-          my.alert({
-            content: JSON.stringify(res)
-          });
-          console.log('success', res);
-        }
-      });
-
-      my.alert({
-        content: my.SDKVersion
-      });
-
-      my.call('winner_account.getPhone', {}, (res) => {
-        my.alert({ content: JSON.stringify(res) });
-        console.log(res);
-      });
+      this.testRequest();
     },
     onShareAppMessage(res) {
       if (res.from === 'button') {
@@ -83,7 +60,7 @@
 </script>
 
 <style>
-  .content {
+  .page-index {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -91,9 +68,9 @@
   }
 
   .logo {
-    height: 200 rpx;
-    width: 200 rpx;
-    margin: 200 rpx auto 50 rpx auto;
+    height: 200px;
+    width: 200px;
+    margin: 200px auto 50px auto;
   }
 
   .text-area {
@@ -102,7 +79,7 @@
   }
 
   .title {
-    font-size: 36 rpx;
+    font-size: 36px;
     color: #8f8f94;
   }
 </style>

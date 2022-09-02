@@ -9,6 +9,8 @@
     "css": "less"
   },
   "scripts": {
+    "prepare": "npm run format",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,ts,tsx,css,less,scss,vue,html,md}\"",
     "build:weapp": "light release --type weapp",
     "build:h5": "light release --type h5",
     "build:gmump": "light release --type gmump",
@@ -51,6 +53,7 @@
     "eslint-plugin-vue": "^6.x",
     "fs-extra": "^10.0.1",
     "minimist": "^1.2.5",
+    "prettier": "^2.4.1",
     "shelljs": "^0.8.5",
     "stylelint": "9.3.0",
     "vue-loader": "^15.9.2"

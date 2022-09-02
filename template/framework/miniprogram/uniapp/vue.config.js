@@ -37,15 +37,15 @@ module.exports = {
     host: '0.0.0.0',
     port: 4147,
     https: false,
-    hotOnly: false,
+    hotOnly: false
     /* 使用代理 */
-    proxy: {
-      // '/g/hspf-shelf-svr/v/': {
-      //   /* 目标代理服务器地址 */
-      //   target: 'http://121.40.59.72:8088',
-      //   /* 允许跨域 */
-      //   changeOrigin: true,
-      // },
-    }
+    // proxy: {
+    //   '/g/hspf-shelf-svr/v/': {
+    //     /* 目标代理服务器地址 */
+    //     target: 'http://121.40.59.72:8088',
+    //     /* 允许跨域 */
+    //     changeOrigin: true,
+    //   },
+    // }
   }
 };
