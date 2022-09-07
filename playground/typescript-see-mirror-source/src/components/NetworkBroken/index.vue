@@ -6,7 +6,7 @@
         alt="网络异常"
       />
       <div class="info">
-        <p>当前网络异常</p>
+        <p>{{ message }}</p>
         <button class="network-button" @click="refresh">刷新</button>
       </div>
     </div>
@@ -14,10 +14,11 @@
 </template>
 
 <script lang="ts">
-  import { Vue, Component } from 'vue-property-decorator';
+  import { Vue, Component, Prop } from 'vue-property-decorator';
 
   @Component
   export default class RouteError extends Vue {
+    @Prop(String) message: string | '当前网络异常';
     refresh() {
       window.location.reload();
     }
