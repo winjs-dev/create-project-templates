@@ -1,3 +1,13 @@
+<script lang="ts" setup>
+  defineProps<{
+    message: string;
+  }>();
+
+  function refresh() {
+    window.location.reload();
+  }
+</script>
+
 <template>
   <div class="page-network">
     <div class="network-box">
@@ -6,29 +16,12 @@
         alt="网络异常"
       />
       <div class="info">
-        <p>当前网络异常</p>
+        <p>{{ message }}</p>
         <button class="network-button" @click="refresh">刷新</button>
       </div>
     </div>
   </div>
 </template>
-
-<script lang="ts">
-  import { defineComponent } from 'vue';
-
-  export default defineComponent({
-    name: 'RouteError',
-    setup() {
-      function refresh() {
-        window.location.reload();
-      }
-
-      return {
-        refresh
-      };
-    }
-  });
-</script>
 
 <style scoped>
   .page-network {

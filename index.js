@@ -84,6 +84,7 @@ function emptyDir(dir) {
 // 8. 是否使用公司镜像源 mirror-source
 // 9. 是否使用 see 命令输出包
 // 10. 是否支持子应用或微应用
+// 11. 是否支持单元测试
 async function init() {
   console.log(`\n${banner}\n`);
 
@@ -146,9 +147,10 @@ async function init() {
     // - UI Framework: default(wui) / vant / hui / element-ui / ant-design-vue ...
     // - Layout Adapter: default(rem) / vw
     // - Version Control: default(git) / svn
-    // - Add Mirror Source Support? no
+    // - Add Company Mirror Source Support? no
     // - Add See package Support?  no
     // - Add Subsystem Support? no
+    // - Add Vitest for Unit Testing? no
     result = await prompts(
       [
         {
@@ -441,7 +443,7 @@ async function init() {
             if (isFeatureFlagsUsed) return null;
             return values.framework !== 'mini' ? 'toggle' : null;
           },
-          message: 'Add Mirror Source Support?',
+          message: 'Add Company Mirror Source Support?',
           initial: false,
           active: 'Yes',
           inactive: 'No'
@@ -474,6 +476,17 @@ async function init() {
             { title: 'qiankun', value: microFrontTypeEnum.qiankun }
           ],
           hint: '- Space to select, Return to submit'
+        },
+        {
+          name: 'needsVitest',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed) return null;
+            return values.buildTools === 'bundle' ? null : 'toggle';
+          },
+          message: 'Add Vitest for Unit Testing?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -507,7 +520,8 @@ async function init() {
     versionControl = argv.versionControl,
     needsMirrorSource = argv.ms,
     needsSeePackage = argv.see,
-    microFrontType = argv.microFrontType || []
+    microFrontType = argv.microFrontType || [],
+    needsVitest = argv.vitest || argv.tests
   } = result;
 
   // app 容器name
@@ -717,6 +731,15 @@ async function init() {
       render('subsystem/qiankun');
     }
 
+    // unit-testing
+    if (needsVitest) {
+      if (framework === 'v3') {
+        render('unit-testing/vitest/v3');
+      } else {
+        render('unit-testing/vitest/v2');
+      }
+    }
+
     // Main generation
     fs.writeFileSync(
       path.resolve(root, 'src/main.js'),
@@ -844,9 +867,13 @@ async function init() {
 
     // Cleanup.
 
+    // Convert the JavaScript template to the TypeScript
     if (needsTypeScript) {
-      // rename all src `.js` files to `.ts`
-      // rename jsconfig.json to tsconfig.json
+      // Check all the remaining `.js` files:
+      //   - If the corresponding TypeScript version already exists, remove the `.js` version.
+      //   - Otherwise, rename the `.js` file to `.ts`
+      // Remove `jsconfig.json`, because we already have tsconfig.json
+      // `jsconfig.json` is not reused, because we use solution-style `tsconfig`s, which are much more complicated.
       preOrderDirectoryTraverse(
         path.resolve(root, 'src'),
         () => {},
@@ -859,7 +886,7 @@ async function init() {
               fs.renameSync(filepath, tsFilePath);
             }
           } else if (path.basename(filepath) === 'jsconfig.json') {
-            fs.renameSync(filepath, filepath.replace(/jsconfig\.json$/, 'tsconfig.json'));
+            fs.unlinkSync(filepath);
           }
         }
       );

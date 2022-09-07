@@ -6,7 +6,7 @@
         alt="网络异常"
       />
       <div class="info">
-        <p>当前网络异常</p>
+        <p>{{ message }}</p>
         <button class="network-button" @click="refresh">刷新</button>
       </div>
     </div>
@@ -15,6 +15,14 @@
 
 <script>
   export default {
+    props: {
+      message: {
+        type: String,
+        default() {
+          return '当前网络异常';
+        }
+      }
+    },
     methods: {
       refresh() {
         window.location.reload();

@@ -1,3 +1,19 @@
+<script setup>
+  defineProps({
+    message: {
+      type: String,
+      required: true,
+      default() {
+        return '当前网络异常';
+      }
+    }
+  });
+
+  function refresh() {
+    window.location.reload();
+  }
+</script>
+
 <template>
   <div class="page-network">
     <div class="network-box">
@@ -6,26 +22,12 @@
         alt="网络异常"
       />
       <div class="info">
-        <p>当前网络异常</p>
+        <p>{{ message }}</p>
         <button class="network-button" @click="refresh">刷新</button>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-  export default {
-    setup() {
-      function refresh() {
-        window.location.reload();
-      }
-
-      return {
-        refresh
-      };
-    }
-  };
-</script>
 
 <style scoped>
   .page-network {
