@@ -151,6 +151,7 @@ async function init() {
     // - Add See package Support?  no
     // - Add Subsystem Support? no
     // - Add Vitest for Unit Testing? no
+    // - Add Jest for Unit Testing? no
     result = await prompts(
       [
         {
