@@ -20,7 +20,7 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#typescriptMirrorSource1i1f8lmcuxj',
+  el: '#typescriptMirrorSource18ezy9rwofv',
   router,
   // use Runtime-only
   // https://vuejs.org/v2/guide/installation.html
