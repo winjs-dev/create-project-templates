@@ -37,6 +37,9 @@ function fullCombination(arr) {
 const flagCombinations = fullCombination(featureFlags)
 flagCombinations.push(['default'])
 
+let hasFile = fs.existsSync(path.join(__dirname, `../playground`))
+// 创建 playground
+if (!hasFile) await $`mkdir playground`
 const playgroundDir = path.resolve(__dirname, '../playground/')
 const bin = path.posix.relative('../playground/', '../outfile.cjs')
 
