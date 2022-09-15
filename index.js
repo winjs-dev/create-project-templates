@@ -487,6 +487,17 @@ async function init() {
           initial: false,
           active: 'Yes',
           inactive: 'No'
+        },
+        {
+          name: 'needsJest',
+          type: (prev, values) => {
+            if (isFeatureFlagsUsed) return null;
+            return values.buildTools === 'bundless' ? null : 'toggle';
+          },
+          message: 'Add jest for Unit Testing?',
+          initial: false,
+          active: 'Yes',
+          inactive: 'No'
         }
       ],
       {
@@ -521,7 +532,8 @@ async function init() {
     needsMirrorSource = argv.ms,
     needsSeePackage = argv.see,
     microFrontType = argv.microFrontType || [],
-    needsVitest = argv.vitest || argv.tests
+    needsVitest = argv.vitest,
+    needsJest = argv.jest
   } = result;
 
   // app 容器name
@@ -560,7 +572,11 @@ async function init() {
     uiFramework,
     layoutAdapter,
     versionControl,
-    microFrontType
+    microFrontType,
+    needsMirrorSource,
+    needsSeePackage,
+    needsVitest,
+    needsJest
   };
   const render = function render(templateName) {
     const templateDir = path.resolve(templateRoot, templateName);
@@ -732,11 +748,22 @@ async function init() {
     }
 
     // unit-testing
+    // vitest
     if (needsVitest) {
       if (framework === 'v3') {
         render('unit-testing/vitest/v3');
       } else {
         render('unit-testing/vitest/v2');
+      }
+    }
+
+    // jest
+    if (needsJest) {
+      render('unit-testing/jest/common');
+      if (framework === 'v3') {
+        render('unit-testing/jest/v3');
+      } else {
+        render('unit-testing/jest/v2');
       }
     }
 
