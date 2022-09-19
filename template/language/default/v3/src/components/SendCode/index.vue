@@ -29,6 +29,7 @@
         default: false
       }
     },
+    emits: ['input'],
     setup(props, { emit }) {
       const state = reactive({
         isStart: false,
