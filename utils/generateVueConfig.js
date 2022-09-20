@@ -43,7 +43,6 @@ const isMicroFront = () => {
   return process.env.VUE_APP_MICRO_MODE === 'qiankun';
 };
 <%_ } _%>
-
 <%_ if (versionControl === 'svn') { _%>
   // 获取 svn 信息
 const getSvnInfo = () => {
