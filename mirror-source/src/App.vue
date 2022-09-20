@@ -1,5 +1,5 @@
 <template>
-  <div id="mirrorSource1yjpgkcoqs2" class="mirror-source-container">
+  <div id="mirrorSource2iq4f3ga0bk" class="mirror-source-container">
     <div class="pages">
       <keep-alive v-if="$route.meta.keepAlive">
         <router-view />

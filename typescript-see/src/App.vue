@@ -1,5 +1,5 @@
 <template>
-  <div id="typescriptSee3xqonn5c7l4" class="typescript-see-container">
+  <div id="typescriptSee11ohw2p6mmd" class="typescript-see-container">
     <div class="pages">
       <keep-alive v-if="$route.meta.keepAlive">
         <router-view />
