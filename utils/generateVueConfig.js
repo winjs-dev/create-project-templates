@@ -73,7 +73,10 @@ const genPlugins = () => {
         /\\.md$/, // .md
       ],
       dts: true,
-      imports: ['vue', 'vue-router']
+      imports: ['vue', 'vue-router'],
+      eslintrc: {
+        enabled: true,
+      },
     }),
     require('@winner-fed/unplugin-vue-setup-extend/webpack').default({}),
    <%_ } _%>
