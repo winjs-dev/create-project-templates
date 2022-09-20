@@ -1,6 +1,6 @@
 {
   "name": "@winner-fed/create-project",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "An easy way to start a project",
   "type": "module",
   "main": "outfile.cjs",
@@ -25,7 +25,7 @@
     "test": "zx ./scripts/test.mjs",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "prepublish": "zx ./scripts/prepublish.mjs",
-    "release": "np --yolo --no-release-draft"
+    "release": "pnpm run build && bumpp --commit --push --tag && pnpm publish --no-git-checks"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
   },
   "homepage": "https://github.com/cloud-templates/create-project#readme",
   "devDependencies": {
+    "bumpp": "^8.2.1",
     "ejs": "^3.1.6",
     "esbuild": "^0.14.23",
     "esbuild-plugin-license": "^1.2.2",
