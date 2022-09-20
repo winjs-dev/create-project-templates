@@ -20,7 +20,7 @@ try {
 }
 
 await $`git tag -m "v${version}" v${version}`
-await $`git push -f git@github.com:cloud-templates/create-project-templates.git master:main`
+await $`git push -f https://github.com/cloud-templates/create-project-templates.git master:main`
 await $`git push --follow-tags`
 
 const projectRoot = path.resolve(__dirname, '../')
