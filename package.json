@@ -16,7 +16,6 @@
     "node": "^14.13.1 || >=16.0.0"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "format": "prettier --write .",
     "build": "zx ./scripts/build.mjs",
