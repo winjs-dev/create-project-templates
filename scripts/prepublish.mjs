@@ -20,10 +20,9 @@ try {
 }
 
 await $`git tag -m "v${version}" v${version}`
-// await $`git push -f https://github.com/cloud-templates/create-project-templates.git master:main`
 await $`git remote add origin https://github.com/cloud-templates/create-project-templates.git`
-await $`git push --set-upstream origin main`
-await $`git push --follow-tags`
+await $`git push -f https://github.com/cloud-templates/create-project-templates.git master:main`
+await $`git push --force --tags`
 
 const projectRoot = path.resolve(__dirname, '../')
 cd(projectRoot)

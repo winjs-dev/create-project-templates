@@ -1,5 +1,6 @@
 #!/usr/bin/env zx
 import 'zx/globals'
+import toValidPackageName from '../utils/toValidPackageName.js'
 
 $.verbose = false
 
@@ -37,19 +38,39 @@ function fullCombination(arr) {
 const flagCombinations = fullCombination(featureFlags)
 flagCombinations.push(['default'])
 
+// mini
+const flagMiniCombinations = [['framework=mini'], ['framework=mini', 'miniFramework=hola'], ['framework=mini', 'miniFramework=hola']];
+
+// v3
+const flaV3Combinations = [
+  ['framework=v3', 'application=mobile', 'buildTools=bundle', 'uiFramework=wui'], ['framework=v3', 'application=offline', 'buildTools=vite', 'uiFramework=vant'], ['framework=v3', 'application=pc', 'buildTools=bundle', 'uiFramework=element-ui']];
+
 let hasFile = fs.existsSync(path.join(__dirname, `../playground`))
 // 创建 playground
 if (!hasFile) await $`mkdir playground`
 const playgroundDir = path.resolve(__dirname, '../playground/')
 const bin = path.posix.relative('../playground/', '../outfile.cjs')
 
-cd(playgroundDir)
-for (const flags of flagCombinations) {
-  const projectName = flags.join('-')
+async function generateProject(combinations) {
+  for (const flags of combinations) {
+    const flagsTemp = flags.map((item) => toValidPackageName(item))
 
-  console.log(`Removing previously generated project ${projectName}`)
-  await $`rm -rf ${projectName}`
+    const projectName = flagsTemp.join('-')
 
-  console.log(`Creating project ${projectName}`)
-  await $`node ${[bin, projectName, ...flags.map((flag) => `--${flag}`), '--force']}`
+    console.log(`Removing previously generated project ${projectName}`)
+    await $`rm -rf ${projectName}`
+
+    console.log(`Creating project ${projectName}`)
+
+    await $`node ${[bin, projectName, ...flags.map((flag) => `--${flag}`), '--force']}`
+  }
 }
+
+cd(playgroundDir)
+
+// v2
+await generateProject(flagCombinations)
+// mini
+await generateProject(flagMiniCombinations)
+// v3
+await generateProject(flaV3Combinations)

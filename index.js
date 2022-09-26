@@ -8,6 +8,7 @@ import minimist from 'minimist';
 import prompts from 'prompts';
 import { red, yellow, cyan, magenta, green, bold } from 'kolorist';
 
+import toValidPackageName from './utils/toValidPackageName.js';
 import createSpawnCmd from './utils/createSpawnCmd';
 
 import { microFrontTypeEnum } from './utils/dictionary.js';
@@ -34,15 +35,6 @@ import { generateAppVue, generateAppVueV3 } from './utils/generateAppVue.js';
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
-}
-
-function toValidPackageName(projectName) {
-  return projectName
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/^[._]/, '')
-    .replace(/[^a-z0-9-~]+/g, '-');
 }
 
 function canSafelyOverwrite(dir) {
@@ -106,10 +98,26 @@ async function init() {
 
   // if any of the feature flags is set, we would skip the feature prompts
   // use `??` instead of `||` once we drop Node.js 12 support
-  const isFeatureFlagsUsed = typeof (argv.default ?? argv.ts ?? argv.see ?? argv.ms) === 'boolean';
+  const isFeatureFlagsUsed =
+    typeof (
+      argv.default ??
+      ['v2', 'v3', 'mini'].includes(argv.framework) ??
+      ['mobile', 'pc', 'offline'].includes(argv.application) ??
+      ['gmu', 'mpaas'].includes(argv.mobileDevPlatform) ??
+      ['taro', 'uniapp', 'hola'].includes(argv.mini) ??
+      ['bundle', 'bundless'].includes(argv.buildTools) ??
+      ['wui', 'vant', 'hui', 'element-ui', 'ant'].includes(argv.uiFramework) ??
+      ['rem', 'vm'].includes(argv.layoutAdapter) ??
+      ['svn', 'git'].includes(argv.versionControl) ??
+      argv.ts ??
+      argv.see ??
+      argv.ms ??
+      argv.vitest ??
+      argv.jest
+    ) === 'boolean';
 
   let targetDir = argv._[0];
-  const defaultProjectName = !targetDir ? 'winner-project' : targetDir;
+  const defaultProjectName = !targetDir ? 'winner-project' : toValidPackageName(targetDir);
 
   const forceOverwrite = argv.force;
 
@@ -518,14 +526,14 @@ async function init() {
     packageName = projectName ?? defaultProjectName,
     shouldOverwrite,
     framework = argv.framework,
-    miniFramework,
+    miniFramework = argv.miniFramework,
     needsTypeScript = argv.typescript,
     application = argv.application,
     mobileDevPlatform = argv.mobileDevPlatform,
-    offlineId = argv.offlineId,
-    offlineName = argv.offlineName,
-    mpaasOfflineId = argv.mpaasOfflineId,
-    mpaasOfflineName = argv.mpaasOfflineName,
+    offlineId = argv.offlineId || 'offline',
+    offlineName = argv.offlineName || 'default-project',
+    mpaasOfflineId = argv.mpaasOfflineId || '88888888',
+    mpaasOfflineName = argv.mpaasOfflineName || 'default-project',
     buildTools = argv.buildTools,
     uiFramework = argv.uiFramework,
     layoutAdapter = argv.layoutAdapter,
@@ -586,13 +594,12 @@ async function init() {
 
   // mini 小程序开发框架
   if (framework === 'mini') {
-    if (miniFramework === 'taro') {
-      render('framework/miniprogram/taro');
-    } else if (miniFramework === 'uniapp') {
+    if (miniFramework === 'uniapp') {
       render('framework/miniprogram/uniapp');
     } else if (miniFramework === 'hola') {
       render('framework/miniprogram/hola');
     }
+    render('framework/miniprogram/taro');
   } else {
     // vue2 vue3
     // Render base template
