@@ -65,6 +65,12 @@ function emptyDir(dir) {
   );
 }
 
+function splitBySymbol(str) {
+  if (str && str.includes('=')) {
+    return str.split('=')[1];
+  }
+}
+
 // 步骤
 // 1. 选择使用框架 framework
 // 2. 选择应用类型 application
@@ -101,14 +107,16 @@ async function init() {
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
-      // argv.framework ?? ['v2', 'v3', 'mini'].includes(argv.framework) ??
-      // argv.application ?? ['mobile', 'pc', 'offline'].includes(argv.application) ??
-      // argv.mobileDevPlatform ?? ['gmu', 'mpaas'].includes(argv.mobileDevPlatform) ??
-      // argv.mini ?? ['taro', 'uniapp', 'hola'].includes(argv.mini) ??
-      // argv.buildTools ?? ['bundle', 'bundless'].includes(argv.buildTools) ??
-      // argv.uiFramework ?? ['wui', 'vant', 'hui', 'element-ui', 'ant'].includes(argv.uiFramework) ??
-      // argv.layoutAdapter ?? ['rem', 'vm'].includes(argv.layoutAdapter) ??
-      // argv.versionControl ?? ['svn', 'git'].includes(argv.versionControl) ??
+      (argv.framework && ['v2', 'v3', 'mini'].includes(splitBySymbol(argv.framework))) ??
+      (argv.application && ['mobile', 'pc', 'offline'].includes(splitBySymbol(argv.application))) ??
+      (argv.mobileDevPlatform &&
+        ['gmu', 'mpaas'].includes(splitBySymbol(argv.mobileDevPlatform))) ??
+      (argv.mini && ['taro', 'uniapp', 'hola'].includes(splitBySymbol(argv.mini))) ??
+      (argv.buildTools && ['bundle', 'bundless'].includes(splitBySymbol(argv.buildTools))) ??
+      (argv.uiFramework &&
+        ['wui', 'vant', 'hui', 'element-ui', 'ant'].includes(splitBySymbol(argv.uiFramework))) ??
+      (argv.layoutAdapter && ['rem', 'vm'].includes(splitBySymbol(argv.layoutAdapter))) ??
+      (argv.versionControl && ['svn', 'git'].includes(splitBySymbol(argv.versionControl))) ??
       argv.ts ??
       argv.see ??
       argv.ms ??
@@ -122,8 +130,6 @@ async function init() {
   const forceOverwrite = argv.force;
 
   let result = {};
-
-  console.log('isFeatureFlagsUsed', isFeatureFlagsUsed);
 
   const pcUI = [
     {
