@@ -101,14 +101,14 @@ async function init() {
   const isFeatureFlagsUsed =
     typeof (
       argv.default ??
-      ['v2', 'v3', 'mini'].includes(argv.framework) ??
-      ['mobile', 'pc', 'offline'].includes(argv.application) ??
-      ['gmu', 'mpaas'].includes(argv.mobileDevPlatform) ??
-      ['taro', 'uniapp', 'hola'].includes(argv.mini) ??
-      ['bundle', 'bundless'].includes(argv.buildTools) ??
-      ['wui', 'vant', 'hui', 'element-ui', 'ant'].includes(argv.uiFramework) ??
-      ['rem', 'vm'].includes(argv.layoutAdapter) ??
-      ['svn', 'git'].includes(argv.versionControl) ??
+      // argv.framework ?? ['v2', 'v3', 'mini'].includes(argv.framework) ??
+      // argv.application ?? ['mobile', 'pc', 'offline'].includes(argv.application) ??
+      // argv.mobileDevPlatform ?? ['gmu', 'mpaas'].includes(argv.mobileDevPlatform) ??
+      // argv.mini ?? ['taro', 'uniapp', 'hola'].includes(argv.mini) ??
+      // argv.buildTools ?? ['bundle', 'bundless'].includes(argv.buildTools) ??
+      // argv.uiFramework ?? ['wui', 'vant', 'hui', 'element-ui', 'ant'].includes(argv.uiFramework) ??
+      // argv.layoutAdapter ?? ['rem', 'vm'].includes(argv.layoutAdapter) ??
+      // argv.versionControl ?? ['svn', 'git'].includes(argv.versionControl) ??
       argv.ts ??
       argv.see ??
       argv.ms ??
@@ -122,6 +122,8 @@ async function init() {
   const forceOverwrite = argv.force;
 
   let result = {};
+
+  console.log('isFeatureFlagsUsed', isFeatureFlagsUsed);
 
   const pcUI = [
     {
