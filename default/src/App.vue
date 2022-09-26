@@ -1,5 +1,5 @@
 <template>
-  <div id="default7a09wpc40v4" class="default-container">
+  <div id="default5nu982his58" class="default-container">
     <div class="pages">
       <keep-alive v-if="$route.meta.keepAlive">
         <router-view />
