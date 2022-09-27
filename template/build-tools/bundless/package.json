@@ -5,12 +5,11 @@
     "build": "vite build",
     "preview": "vite preview --port 5050",
     "report": "cross-env REPORT=true npm run build",
-    "lint": "npm run f2elint-scan"
+    "lint": "npm run f2elint-scan --quiet"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^2.0.0",
     "@vue/runtime-dom": "^3.2.22",
-    "babel-eslint": "^10.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "rollup-plugin-visualizer": "^5.7.1",
