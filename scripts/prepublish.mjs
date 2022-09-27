@@ -1,12 +1,15 @@
 #!/usr/bin/env zx
 import 'zx/globals'
 
+const { version } = JSON.parse(await fs.readFile('./package.json'))
+const playgroundDir = path.resolve(__dirname, '../playground/')
+
+await fs.remove(playgroundDir)
+
 await $`pnpm build`
 await $`pnpm snapshot`
 
-let { version } = JSON.parse(await fs.readFile('./package.json'))
 
-const playgroundDir = path.resolve(__dirname, '../playground/')
 cd(playgroundDir)
 
 await $`git init`
