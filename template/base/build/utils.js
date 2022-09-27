@@ -56,13 +56,14 @@ exports.transformTime = function transformTime() {
  * @param system
  * @param type
  * @param outputName
+ * @param configName
  * @returns {{seePackageName: string, seePackageOptions: {system, templateFunc: ((function(): (string|string))|*), variablesFunc: ((function(): (*|[]|undefined))|*), name, description: string, type, version}}}
  */
-exports.generateSeePackageInfo = function generateSeePackageInfo({ system, type, outputName }) {
+exports.generateSeePackageInfo = function generateSeePackageInfo({ system, type, outputName, configName }) {
   let seePackageName = `${system}-${name}-web`;
   const templateFunc = () => {
     if (type === 'bizframe') {
-      return `./${outputName}/config.local.js`;
+      return `./${outputName}/${configName}.js`;
     }
 
     // 子包遵循主框架的规范

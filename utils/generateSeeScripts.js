@@ -18,7 +18,7 @@ const outputName = 'dist';
 
 async function init() {
   // 1. 生成 see 发布物的名称及参数
-  const { seePackageName, seePackageOptions } = generateSeePackageInfo({ system, type, outputName });
+  const { seePackageName, seePackageOptions } = generateSeePackageInfo({ system, type, outputName, configName });
 
   // 2. 移除 package 文件夹
   fs.removeSync('./package');

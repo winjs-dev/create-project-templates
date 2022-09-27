@@ -548,7 +548,7 @@ async function init() {
     versionControl = argv.versionControl,
     needsMirrorSource = argv.ms,
     needsSeePackage = argv.see,
-    microFrontType = argv.microFrontType || [],
+    microFrontType = argv.microFrontType,
     needsVitest = argv.vitest,
     needsJest = argv.jest
   } = result;
@@ -753,16 +753,15 @@ async function init() {
 
     if (microFrontType.length) {
       render('subsystem/base');
-    }
 
-    if (microFrontType.includes(microFrontTypeEnum.hui1)) {
-      render('subsystem/hui1');
-    }
+      if (microFrontType.includes(microFrontTypeEnum.hui1)) {
+        render('subsystem/hui1');
+      }
 
-    if (microFrontType.includes(microFrontTypeEnum.qiankun)) {
-      render('subsystem/qiankun');
+      if (microFrontType.includes(microFrontTypeEnum.qiankun)) {
+        render('subsystem/qiankun');
+      }
     }
-
     // unit-testing
     // vitest
     if (needsVitest) {

@@ -42,8 +42,12 @@ flagCombinations.push(['default'])
 const flagMiniCombinations = [['framework=mini'], ['framework=mini', 'miniFramework=hola'], ['framework=mini', 'miniFramework=hola']];
 
 // v3
-const flaV3Combinations = [
+const flagV3Combinations = [
   ['framework=v3', 'application=mobile', 'buildTools=bundle', 'uiFramework=wui'], ['framework=v3', 'application=offline', 'buildTools=vite', 'uiFramework=vant'], ['framework=v3', 'application=pc', 'buildTools=bundle', 'uiFramework=element-ui']];
+
+// subsystem
+const flagSubsystemCombinations = [
+  ['framework=v2', 'application=pc', 'buildTools=bundle', 'uiFramework=hui', 'ms', 'see', 'microFrontType=hui1.0']];
 
 let hasFile = fs.existsSync(path.join(__dirname, `../playground`))
 // 创建 playground
@@ -73,4 +77,6 @@ await generateProject(flagCombinations)
 // mini
 await generateProject(flagMiniCombinations)
 // v3
-await generateProject(flaV3Combinations)
+await generateProject(flagV3Combinations)
+// subsystem
+await generateProject(flagSubsystemCombinations)

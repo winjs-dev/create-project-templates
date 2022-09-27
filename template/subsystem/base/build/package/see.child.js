@@ -19,7 +19,8 @@ async function init() {
   const { seePackageName, seePackageOptions } = generateSeePackageInfo({
     system,
     type,
-    outputName
+    outputName,
+    configName
   });
 
   // 2. 移除 package 文件夹
