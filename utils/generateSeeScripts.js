@@ -13,10 +13,12 @@ if (!system) {
 
 const type = 'bizframe';
 const configName = 'config.local';
+// 自定义输出的目录名称，默认为 dist
+const outputName = 'dist';
 
 async function init() {
   // 1. 生成 see 发布物的名称及参数
-  const { seePackageName, seePackageOptions } = generateSeePackageInfo({ system, type });
+  const { seePackageName, seePackageOptions } = generateSeePackageInfo({ system, type, outputName });
 
   // 2. 移除 package 文件夹
   fs.removeSync('./package');
@@ -28,6 +30,7 @@ async function init() {
       {
         ...seePackageOptions,
         configName,
+        outputName,
         seePackageName
       },
       function () {
@@ -39,6 +42,7 @@ async function init() {
           ...seePackageOptions,
           seePackageType: 'web',
           configName,
+          outputName,
           seePackageName: seePackageName.replace('-docker', '')<%_ if (buildTools === 'bundleless') { _%>, 
           scriptsType: 'bash' <%_ } _%>
         });
@@ -51,6 +55,7 @@ async function init() {
   generateSeePackageZip({
     ...seePackageOptions,
     configName,
+    outputName,
     seePackageName<%_ if (buildTools === 'bundleless') { _%>,     
     scriptsType: 'bash' <%_ } _%>
   });

@@ -55,17 +55,18 @@ exports.transformTime = function transformTime() {
  * 生成发布物的相关信息
  * @param system
  * @param type
+ * @param outputName
  * @returns {{seePackageName: string, seePackageOptions: {system, templateFunc: ((function(): (string|string))|*), variablesFunc: ((function(): (*|[]|undefined))|*), name, description: string, type, version}}}
  */
-exports.generateSeePackageInfo = function generateSeePackageInfo({ system, type }) {
+exports.generateSeePackageInfo = function generateSeePackageInfo({ system, type, outputName }) {
   let seePackageName = `${system}-${name}-web`;
   const templateFunc = () => {
     if (type === 'bizframe') {
-      return `./dist/config.local.js`;
+      return `./${outputName}/config.local.js`;
     }
 
     // 子包遵循主框架的规范
-    return `./dist/${name}/sysconfig.js`;
+    return `./${outputName}/${name}/sysconfig.js`;
   };
 
   const variablesFunc = () => {
