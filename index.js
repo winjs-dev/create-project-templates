@@ -83,6 +83,8 @@ function splitBySymbol(str) {
 // 9. 是否使用 see 命令输出包
 // 10. 是否支持子应用或微应用
 // 11. 是否支持单元测试
+// --no-git 创建项目，但不初始化 Git
+// --install 创建项目，自动安装依赖
 async function init() {
   console.log(`\n${banner}\n`);
 
@@ -548,7 +550,7 @@ async function init() {
     versionControl = argv.versionControl,
     needsMirrorSource = argv.ms,
     needsSeePackage = argv.see,
-    microFrontType = argv.microFrontType,
+    microFrontType = argv.microFrontType || [],
     needsVitest = argv.vitest,
     needsJest = argv.jest
   } = result;
@@ -751,7 +753,7 @@ async function init() {
       );
     }
 
-    if (microFrontType.length) {
+    if (Array.isArray(microFrontType) && microFrontType.length) {
       render('subsystem/base');
 
       if (microFrontType.includes(microFrontTypeEnum.hui1)) {
@@ -947,12 +949,16 @@ async function init() {
 
   // 如果版本管理工具选择了 Git
   // 则进行 Git 初始化
+
   if (versionControl === 'git') {
-    console.log();
-    await cmdIgnore('git', ['init']);
-    await cmdIgnore('git', ['add .']);
-    await cmdIgnore('git', ['commit -m "initialize commit"']);
-    console.log(`  ${green('Successfully initialization Git repository!')}`);
+    // cli 后跟参数 --no-git
+    if (!(typeof argv.git === 'boolean' && argv.git === false)) {
+      console.log();
+      await cmdIgnore('git', ['init']);
+      await cmdIgnore('git', ['add .']);
+      await cmdIgnore('git', ['commit -m "initialize commit"']);
+      console.log(`  ${green('Successfully initialization Git repository!')}`);
+    }
   }
   // Instructions:
   // Supported package managers: pnpm > yarn > npm
