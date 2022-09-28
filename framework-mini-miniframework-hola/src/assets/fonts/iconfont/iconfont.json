@@ -1,0 +1,674 @@
+{
+  "id": "542105",
+  "name": "智能小组件",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "18437744",
+      "name": "more",
+      "font_class": "more",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "14277857",
+      "name": "走势",
+      "font_class": "stock-trend",
+      "unicode": "e890",
+      "unicode_decimal": 59536
+    },
+    {
+      "icon_id": "14277882",
+      "name": "图形",
+      "font_class": "pr-ratio",
+      "unicode": "e891",
+      "unicode_decimal": 59537
+    },
+    {
+      "icon_id": "11474904",
+      "name": "new",
+      "font_class": "new",
+      "unicode": "e7c5",
+      "unicode_decimal": 59333
+    },
+    {
+      "icon_id": "11474905",
+      "name": "热门",
+      "font_class": "remen",
+      "unicode": "e7c6",
+      "unicode_decimal": 59334
+    },
+    {
+      "icon_id": "11078573",
+      "name": "疑问",
+      "font_class": "doubt",
+      "unicode": "e844",
+      "unicode_decimal": 59460
+    },
+    {
+      "icon_id": "5657339",
+      "name": "股权质押-平仓线",
+      "font_class": "Silo",
+      "unicode": "e79b",
+      "unicode_decimal": 59291
+    },
+    {
+      "icon_id": "5657343",
+      "name": "股权质押-展开",
+      "font_class": "change",
+      "unicode": "e79c",
+      "unicode_decimal": 59292
+    },
+    {
+      "icon_id": "5657344",
+      "name": "股权质押-预警线",
+      "font_class": "warn",
+      "unicode": "e79d",
+      "unicode_decimal": 59293
+    },
+    {
+      "icon_id": "7714312",
+      "name": "mes",
+      "font_class": "mes",
+      "unicode": "e79f",
+      "unicode_decimal": 59295
+    },
+    {
+      "icon_id": "7721911",
+      "name": "未达预警线",
+      "font_class": "under",
+      "unicode": "e7a0",
+      "unicode_decimal": 59296
+    },
+    {
+      "icon_id": "10111885",
+      "name": "pointS",
+      "font_class": "s",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "10111886",
+      "name": "pointB",
+      "font_class": "b",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "10030631",
+      "name": "tips",
+      "font_class": "tips",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "8204547",
+      "name": "宏观指标",
+      "font_class": "marco-more",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "7145412",
+      "name": "question",
+      "font_class": "question",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "6918273",
+      "name": "explain",
+      "font_class": "explain",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "6831639",
+      "name": "market-date",
+      "font_class": "market-date",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "6651896",
+      "name": "titledata",
+      "font_class": "titledata",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "6651901",
+      "name": "meet",
+      "font_class": "meet",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "5876313",
+      "name": "up-arrow",
+      "font_class": "up-arrow",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "5856570",
+      "name": "chooseDate",
+      "font_class": "chooseDate",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "5595023",
+      "name": "setUp",
+      "font_class": "setUp",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "5432269",
+      "name": "财富证券—大盘云图—风险提示",
+      "font_class": "risk",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "5318225",
+      "name": "questionMark",
+      "font_class": "questionMark",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "2992372",
+      "name": "回顶部",
+      "font_class": "back-top",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "4500011",
+      "name": "排序",
+      "font_class": "w-down",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "4500012",
+      "name": "添加",
+      "font_class": "w-add",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "4500013",
+      "name": "未选",
+      "font_class": "w-circle",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "4500014",
+      "name": "概念板块",
+      "font_class": "w-bubble",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "4500015",
+      "name": "筛选",
+      "font_class": "w-set",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "4500016",
+      "name": "行业板块",
+      "font_class": "w-plate",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "4500017",
+      "name": "选择指标",
+      "font_class": "w-target",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "4500018",
+      "name": "右箭头",
+      "font_class": "w-arrow",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "4500019",
+      "name": "已添加",
+      "font_class": "w-add-yet",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "4500020",
+      "name": "指定股票",
+      "font_class": "w-heart",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "4500021",
+      "name": "选中",
+      "font_class": "w-select",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "4434995",
+      "name": "研报推荐-评级上调",
+      "font_class": "tag-up",
+      "unicode": "e797",
+      "unicode_decimal": 59287
+    },
+    {
+      "icon_id": "4434996",
+      "name": "研报推荐-行业",
+      "font_class": "tag-trade",
+      "unicode": "e798",
+      "unicode_decimal": 59288
+    },
+    {
+      "icon_id": "4434997",
+      "name": "研报推荐-今日新增",
+      "font_class": "tag-add",
+      "unicode": "e799",
+      "unicode_decimal": 59289
+    },
+    {
+      "icon_id": "4435000",
+      "name": "研报推荐-热门",
+      "font_class": "tag-hot",
+      "unicode": "e79a",
+      "unicode_decimal": 59290
+    },
+    {
+      "icon_id": "4360180",
+      "name": "荐股师-筛选",
+      "font_class": "seniorSelect",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "4317605",
+      "name": "缺省-刷新",
+      "font_class": "refresh",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "4317606",
+      "name": "缺省-重新加载",
+      "font_class": "shine",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "4317607",
+      "name": "缺省-返回主页",
+      "font_class": "home",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "4315332",
+      "name": "predicting",
+      "font_class": "predicting",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "4310068",
+      "name": "自选列表—完成",
+      "font_class": "self-list-ok",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "4297030",
+      "name": "自选列表—管理",
+      "font_class": "self-list-manage",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "4297031",
+      "name": "自选列表—导入",
+      "font_class": "self-list-upload",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "4297032",
+      "name": "自选列表—删除",
+      "font_class": "self-list-del",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "4262518",
+      "name": "大宗交易—所有股东（下拉）",
+      "font_class": "state-more",
+      "unicode": "e796",
+      "unicode_decimal": 59286
+    },
+    {
+      "icon_id": "4157627",
+      "name": "形态选股-看跌",
+      "font_class": "xingtaixuangu-kandie1",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "4074907",
+      "name": "predict-false",
+      "font_class": "predict-false",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "4074908",
+      "name": "predict-true",
+      "font_class": "predict-true",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "4029690",
+      "name": "trash",
+      "font_class": "trash",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "4024655",
+      "name": "玩转涨停-连续涨停箭头",
+      "font_class": "limit-up",
+      "unicode": "e795",
+      "unicode_decimal": 59285
+    },
+    {
+      "icon_id": "4005603",
+      "name": "大宗交易—危机榜",
+      "font_class": "circle-point",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "4005604",
+      "name": "大宗交易—买方",
+      "font_class": "buy",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "4005605",
+      "name": "大宗交易—卖方",
+      "font_class": "sell",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "4001953",
+      "name": "指标选股-已选指标",
+      "font_class": "zhibiaoxuangu-yixuanzhibiao",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "3997829",
+      "name": "shop-cart",
+      "font_class": "shop-cart",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "3997830",
+      "name": "profit",
+      "font_class": "profit",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "3981088",
+      "name": "title-hint",
+      "font_class": "title-hint",
+      "unicode": "e794",
+      "unicode_decimal": 59284
+    },
+    {
+      "icon_id": "3940021",
+      "name": "形态选股-箭头",
+      "font_class": "xingtaixuangu-jiantou",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "3940023",
+      "name": "形态选股-加自选",
+      "font_class": "xingtaixuangu-jiazixuan",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "3940025",
+      "name": "形态选股-看涨",
+      "font_class": "xingtaixuangu-kanzhang",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "3940026",
+      "name": "形态选股-删自选",
+      "font_class": "xingtaixuangu-shanzixuan",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "3940027",
+      "name": "形态选股-向上箭头",
+      "font_class": "xingtaixuangu-xiangshangjiantou",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "3940028",
+      "name": "形态选股-向下箭头",
+      "font_class": "xingtaixuangu-xiangxiajiantou",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "3940029",
+      "name": "形态选股-热门形态",
+      "font_class": "xingtaixuangu-remenxingtai",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "3940030",
+      "name": "形态选股-自选形态",
+      "font_class": "xingtaixuangu-zixuanxingtai",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "3915842",
+      "name": "删除icon",
+      "font_class": "close1",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "3914596",
+      "name": "清除",
+      "font_class": "clear",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "3914597",
+      "name": "搜索icon",
+      "font_class": "city-search",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "2122940",
+      "name": "对",
+      "font_class": "1",
+      "unicode": "e74a",
+      "unicode_decimal": 59210
+    },
+    {
+      "icon_id": "3884370",
+      "name": "check",
+      "font_class": "check",
+      "unicode": "e791",
+      "unicode_decimal": 59281
+    },
+    {
+      "icon_id": "3884371",
+      "name": "add-up",
+      "font_class": "add-up",
+      "unicode": "e792",
+      "unicode_decimal": 59282
+    },
+    {
+      "icon_id": "3829342",
+      "name": "融资融券—火苗",
+      "font_class": "rongzirongquanhuomiao",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "3829343",
+      "name": "融资融券—问号",
+      "font_class": "rongzirongquanwenhao",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "3829344",
+      "name": "融资融券—潜力榜",
+      "font_class": "rongzirongquanqianlibang",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "3829345",
+      "name": "融资融券—龙虎榜",
+      "font_class": "rongzirongquanlonghubang",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "3829341",
+      "name": "融资融券—删除",
+      "font_class": "rongzirongquanshanchu",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "3820835",
+      "name": "wan",
+      "font_class": "wan",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "3814173",
+      "name": "宏观指标-星星",
+      "font_class": "star",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "3814174",
+      "name": "使用说明按钮",
+      "font_class": "book",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "3814175",
+      "name": "弹窗-退出",
+      "font_class": "close",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "3784018",
+      "name": "历史回看—按钮下拉",
+      "font_class": "triangle",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "3775433",
+      "name": "arrow-down",
+      "font_class": "arrow-down",
+      "unicode": "e78e",
+      "unicode_decimal": 59278
+    },
+    {
+      "icon_id": "3775434",
+      "name": "arrow-sort",
+      "font_class": "arrow-sort",
+      "unicode": "e78f",
+      "unicode_decimal": 59279
+    },
+    {
+      "icon_id": "3707116",
+      "name": "自选监控3",
+      "font_class": "no-signal",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "3705004",
+      "name": "back",
+      "font_class": "back",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "3705005",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "3705006",
+      "name": "cha",
+      "font_class": "cha",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "3701314",
+      "name": "自选监控2",
+      "font_class": "arrow",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "3701090",
+      "name": "形态识别3",
+      "font_class": "angle",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    }
+  ]
+}
