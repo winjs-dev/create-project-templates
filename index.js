@@ -131,6 +131,11 @@ async function init() {
 
   const forceOverwrite = argv.force;
 
+  // git
+  const shouldInitGit = argv.git !== false;
+  // auto install
+  const shouldInstall = argv.install === true;
+
   let result = {};
 
   const pcUI = [
@@ -561,6 +566,7 @@ async function init() {
   const root = path.join(cwd, targetDir);
 
   const cmdIgnore = createSpawnCmd(root, 'ignore');
+  const cmdInherit = createSpawnCmd(root, 'inherit');
 
   if (shouldOverwrite) {
     emptyDir(root);
@@ -949,15 +955,18 @@ async function init() {
 
   // 如果版本管理工具选择了 Git
   // 则进行 Git 初始化
-
   if (versionControl === 'git') {
     // cli 后跟参数 --no-git
-    if (!(typeof argv.git === 'boolean' && argv.git === false)) {
+    if (shouldInitGit) {
       console.log();
-      await cmdIgnore('git', ['init']);
-      await cmdIgnore('git', ['add .']);
-      await cmdIgnore('git', ['commit -m "initialize commit"']);
-      console.log(`  ${green('Successfully initialization Git repository!')}`);
+      try {
+        await cmdIgnore('git', ['init']);
+        await cmdIgnore('git', ['add .']);
+        await cmdIgnore('git', ['commit -m "initialize commit"']);
+        console.log(`  ${green('Successfully initialization Git repository!')}`);
+      } catch (error) {
+        console.log(`  ${red('Initialization Git repository failed!')}`);
+      }
     }
   }
   // Instructions:
@@ -967,11 +976,19 @@ async function init() {
   const userAgent = process.env.npm_config_user_agent ?? '';
   const packageManager = /pnpm/.test(userAgent) ? 'pnpm' : /yarn/.test(userAgent) ? 'yarn' : 'npm';
 
+  if (shouldInstall) {
+    console.log();
+    console.log(`  ${yellow('Installing deps...')}`);
+    await cmdInherit(packageManager, [packageManager === 'npm' ? 'install' : '']);
+    console.log();
+    console.log(`  ${green('Successfully install deps!')}`);
+  }
+
   console.log(`\nDone. Now run:\n`);
   if (root !== cwd) {
     console.log(`  ${bold(green(`cd ${path.relative(cwd, root)}`))}`);
   }
-  console.log(`  ${bold(green(getCommand(packageManager, 'bootstrap')))}`);
+  !shouldInstall && console.log(`  ${bold(green(getCommand(packageManager, 'bootstrap')))}`);
   console.log(`  ${bold(green(getCommand(packageManager, 'dev')))}`);
   console.log();
 }
