@@ -367,7 +367,10 @@ async function init() {
           name: 'buildTools',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' ? 'select' : null;
+            // 离线包不能使用 vite 作为构建工具，type=module 不支持文件协议访问
+            return values.framework !== 'mini' && values.application !== 'offline'
+              ? 'select'
+              : null;
           },
           message: 'Choose whether your build tools is bundle(webpack) or bundless(vite)?',
           choices: [
@@ -505,7 +508,7 @@ async function init() {
           name: 'needsVitest',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.buildTools === 'bundle' ? null : 'toggle';
+            return values.framework === 'mini' || values.buildTools === 'bundle' ? null : 'toggle';
           },
           message: 'Add Vitest for Unit Testing?',
           initial: false,
@@ -516,7 +519,9 @@ async function init() {
           name: 'needsJest',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.buildTools === 'bundless' ? null : 'toggle';
+            return values.framework === 'mini' || values.buildTools === 'bundless'
+              ? null
+              : 'toggle';
           },
           message: 'Add jest for Unit Testing?',
           initial: false,
@@ -549,7 +554,7 @@ async function init() {
     offlineName = argv.offlineName || 'default-project',
     mpaasOfflineId = argv.mpaasOfflineId || '88888888',
     mpaasOfflineName = argv.mpaasOfflineName || 'default-project',
-    buildTools = argv.buildTools,
+    buildTools = argv.buildTools || 'bundle',
     uiFramework = argv.uiFramework,
     layoutAdapter = argv.layoutAdapter,
     versionControl = argv.versionControl,
