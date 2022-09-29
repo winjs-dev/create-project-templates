@@ -15,7 +15,11 @@ const indexHTML = `<!DOCTYPE html>
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
     <meta content="email=no" name="format-detection" />
+    <%_ if (buildTools === 'bundless') { _%>
+    <title><%%- title %%></title>
+    <%_ } else { _%>
     <title><%= packageName %></title>
+    <%_ } _%>
     <%_ if(!microFrontType.length) { _%>
     <style>
       html,
@@ -27,7 +31,7 @@ const indexHTML = `<!DOCTYPE html>
         overflow-x: hidden;
       }
     </style>
-     <%_ } _%>
+    <%_ } _%>
   </head>
   <body>
     <noscript>
@@ -163,6 +167,9 @@ const indexHTML = `<!DOCTYPE html>
       );
     </script>
     <%_ } _%>
+    <%_ if (buildTools === 'bundless') { _%>
+    <%%- injectScript %%>
+    <%_ } _%>
     <script>
       Object.freeze(window.LOCAL_CONFIG);
       Object.defineProperty(window, 'LOCAL_CONFIG', {
@@ -178,7 +185,8 @@ export default function generateIndexHTML({
   packageName,
   microFrontType,
   mobileDevPlatform,
-  appContainerName
+  appContainerName,
+  buildTools
 }) {
   const needsQiankunMicroFrontend = microFrontType?.includes(microFrontTypeEnum.qiankun);
 
@@ -187,6 +195,7 @@ export default function generateIndexHTML({
     needsQiankunMicroFrontend,
     microFrontType,
     mobileDevPlatform,
-    appContainerName
+    appContainerName,
+    buildTools
   });
 }

@@ -823,7 +823,8 @@ async function init() {
         packageName,
         microFrontType,
         mobileDevPlatform,
-        appContainerName
+        appContainerName,
+        buildTools
       })
     );
 
