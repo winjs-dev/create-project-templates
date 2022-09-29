@@ -3,5 +3,12 @@
 module.exports = {
   extends: '@winner-fed/stylelint-config-win',
   // 指定 less 语法
-  customSyntax: 'postcss-less'
+  customSyntax: 'postcss-less',
+  // html, vue
+  overrides: [
+    {
+      files: ['*.html', '**/*.html', '*.htm', '**/*.htm', '*.vue', '**/*.vue'],
+      customSyntax: 'postcss-html'
+    }
+  ]
 };

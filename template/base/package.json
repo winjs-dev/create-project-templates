@@ -18,7 +18,7 @@
     "qs": "^6.10.3"
   },
   "devDependencies": {
-    "@winner-fed/f2elint": "^1.0.4",
+    "@winner-fed/f2elint": "^2.0.0",
     "archiver": "^3.0.0",
     "autoprefixer": "^10.4.12",
     "chalk": "^2.4.1",
