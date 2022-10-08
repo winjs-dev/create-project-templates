@@ -7,8 +7,8 @@
     "reinstall": "rimraf node_modules && rimraf yarn.lock && rimraf package.lock.json && npm run bootstrap",
     "escheck": "es-check",
     "zip": "node build/zip.js",
-    "f2elint-scan": "f2elint scan --quiet",
-    "f2elint-fix": "f2elint fix"
+    "f2elint-scan": "f2elint scan --quiet --include src",
+    "f2elint-fix": "f2elint fix --include src"
   },
   "dependencies": {
     "@winner-fed/cloud-utils": "*",
