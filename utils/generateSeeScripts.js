@@ -43,7 +43,7 @@ async function init() {
           seePackageType: 'web',
           configName,
           outputName,
-          seePackageName: seePackageName.replace('-docker', '')<%_ if (buildTools === 'bundleless') { _%>, 
+          seePackageName: seePackageName.replace('-docker', '')<%_ if (buildTools === 'bundless') { _%>, 
           scriptsType: 'bash' <%_ } _%>
         });
       }
@@ -56,7 +56,7 @@ async function init() {
     ...seePackageOptions,
     configName,
     outputName,
-    seePackageName<%_ if (buildTools === 'bundleless') { _%>,     
+    seePackageName<%_ if (buildTools === 'bundless') { _%>,     
     scriptsType: 'bash' <%_ } _%>
   });
 }

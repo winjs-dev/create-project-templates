@@ -36,7 +36,7 @@ import './vendor/vant';
 import './vendor/wui';
 <%_ } _%>
 import './plugins/composition';
-<%_ if (buildTools === 'bundleless') { _%>
+<%_ if (buildTools === 'bundless') { _%>
 import 'virtual:svg-icons-register';
 <%_ } _%>
 <%_ if (application === 'offline') { _%>
@@ -153,7 +153,7 @@ import setupVendor from './vendor/vant';
 <%_ } else if (uiFramework === 'wui') { _%>
 import setupVendor from './vendor/wui';
 <%_ } _%>
-<%_ if (buildTools === 'bundleless') { _%>
+<%_ if (buildTools === 'bundless') { _%>
 import 'virtual:svg-icons-register';
 <%_ } _%>
 <%_ if (application === 'offline') { _%>

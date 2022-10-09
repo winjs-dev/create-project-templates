@@ -27,7 +27,7 @@ export default function setupGlobalComponent(app) {
   });
 }
   <%_ } _%>
-<%_ } else if (buildTools === 'bundleless') { _%>
+<%_ } else if (buildTools === 'bundless') { _%>
   <%_ if (framework === 'v2') { _%>
 import Vue from 'vue';
 
