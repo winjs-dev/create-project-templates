@@ -17,7 +17,7 @@ export default defineConfig(({ command, mode }) => {
   // The boolean type read by loadEnv is a string. This function can be converted to boolean type
   const viteEnv = wrapperEnv(env);
 
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE, VITE_LEGACY } = viteEnv;
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv;
 
   const isBuild = command === 'build';
 
@@ -53,8 +53,8 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       target: 'es2015',
+      cssTarget: 'chrome51',
       outDir: 'dist',
-      polyfillDynamicImport: VITE_LEGACY,
       minify: 'terser',
       terserOptions: {
         compress: {
