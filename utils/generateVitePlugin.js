@@ -4,6 +4,7 @@ import ejs from 'ejs';
 const viteConfig = `import legacy from '@vitejs/plugin-legacy';
 <%_ if (framework === 'v2') { _%>
 import vue from '@vitejs/plugin-vue2';
+import vueJsx from '@vitejs/plugin-vue2-jsx';
 // @ts-ignore
 import scriptSetup from 'unplugin-vue2-script-setup/vite';
 <%_ } _%>
@@ -33,7 +34,8 @@ export function createVitePlugins(viteEnv, isBuild) {
 
   const vitePlugins = [
     <%_ if (framework === 'v2') { _%>
-    vue(),
+    vue(),  
+    vueJsx(),
     scriptSetup(),
     <%_ } _%>
     <%_ if (framework === 'v3') { _%>
