@@ -35,7 +35,6 @@ import './vendor/vant';
 <%_ } else if (uiFramework === 'wui') { _%>
 import './vendor/wui';
 <%_ } _%>
-import './plugins/composition';
 <%_ if (buildTools === 'bundless') { _%>
 import 'virtual:svg-icons-register';
 <%_ } _%>

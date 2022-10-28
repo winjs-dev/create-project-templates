@@ -3,9 +3,8 @@ import ejs from 'ejs';
 // 模板字符串中需要 ${} 原样输出，需要对 $ 进行转义处理
 const viteConfig = `import legacy from '@vitejs/plugin-legacy';
 <%_ if (framework === 'v2') { _%>
-import { createVuePlugin as vue2 } from 'vite-plugin-vue2';
+import vue from '@vitejs/plugin-vue2';
 // @ts-ignore
-import vueTemplateBabelCompiler from 'vue-template-babel-compiler';
 import scriptSetup from 'unplugin-vue2-script-setup/vite';
 <%_ } _%>
 <%_ if (framework === 'v3') { _%>
@@ -34,12 +33,7 @@ export function createVitePlugins(viteEnv, isBuild) {
 
   const vitePlugins = [
     <%_ if (framework === 'v2') { _%>
-    vue2({
-      jsx: true,
-      vueTemplateOptions: {
-        compiler: vueTemplateBabelCompiler
-      }
-    }),
+    vue(),
     scriptSetup(),
     <%_ } _%>
     <%_ if (framework === 'v3') { _%>

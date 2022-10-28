@@ -248,7 +248,6 @@ export default {
 
     ```json
     "dependencies": {
-        "@vue/composition-api": "^1.4.6",
         "@winner-fed/cloud-utils": "*",
         "@winner-fed/magicless": "*",
         "axios": "^0.26.0",

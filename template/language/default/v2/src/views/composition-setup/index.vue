@@ -16,7 +16,7 @@
    */
   // 工具类
   import { formatDate } from 'utils';
-  import { ref } from '@vue/composition-api';
+  import { ref } from 'vue';
   import services from '@/services';
 
   const msg = ref('Welcome to Your Vue.js App.This a composition-api and setup demo');
