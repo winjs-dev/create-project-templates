@@ -36,7 +36,6 @@ yarn-error.log*
 .project
 .happypack
 .history
-yarn.lock
 
 /package
 /docker/html
