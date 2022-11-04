@@ -73,7 +73,7 @@ export function createVitePlugins(viteEnv, isBuild) {
   // vite-plugin-svg-icons
   vitePlugins.push(configSvgIconsPlugin(isBuild));
 
-  // vite-plugin-style-import
+  // vite-plugin-imp
   vitePlugins.push(configStyleImportPlugin());
 
   // rollup-plugin-visualizer
