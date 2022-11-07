@@ -4,7 +4,7 @@ function createSpawnCmd(dest, stdio = 'inherit') {
   return function (cmd, args = []) {
     const ls = spawn(cmd, args, {
       cwd: dest,
-      stdio: stdio,
+      stdio,
       shell: true
     });
     return new Promise((resolve, reject) => {

@@ -45,6 +45,9 @@
   },
   "homepage": "https://github.com/cloud-templates/create-project#readme",
   "devDependencies": {
+    "@types/node": "^16.11.68",
+    "@types/prompts": "^2.4.1",
+    "@vue/tsconfig": "^0.1.3",
     "bumpp": "^8.2.1",
     "ejs": "^3.1.6",
     "esbuild": "^0.14.23",

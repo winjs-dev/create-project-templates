@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import deepMerge from './deepMerge.js';
+import deepMerge from './deepMerge.ts';
 import sortDependencies from './sortDependencies.js';
 
 /**

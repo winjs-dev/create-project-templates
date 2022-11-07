@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 import 'zx/globals'
-import toValidPackageName from '../utils/toValidPackageName.js'
+import toValidPackageName from '../utils/toValidPackageName.ts'
 
 $.verbose = false
 

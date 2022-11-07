@@ -1,5 +1,5 @@
 import ejs from 'ejs';
-import { microFrontTypeEnum } from './dictionary.js';
+import { microFrontTypeEnum } from './dictionary.ts';
 
 const mainV2 = `<%_ if (needsQiankunMicroFrontend) { _%>import './publicPath';
 import { checkIsQiankunMicroService } from '@/utils';

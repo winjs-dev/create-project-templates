@@ -1,5 +1,5 @@
 import ejs from 'ejs';
-import { microFrontTypeEnum } from './dictionary.js';
+import { microFrontTypeEnum } from './dictionary.ts';
 
 const indexHTML = `<!DOCTYPE html>
 <html lang="zh-CN">

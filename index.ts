@@ -1,37 +1,34 @@
 #!/usr/bin/env node
 // @ts-check
 
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 import minimist from 'minimist';
 import prompts from 'prompts';
 import { red, yellow, cyan, magenta, green, bold } from 'kolorist';
 
-import toValidPackageName from './utils/toValidPackageName.js';
+import toValidPackageName from './utils/toValidPackageName';
 import createSpawnCmd from './utils/createSpawnCmd';
 
-import { microFrontTypeEnum } from './utils/dictionary.js';
+import { microFrontTypeEnum } from './utils/dictionary';
 
-import renderTemplate from './utils/renderTemplate.js';
-import {
-  postOrderDirectoryTraverse,
-  preOrderDirectoryTraverse
-} from './utils/directoryTraverse.js';
-import { generateMain, generateMainV3 } from './utils/generateMain.js';
-import generateVueConfig from './utils/generateVueConfig.js';
-import getCommand from './utils/getCommand.js';
-import generateOfflinePackage from './utils/generateOfflinePackage.js';
-import generateRouterInterceptor from './utils/generateRouterInterceptor.js';
-import generateIndexHTML from './utils/generateIndexHTML.js';
-import banner from './utils/banner.js';
+import renderTemplate from './utils/renderTemplate';
+import { postOrderDirectoryTraverse, preOrderDirectoryTraverse } from './utils/directoryTraverse';
+import { generateMain, generateMainV3 } from './utils/generateMain';
+import generateVueConfig from './utils/generateVueConfig';
+import getCommand from './utils/getCommand';
+import generateOfflinePackage from './utils/generateOfflinePackage';
+import generateRouterInterceptor from './utils/generateRouterInterceptor';
+import generateIndexHTML from './utils/generateIndexHTML';
+import banner from './utils/banner';
 import generateBabelConfig from './utils/generateBabelConfig';
-import generateViteStyleImport from './utils/generateViteStyleImport';
+import generateViteStyleImport from './utils/generateViteStyleImport.js';
 import generateSeeScriptsConfig from './utils/generateSeeScripts';
 import generateRegisterGlobalComponent from './utils/generateRegisterGlobalComponent';
 import generateVitePlugin from './utils/generateVitePlugin';
-import { generateOnlyContainer } from './utils/commonTools.js';
-import { generateAppVue, generateAppVueV3 } from './utils/generateAppVue.js';
+import { generateOnlyContainer } from './utils/commonTools';
+import { generateAppVue, generateAppVueV3 } from './utils/generateAppVue';
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
@@ -136,7 +133,29 @@ async function init() {
   // auto install
   const shouldInstall = argv.install === true;
 
-  let result = {};
+  let result: {
+    projectName?: string;
+    shouldOverwrite?: boolean;
+    packageName?: string;
+    framework?: 'vue2' | 'vue3' | 'miniprogram';
+    miniFramework?: 'taro' | 'uniapp' | 'hola';
+    needsTypeScript?: boolean;
+    application?: 'mobile' | 'pc' | 'offline';
+    mobileDevPlatform?: 'gmu' | 'mpaas';
+    offlineId?: string;
+    offlineName?: string;
+    mpaasOfflineId?: string;
+    mpaasOfflineName?: string;
+    buildTools?: 'bundle' | 'bundless';
+    uiFramework?: 'wui' | 'vant' | 'hui' | 'element-ui' | 'ant';
+    layoutAdapter?: 'rem' | 'vm';
+    versionControl?: 'svn' | 'git';
+    needsMirrorSource?: boolean;
+    needsSeePackage?: boolean;
+    microFrontType?: 'hui1' | 'qiankun';
+    needsVitest?: boolean;
+    needsJest?: boolean;
+  } = {};
 
   const pcUI = [
     {
@@ -196,7 +215,7 @@ async function init() {
         },
         {
           name: 'overwriteChecker',
-          type: (prev, values = {}) => {
+          type: (prev, values) => {
             if (values.shouldOverwrite === false) {
               throw new Error(red('✖') + ' Operation cancelled');
             }
