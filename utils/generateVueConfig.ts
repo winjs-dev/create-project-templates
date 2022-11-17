@@ -347,7 +347,6 @@ module.exports = defineConfig({
       .loader('vue-loader')
       .tap((options) => {
         options.compilerOptions.preserveWhitespace = true;
-        options.compiler = require('vue-template-babel-compiler');
         return options;
       })
       .end();
