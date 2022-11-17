@@ -2,7 +2,7 @@
   "buildVersion": "V202101-00-000",
   "scripts": {
     "bootstrap": "yarn install || npm install || cnpm install",
-    "format": "prettier --write \"src/**/*.{js,jsx,json,ts,tsx,css,less,scss,vue,html,md}\"",
+    "format": "prettier --write \"*.{js,jsx,json,ts,tsx,css,less,scss,vue,html,md}\"",
     "deploy": "npm run build && npm run zip",
     "reinstall": "rimraf node_modules && rimraf yarn.lock && rimraf package.lock.json && npm run bootstrap",
     "escheck": "es-check",
