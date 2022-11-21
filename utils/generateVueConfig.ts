@@ -126,12 +126,16 @@ const genPlugins = () => {
     <%_ } _%>
     );
   }<%_ if (needsHui1) { _%> else {
+  <%_ if (needsQiankunMicroFrontend) { _%>
     if (!isMicroFront()) {
+  <%_ } _%>
       plugins.push(new HtmlWebpackTagsPlugin({
         links: ['./frame/app.css', './frame/vendors_frame/app.css'],
         append: false
       }))
+    <%_ if (needsQiankunMicroFrontend) { _%>
     }
+    <%_ } _%>
   }
   <%_ } _%>
 
