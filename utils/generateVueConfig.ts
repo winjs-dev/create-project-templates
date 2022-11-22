@@ -142,30 +142,6 @@ const genPlugins = () => {
   return plugins;
 };
 
-// 生产环境去掉 console.log
-const getOptimization = () => {
-  let optimization = {};
-  if (isProd()) {
-    optimization = {
-      // https://webpack.docschina.org/configuration/optimization/#optimization-minimizer
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-            compress: {
-              warnings: false,
-              drop_console: true,
-              drop_debugger: true,
-              pure_funcs: ['console.log']
-            }
-          }
-        })
-      ]
-    };
-  }
-  return optimization;
-};
-
 module.exports = defineConfig({
   /**
    * You can set by yourself according to actual condition
@@ -246,8 +222,6 @@ module.exports = defineConfig({
       }
     },
     plugins: genPlugins(),
-    // https://github.com/cklwblove/vue-cli3-template/issues/12
-    optimization: getOptimization(),
     <%_ if (needsQiankunMicroFrontend) { _%>
     output: {
       library: \`\${pkg.name}\`,
@@ -359,6 +333,17 @@ module.exports = defineConfig({
     config
       .when(process.env.NODE_ENV === 'production',
         config => {
+          // 生产环境去掉 console.log
+          config.optimization.minimizer('terser').tap((args) => {
+            args[0].terserOptions.compress = {
+              drop_console: true,
+              drop_debugger: true,
+              pure_funcs: ['console.log']
+            };
+    
+            return args;
+          });
+          
           config
             .optimization
             .splitChunks({
