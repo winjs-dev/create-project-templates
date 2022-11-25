@@ -1,5 +1,6 @@
 {
   "buildVersion": "V202101-00-000",
+  "private": true,
   "scripts": {
     "bootstrap": "yarn install || npm install || cnpm install",
     "format": "prettier --write \"*.{js,jsx,json,ts,tsx,css,less,scss,vue,html,md}\"",
