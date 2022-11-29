@@ -7,7 +7,7 @@ import fs from 'fs-extra';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
 export function configHtmlPlugin(env, isBuild) {
-  const { VITE_GLOB_APP_TITLE } = env;
+  const { VITE_GLOB_APP_TITLE, VITE_PUBLIC_PATH } = env;
   const suffix = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? '.ts' : '.js';
   const htmlPlugin = createHtmlPlugin({
     minify: isBuild,
@@ -16,7 +16,9 @@ export function configHtmlPlugin(env, isBuild) {
       // Inject data into ejs template
       data: {
         title: VITE_GLOB_APP_TITLE,
-        injectScript: `<script src="./console.js?_t=${Date.now()}"></script>`
+        // html 文件注入 BASE_URL，和 vue-cli 保持一致
+        BASE_URL: VITE_PUBLIC_PATH,
+        injectScript: `<script src="${VITE_PUBLIC_PATH}console.js?_t=${Date.now()}"></script>`
       }
     }
   });

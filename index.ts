@@ -845,6 +845,7 @@ async function init() {
       path.resolve(root, buildTools === 'bundle' ? 'public/index.html' : 'index.html'),
       generateIndexHTML({
         packageName,
+        application,
         microFrontType,
         mobileDevPlatform,
         appContainerName,

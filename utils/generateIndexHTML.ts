@@ -155,19 +155,19 @@ const indexHTML = `<!DOCTYPE html>
     </script>
     <%_ } _%>
     <%_ if (needsQiankunMicroFrontend) { _%>
-    <script src="./config.local.js"></script>
+    <script src="<%%= BASE_URL %%>config.local.js"></script>
     <%_ } else { _%>
     <script>
       document.write(
         unescape(
-          "%3Cscript src='./config.local.js?_t=" +
+          "%3Cscript src='<%%= BASE_URL %>config.local.js?_t=" +
             Math.random() +
             "' type='text/javascript'%3E%3C/script%3E"
         )
       );
     </script>
     <%_ } _%>
-    <%_ if (buildTools === 'bundless') { _%>
+    <%_ if (buildTools === 'bundless' && application !== 'pc') { _%>
     <%%- injectScript %%>
     <%_ } _%>
     <script>
@@ -183,6 +183,7 @@ const indexHTML = `<!DOCTYPE html>
 
 export default function generateIndexHTML({
   packageName,
+  application,
   microFrontType,
   mobileDevPlatform,
   appContainerName,
@@ -192,6 +193,7 @@ export default function generateIndexHTML({
 
   return ejs.render(indexHTML, {
     packageName,
+    application,
     needsQiankunMicroFrontend,
     microFrontType,
     mobileDevPlatform,
