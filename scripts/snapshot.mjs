@@ -1,8 +1,22 @@
 #!/usr/bin/env zx
 import 'zx/globals'
-import toValidPackageName from '../utils/toValidPackageName.ts'
+
+function toValidPackageName(projectName) {
+  return (
+    projectName &&
+    projectName
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/^[._]/, '')
+      .replace(/[^a-z0-9-~]+/g, '-')
+  );
+}
 
 $.verbose = false
+
+if (!/pnpm/.test(process.env.npm_config_user_agent ?? ''))
+  throw new Error("Please use pnpm ('pnpm run snapshot') to generate snapshots!")
 
 const featureFlags = ['typescript', 'see', 'mirror-source']
 
