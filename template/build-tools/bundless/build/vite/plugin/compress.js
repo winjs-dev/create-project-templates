@@ -16,6 +16,10 @@ export function configCompressPlugin(
     plugins.push(
       compressPlugin({
         ext: '.gz',
+        // config.local.js 不需要压缩
+        filter: (file) => {
+          return file.indexOf('config.local.js') === -1;
+        },
         deleteOriginFile
       })
     );
@@ -24,6 +28,10 @@ export function configCompressPlugin(
     plugins.push(
       compressPlugin({
         ext: '.br',
+        // config.local.js 不需要压缩
+        filter: (file) => {
+          return file.indexOf('config.local.js') === -1;
+        },
         algorithm: 'brotliCompress',
         deleteOriginFile
       })
