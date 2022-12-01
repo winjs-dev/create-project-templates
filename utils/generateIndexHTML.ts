@@ -25,10 +25,7 @@ const indexHTML = `<!DOCTYPE html>
       html,
       body,
       #<%= appContainerName %> {
-        width: 100%;
         height: 100%;
-        margin: 0 auto;
-        overflow-x: hidden;
       }
     </style>
     <%_ } _%>
