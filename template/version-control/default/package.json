@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "prepare": "npm run format && husky install",
+    "prepare": "husky install && npm run format",
     "gen:log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "lint:ls-lint": "ls-lint",
     "lint:lint-staged": "nano-staged -c .husky/nano-staged.js"
