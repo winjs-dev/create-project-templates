@@ -65,7 +65,26 @@ export default defineConfig(({ command, mode }) => {
       },
       // Turning off brotliSize display can slightly reduce packaging time
       reportCompressedSize: false,
-      chunkSizeWarningLimit: 1200
+      chunkSizeWarningLimit: 1200,
+      rollupOptions: {
+        output: {
+          chunkFileNames: 'static/js/[name]-[hash].js',
+          entryFileNames: 'static/js/[name]-[hash].js',
+          assetFileNames: (assetInfo) => {
+            if (/\.css$/.test(assetInfo.name)) {
+              return 'static/css/[name].[hash][extname]';
+            }
+            if (/\.(gif|png|jpe?g|svg)(\?\S*)?$/.test(assetInfo.name)) {
+              return 'static/img/[name].[hash][extname]';
+            }
+            if (/\.(otf|ttf|woff2?|eot)(\?\S*)?$/.test(assetInfo.name)) {
+              return 'static/fonts/[name].[hash][extname]';
+            }
+
+            return 'static/[ext]/[name].[hash][extname]';
+          }
+        }
+      }
     },
     css: {
       preprocessorOptions: {
