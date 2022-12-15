@@ -3,6 +3,6 @@
     "amfe-flexible": "^2.2.1"
   },
   "devDependencies": {
-    "postcss-pxtorem": "^5.1.1"
+    "postcss-pxtorem": "^6.0.0"
   }
 }
