@@ -29,6 +29,7 @@
     "rimraf": "^3.0.2",
     "es-check": "^5.2.3",
     "prettier": "^2.4.1",
+    "prettier-plugin-packagejson": "^2.3.0",
     "tasksfile": "^5.1.0",
     "unplugin-vue-components": "^0.22.7"
   },
