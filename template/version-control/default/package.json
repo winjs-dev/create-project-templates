@@ -3,11 +3,11 @@
     "prepare": "husky install && npm run format",
     "gen:log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "lint:ls-lint": "ls-lint",
-    "lint:lint-staged": "nano-staged -c .husky/nano-staged.js"
+    "lint:lint-staged": "line-staged -c .husky/line-staged.js"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "^1.9.2",
     "conventional-changelog-cli": "^2.1.1",
-    "nano-staged": "^0.8.0"
+    "lint-staged": "^13.1.0"
   }
 }

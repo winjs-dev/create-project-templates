@@ -1,5 +1,4 @@
 **/*.svg
-package.json
 output.js
 src/assets/
 dist/**
