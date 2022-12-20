@@ -31,16 +31,36 @@ const codeMessage = {
   504: '网关超时。'
 };
 
+function isString(val) {
+  const toString = Object.prototype.toString;
+  return toString.call(val) === `[object String]`;
+}
+export function joinTimestamp(join, restful = false) {
+  if (!join) {
+    return restful ? '' : {};
+  }
+  const now = new Date().getTime();
+  if (restful) {
+    return `?_t=${now}`;
+  }
+  return { _t: now };
+}
 function responseLog(response) {
   if (process.env.NODE_ENV === 'development') {
-    const randomColor = `rgba(${Math.round(Math.random() * 255)},${Math.round(Math.random() * 255)},${Math.round(
+    const randomColor = `rgba(${Math.round(Math.random() * 255)},${Math.round(
       Math.random() * 255
-    )})`;
-    console.log('%c┍------------------------------------------------------------------┑', `color:${randomColor};`);
+    )},${Math.round(Math.random() * 255)})`;
+    console.log(
+      '%c┍------------------------------------------------------------------┑',
+      `color:${randomColor};`
+    );
     console.log('| 请求地址：', response.config.url);
     console.log('| 请求参数：', Qs.parse(response.config.data));
     console.log('| 返回数据：', response.data);
-    console.log('%c┕------------------------------------------------------------------┙', `color:${randomColor};`);
+    console.log(
+      '%c┕------------------------------------------------------------------┙',
+      `color:${randomColor};`
+    );
   } else {
     console.log('| 请求地址：', response.config.url);
     console.log('| 请求参数：', Qs.parse(response.config.data));
@@ -77,7 +97,8 @@ const axiosRequest = {
     // 以下代码，鉴权token,可根据具体业务增删。
     // demo示例:
     if (config['url'].indexOf('operatorQry') !== -1) {
-      config.headers['accessToken'] = 'de4738c67e1bb450be71b660f0716aa4675860cec1ff9bc23d800efb40519cf3';
+      config.headers['accessToken'] =
+        'de4738c67e1bb450be71b660f0716aa4675860cec1ff9bc23d800efb40519cf3';
     }
     return config;
   },
@@ -165,6 +186,14 @@ export default function request(
 
   if (method === 'get') {
     defaultConfig.data = {};
+    if (!isString(defaultConfig.params)) {
+      // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
+      defaultConfig.params = Object.assign(defaultConfig.params || {}, joinTimestamp(true, false));
+    } else {
+      // 兼容restful风格
+      defaultConfig.url = defaultConfig.url + defaultConfig.params + `${joinTimestamp(true, true)}`;
+      defaultConfig.params = undefined;
+    }
   } else {
     defaultConfig.params = {};
 
