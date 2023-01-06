@@ -334,7 +334,7 @@ module.exports = defineConfig({
       .when(process.env.NODE_ENV === 'production',
         config => {
           // 生产环境去掉 console.log
-          config.optimization.minimizer('terser').tap((args) => {
+          config.optimization.minimize(true).minimizer('terser').tap((args) => {
             args[0].terserOptions.compress = {
               drop_console: true,
               drop_debugger: true,
