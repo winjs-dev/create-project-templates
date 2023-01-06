@@ -2,6 +2,7 @@ import ejs from 'ejs';
 
 // 模板字符串中需要 ${} 原样输出，需要对 $ 进行转义处理
 const viteConfig = `import legacy from '@vitejs/plugin-legacy';
+import browserslist from 'browserslist';
 <%_ if (framework === 'v2') { _%>
 import vue from '@vitejs/plugin-vue2';
 import vueJsx from '@vitejs/plugin-vue2-jsx';
@@ -23,6 +24,8 @@ import { configStyleImportPlugin } from './styleImport';
 import { configVisualizerConfig } from './visualizer';
 import { configImageminPlugin } from './imagemin';
 import { configSvgIconsPlugin } from './svgSprite';
+
+const browserslistConfig = browserslist.loadConfig({ path: '.' });
 
 export function createVitePlugins(viteEnv, isBuild) {
   const {
@@ -62,8 +65,30 @@ export function createVitePlugins(viteEnv, isBuild) {
     isBuild &&
     vitePlugins.push(
       legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+        targets: browserslistConfig,
+        ignoreBrowserslistConfig: false,
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+        /**
+         * Polyfills required by modern browsers
+         *
+         * Since some low-version modern browsers do not support the new syntax
+         * You need to load polyfills corresponding to the syntax to be compatible
+         * At build, all required polyfills are packaged according to the target browser version range
+         * But when the page is accessed, only the required part is loaded depending on the browser version
+         *
+         * Two configuration methods:
+         *
+         * 1. true
+         *  - Automatically load all required polyfills based on the target browser version range
+         *  - Demerit: will introduce polyfills that are not needed by modern browsers in higher versions,
+         *    as well as more aggressive polyfills.
+         *
+         * 2、string[]
+         *  - Add low-version browser polyfills as needed
+         *  - Demerit: It needs to be added manually, which is inflexible;
+         *    it will be discovered after the production is deployed, resulting in production failure! ! !
+         */
+        modernPolyfills: ['es/global-this']
       })
     );
 
