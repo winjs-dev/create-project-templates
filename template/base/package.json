@@ -14,7 +14,7 @@
   "dependencies": {
     "@winner-fed/cloud-utils": "*",
     "@winner-fed/magicless": "*",
-    "axios": "^0.26.0",
+    "axios": "^1.2.1",
     "normalize.css": "^8.0.1",
     "qs": "^6.10.3"
   },

@@ -250,7 +250,7 @@ export default {
     "dependencies": {
         "@winner-fed/cloud-utils": "*",
         "@winner-fed/magicless": "*",
-        "axios": "^0.26.0",
+        "axios": "^1.2.1",
         "core-js": "^3.8.3",
         "h_ui": "^1.29.1",
         "js-cookie": "^3.0.1",
