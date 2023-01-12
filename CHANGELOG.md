@@ -1,3 +1,21 @@
+## [2.3.29](https://github.com/cloud-templates/create-project/compare/v2.3.28...v2.3.29) (2023-01-12)
+
+
+### Features
+
+* 🎸 see构建调整为 deploy-cli 工具 ([453ca29](https://github.com/cloud-templates/create-project/commit/453ca29b07bace28c6a66774f863bbf343fb6a1d))
+
+
+
+## [2.3.28](https://github.com/cloud-templates/create-project/compare/v2.3.27...v2.3.28) (2023-01-06)
+
+
+### Features
+
+* **axios:** axios 升级到1.2.1 ([131a116](https://github.com/cloud-templates/create-project/commit/131a116c89d2867ee54f94a92f34af00ba912116))
+
+
+
 ## [2.3.27](https://github.com/cloud-templates/create-project/compare/v2.3.26...v2.3.27) (2022-12-20)
 
 

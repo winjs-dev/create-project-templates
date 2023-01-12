@@ -23,7 +23,7 @@
     "pretest": "run-s build snapshot",
     "test": "zx ./scripts/test.mjs",
     "prepublishOnly": "zx ./scripts/prepublish.mjs",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "release": "pnpm run build && bumpp --commit --push --tag && pnpm publish --no-git-checks"
   },
   "repository": {
