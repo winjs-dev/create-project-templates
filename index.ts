@@ -24,7 +24,6 @@ import generateIndexHTML from './utils/generateIndexHTML';
 import banner from './utils/banner';
 import generateBabelConfig from './utils/generateBabelConfig';
 import generateViteStyleImport from './utils/generateViteStyleImport.js';
-import generateSeeScriptsConfig from './utils/generateSeeScripts';
 import generateRegisterGlobalComponent from './utils/generateRegisterGlobalComponent';
 import generateVitePlugin from './utils/generateVitePlugin';
 import { generateOnlyContainer } from './utils/commonTools';
@@ -773,14 +772,6 @@ async function init() {
 
     if (needsSeePackage) {
       render('see-package');
-
-      // build/package/see.js
-      fs.writeFileSync(
-        path.resolve(root, 'build/package/see.js'),
-        generateSeeScriptsConfig({
-          buildTools
-        })
-      );
     }
 
     if (Array.isArray(microFrontType) && microFrontType.length) {

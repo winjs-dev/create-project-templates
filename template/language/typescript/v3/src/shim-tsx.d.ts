@@ -1,6 +1,5 @@
 // 文件: `shim-tsx.d.ts`
 import Vue, { VNode } from 'vue';
-import type { ComponentRenderProxy } from '@vue/composition-api';
 
 declare module '*.tsx' {
   import { defineComponent } from 'vue';
@@ -14,8 +13,6 @@ declare global {
   namespace JSX {
     // tslint:disable no-empty-interface
     type Element = VNode;
-    // tslint:disable no-empty-interface
-    type ElementClass = ComponentRenderProxy;
     interface ElementAttributesProperty {
       $props: any; // 定义要使用的属性名称
     }

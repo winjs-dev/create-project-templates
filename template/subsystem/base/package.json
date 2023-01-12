@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "build:see": "npm run build && node build/package/see.js"
+    "build:see": "npm run build && deploy-cli see"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.2.31",
-    "@winner-fed/winner-deploy": "^4.0.0",
+    "@winner-fed/deploy-cli": "^0.0.5",
     "cache-loader": "^4.1.0",
     "replace-in-file": "^6.2.0",
     "html-webpack-tags-plugin": "^3.0.2"

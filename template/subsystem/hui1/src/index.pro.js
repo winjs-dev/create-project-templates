@@ -1,7 +1,6 @@
 import FUNS from './services/services';
 import { routes } from './router/routes';
 import { filters } from './filters/filters';
-import VueCompositionAPI from '@vue/composition-api';
 import Locales from './locales';
 import './icons';
 
@@ -29,9 +28,6 @@ const plugin = {
       const ctrl = componentConfig.default || componentConfig;
       Vue.component(ctrl.name, ctrl);
     });
-
-    // VueCompositionAPI
-    Vue.use(VueCompositionAPI);
   }
 };
 
