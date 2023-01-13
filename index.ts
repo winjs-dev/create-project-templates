@@ -81,6 +81,7 @@ function splitBySymbol(str) {
 // 11. 是否支持单元测试
 // --no-git 创建项目，但不初始化 Git
 // --install 创建项目，自动安装依赖
+// TODO --update 一键更新 package.json 所有依赖版本
 async function init() {
   console.log(`\n${banner}\n`);
 
@@ -89,12 +90,14 @@ async function init() {
   // --typescript / --ts
   // --mirror-source / --ms
   // --see / --see
+  // --update / --u
   // --force (for force overwriting)
   const argv = minimist(process.argv.slice(2), {
     alias: {
       typescript: ['ts'],
       'mirror-source': ['ms'],
-      see: ['see']
+      see: ['see'],
+      update: ['u']
     },
     // all arguments are treated as booleans
     boolean: true
@@ -131,6 +134,8 @@ async function init() {
   const shouldInitGit = argv.git !== false;
   // auto install
   const shouldInstall = argv.install === true;
+  // update deps
+  const shouldUpdateDeps = argv.update === true || argv.u === true;
 
   let result: {
     projectName?: string;
@@ -986,6 +991,7 @@ async function init() {
       }
     }
   }
+
   // Instructions:
   // Supported package managers: pnpm > yarn > npm
   // Note: until <https://github.com/pnpm/pnpm/issues/3505> is resolved,

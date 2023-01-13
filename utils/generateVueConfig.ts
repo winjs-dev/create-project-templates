@@ -1,5 +1,5 @@
 import ejs from 'ejs';
-import { microFrontTypeEnum } from './dictionary.js';
+import { microFrontTypeEnum } from './dictionary';
 
 // 模板字符串中需要 ${} 原样输出，需要对 $ 进行转义处理
 const vueConfig = `const { defineConfig } = require('@vue/cli-service');

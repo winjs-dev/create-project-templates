@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 
-import deepMerge from './deepMerge.ts';
-import sortDependencies from './sortDependencies.js';
+import deepMerge from './deepMerge';
+import sortDependencies from './sortDependencies';
 
 /**
  * Renders a template folder/file to the file system,
