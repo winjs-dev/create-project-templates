@@ -72,7 +72,15 @@ const genPlugins = () => {
         /\\.md$/, // .md
       ],
       dts: true,
-      imports: ['vue', 'vue-router'],
+      imports: [
+        'vue',
+        'vue-router',
+        {
+          '@/services': [
+            ['default', 'services']
+          ]
+        }
+      ],
       eslintrc: {
         enabled: true,
       },
