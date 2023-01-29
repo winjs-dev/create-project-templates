@@ -28,7 +28,7 @@ await $`git remote add origin https://github.com/cloud-templates/create-project-
 // 1. 进入 https://github.com/settings/tokens
 // From your GitHub account, go to Settings → Developer Settings → Personal Access Token → Generate New Token (Give your password) → Fillup the form → click Generate token → Copy the generated Token, it will be something like ghp_sFhFsSHhTzMDreGRLjmks4Tzuzgthdvfsrta
 // 2. 终端会让输入用户名和密码，用户名为：cklwblove，密码就是第1步骤的 token
-await $`git push -f https://github.com/cloud-templates/create-project-templates.git master:main`
+await $`git push -f https://github.com/cloud-templates/create-project-templates.git main`
 await $`git push --force --tags`
 
 const projectRoot = path.resolve(__dirname, '../')
