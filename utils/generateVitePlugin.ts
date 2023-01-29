@@ -53,7 +53,15 @@ export function createVitePlugins(viteEnv, isBuild) {
         /\\.md$/, // .md
       ],
       dts: true,
-      imports: ['vue', 'vue-router']
+      imports: [
+        'vue',
+        'vue-router',
+        {
+          '@/services': [
+            ['default', 'services']
+          ]
+        }
+      ]
     }),
     <%_ } _%>
     Components({}),
