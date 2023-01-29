@@ -22,51 +22,19 @@ export function configStyleImportPlugin() {
 }
 <%_ } else if (uiFramework === 'vant') { _%>
 export function configStyleImportPlugin() {
-  const styleImportPlugin = vitePluginImp({
-    libList: [
-        {
-          libName: 'vant',
-          style(name) {
-            return \`vant/es/\${name}/style/index\`
-          }
-        },
-      ]
-  });
+  const styleImportPlugin = vitePluginImp();
   return styleImportPlugin;
 }
 
 <%_ } else if (uiFramework === 'element-ui' && framework === 'v3') { _%>
 export function configStyleImportPlugin() {
-  const styleImportPlugin = vitePluginImp({
-    libList: [
-     {
-        libName: 'element-ui',
-        libDirectory: 'lib',
-        style(name) {
-          if (components.includes(pascalCase(\`el-\${name}\`))) {
-            return \`element-ui/lib/theme-chalk/\${name}.css\`
-          }
-          return false
-        },
-      }
-    ]
-  });
+  const styleImportPlugin = vitePluginImp();
   return styleImportPlugin;
 }
 
 <%_ } else if (uiFramework === 'ant' && framework === 'v3') { _%>
 export function configStyleImportPlugin() {
-  const styleImportPlugin = vitePluginImp({ 
-    libList: [
-      {
-        libName: 'ant-design-vue',
-        style(name) {
-          // use less
-          return \`ant-design-vue/es/\${name}/style/css.js\`
-        }
-      },
-    ]
-  });
+  const styleImportPlugin = vitePluginImp();
   return styleImportPlugin;
 }
 

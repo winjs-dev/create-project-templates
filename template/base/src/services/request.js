@@ -31,55 +31,6 @@ const codeMessage = {
   504: '网关超时。'
 };
 
-function isString(val) {
-  const toString = Object.prototype.toString;
-  return toString.call(val) === `[object String]`;
-}
-export function joinTimestamp(join, restful = false) {
-  if (!join) {
-    return restful ? '' : {};
-  }
-  const now = new Date().getTime();
-  if (restful) {
-    return `?_t=${now}`;
-  }
-  return { _t: now };
-}
-
-// 兼容处理
-// 格式化 restful 接口形式
-function formatURL(path, queryParams) {
-  const params = {
-    ...(queryParams || {})
-  };
-
-  const url = path.replace(/\{([^\\}]*(?:\\.[^\\}]*)*)\}/gm, (match, key) => {
-    // eslint-disable-next-line no-param-reassign
-    key = key.trim();
-
-    if (params[key] !== undefined) {
-      const value = params[key];
-      delete params[key];
-      return value;
-    }
-    console.warn('Please set value for template key: ', key);
-    return '';
-  });
-
-  const paramStr = Object.keys(params)
-    .map((key) => {
-      return params[key] === undefined ? '' : `${key}=${params[key]}`;
-    })
-    .filter((id) => id)
-    .join('&');
-
-  if (paramStr) {
-    return `${url}?${paramStr}`;
-  }
-
-  return url;
-}
-
 function responseLog(response) {
   if (process.env.NODE_ENV === 'development') {
     const randomColor = `rgba(${Math.round(Math.random() * 255)},${Math.round(
@@ -129,22 +80,12 @@ function checkStatus(response) {
  */
 const axiosRequest = {
   success: (config) => {
-    // 兼容restful风格
-    config.url = formatURL(config.url);
-
-    if (config.method === 'get') {
-      if (!isString(config.params)) {
-        // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
-        config.params = Object.assign(config.params || {}, joinTimestamp(true, false));
-      } else {
-        // 兼容restful风格
-        config.url = config.url + `${joinTimestamp(true, true)}`;
-        config.params = undefined;
-      }
-    } else {
-      config.params = {};
+    // 以下代码，鉴权token,可根据具体业务增删。
+    // demo示例:
+    if (config['url'].indexOf('operatorQry') !== -1) {
+      config.headers['accessToken'] =
+        'de4738c67e1bb450be71b660f0716aa4675860cec1ff9bc23d800efb40519cf3';
     }
-
     return config;
   },
   error: (error) => Promise.reject(error)
@@ -184,6 +125,29 @@ const axiosResponse = {
 requestInstance.interceptors.request.use(axiosRequest.success, axiosRequest.error);
 requestInstance.interceptors.response.use(axiosResponse.success, axiosResponse.error);
 
+// 兼容处理
+// 格式化 restful 接口形式
+function formatURL(path, queryParams) {
+  const params = {
+    ...(queryParams || {})
+  };
+
+  const url = path.replace(/\{([^\\}]*(?:\\.[^\\}]*)*)\}/gm, (match, key) => {
+    // eslint-disable-next-line no-param-reassign
+    key = key.trim();
+
+    if (params[key] !== undefined) {
+      const value = params[key];
+      delete params[key];
+      return value;
+    }
+    console.warn('Please set value for template key: ', key);
+    return '';
+  });
+
+  return url;
+}
+
 /**
  * 基于axios ajax请求
  * @param url
@@ -206,9 +170,11 @@ export default function request(
     ...headers
   };
 
+  console.log('data', data);
+
   const defaultConfig = {
     baseURL,
-    url,
+    url: formatURL(url, data),
     method,
     params: data,
     data,
@@ -229,7 +195,14 @@ export default function request(
     })
   };
 
-  if (method === 'post') {
+  if (method.toLowerCase() === 'get') {
+    defaultConfig.data = {};
+
+    // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
+    defaultConfig.params = Object.assign(defaultConfig.params || {}, { _t: new Date().getTime() });
+  } else {
+    defaultConfig.params = {};
+
     const contentType = formatHeaders['Content-Type'];
 
     if (typeof contentType !== 'undefined') {
