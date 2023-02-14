@@ -53,6 +53,9 @@ export function createVitePlugins(viteEnv, isBuild) {
         /\\.md$/, // .md
       ],
       dts: true,
+      eslintrc: {
+        enabled: true
+      },
       imports: [
         'vue',
         'vue-router',
