@@ -38,9 +38,9 @@ await esbuild.build({
       setup({ onResolve, resolve }) {
         onResolve({ filter: /^prompts$/, namespace: 'file' }, async ({ importer, resolveDir }) => {
           // we can always use non-transpiled code since we support 14.16.0+
-          const result = await resolve('prompts/lib/index.js', { importer, resolveDir })
-          return result
-        })
+          const result = await resolve('prompts/lib/index.js', { importer, resolveDir });
+          return result;
+        });
       }
     },
     esbuildPluginLicense({
@@ -48,7 +48,7 @@ await esbuild.build({
         includePrivate: false,
         output: {
           file: 'LICENSE',
-          template (allDependencies) {
+          template(allDependencies) {
             // There's a bug in the plugin that it also includes the `create-vue` package itself
             const dependencies = allDependencies.filter((d) => d.packageJson.name !== '@winner-fed/create-project');
             const licenseText =
@@ -57,9 +57,7 @@ await esbuild.build({
               CORE_LICENSE +
               `\n## Licenses of bundled dependencies\n\n` +
               `The published @winner-fed/create-project artifact additionally contains code with the following licenses:\n` +
-              [...new Set(dependencies.map((dependency) => dependency.packageJson.license))].join(
-                ', '
-              ) +
+              [...new Set(dependencies.map((dependency) => dependency.packageJson.license))].join(', ') +
               '\n\n' +
               `## Bundled dependencies\n\n` +
               dependencies

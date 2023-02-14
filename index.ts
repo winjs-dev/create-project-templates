@@ -110,12 +110,10 @@ async function init() {
       argv.default ??
       (argv.framework && ['v2', 'v3', 'mini'].includes(splitBySymbol(argv.framework))) ??
       (argv.application && ['mobile', 'pc', 'offline'].includes(splitBySymbol(argv.application))) ??
-      (argv.mobileDevPlatform &&
-        ['gmu', 'mpaas'].includes(splitBySymbol(argv.mobileDevPlatform))) ??
+      (argv.mobileDevPlatform && ['gmu', 'mpaas'].includes(splitBySymbol(argv.mobileDevPlatform))) ??
       (argv.mini && ['taro', 'uniapp', 'hola'].includes(splitBySymbol(argv.mini))) ??
       (argv.buildTools && ['bundle', 'bundless'].includes(splitBySymbol(argv.buildTools))) ??
-      (argv.uiFramework &&
-        ['wui', 'vant', 'hui', 'element-ui', 'ant'].includes(splitBySymbol(argv.uiFramework))) ??
+      (argv.uiFramework && ['wui', 'vant', 'hui', 'element-ui', 'ant'].includes(splitBySymbol(argv.uiFramework))) ??
       (argv.layoutAdapter && ['rem', 'vm'].includes(splitBySymbol(argv.layoutAdapter))) ??
       (argv.versionControl && ['svn', 'git'].includes(splitBySymbol(argv.versionControl))) ??
       argv.ts ??
@@ -211,8 +209,7 @@ async function init() {
           name: 'shouldOverwrite',
           type: () => (canSafelyOverwrite(targetDir) || forceOverwrite ? null : 'confirm'),
           message: () => {
-            const dirForPrompt =
-              targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`;
+            const dirForPrompt = targetDir === '.' ? 'Current directory' : `Target directory "${targetDir}"`;
 
             return `${dirForPrompt} is not empty. Remove existing files and continue?`;
           }
@@ -303,9 +300,7 @@ async function init() {
           name: 'mobileDevPlatform',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.application === 'offline'
-              ? 'select'
-              : null;
+            return values.framework !== 'mini' && values.application === 'offline' ? 'select' : null;
           },
           message: 'Select a mobile development platform?',
           choices: [
@@ -324,15 +319,11 @@ async function init() {
           name: 'offlineId',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.mobileDevPlatform === 'gmu'
-              ? 'text'
-              : null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'gmu' ? 'text' : null;
           },
           message: 'Fill in the offline package ID',
           validate: (val) => {
-            return /^[0-9a-z]{4,8}$/.test(val)
-              ? true
-              : '请输入4-8位的小写英文字母或数字，注意唯一性';
+            return /^[0-9a-z]{4,8}$/.test(val) ? true : '请输入4-8位的小写英文字母或数字，注意唯一性';
           },
           initial: '离线包 ID'
         },
@@ -340,24 +331,18 @@ async function init() {
           name: 'offlineName',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.mobileDevPlatform === 'gmu'
-              ? 'text'
-              : null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'gmu' ? 'text' : null;
           },
           message: 'Fill in the offline package name',
           validate: (val) => {
-            return /^[\u4e00-\u9fa5a-zA-Z0-9]{1,10}$/.test(val)
-              ? true
-              : '请输入1-10位的中英文字符或数字';
+            return /^[\u4e00-\u9fa5a-zA-Z0-9]{1,10}$/.test(val) ? true : '请输入1-10位的中英文字符或数字';
           }
         },
         {
           name: 'mpaasOfflineId',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.mobileDevPlatform === 'mpaas'
-              ? 'text'
-              : null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'mpaas' ? 'text' : null;
           },
           message: 'Fill in the offline package ID',
           validate: (val) => {
@@ -369,9 +354,7 @@ async function init() {
           name: 'mpaasOfflineName',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework !== 'mini' && values.mobileDevPlatform === 'mpaas'
-              ? 'text'
-              : null;
+            return values.framework !== 'mini' && values.mobileDevPlatform === 'mpaas' ? 'text' : null;
           },
           message: 'Fill in the offline package name'
         },
@@ -391,9 +374,7 @@ async function init() {
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
             // 离线包不能使用 vite 作为构建工具，type=module 不支持文件协议访问
-            return values.framework !== 'mini' && values.application !== 'offline'
-              ? 'select'
-              : null;
+            return values.framework !== 'mini' && values.application !== 'offline' ? 'select' : null;
           },
           message: 'Choose whether your build tools is bundle(webpack) or bundless(vite)?',
           choices: [
@@ -542,9 +523,7 @@ async function init() {
           name: 'needsJest',
           type: (prev, values) => {
             if (isFeatureFlagsUsed) return null;
-            return values.framework === 'mini' || values.buildTools === 'bundless'
-              ? null
-              : 'toggle';
+            return values.framework === 'mini' || values.buildTools === 'bundless' ? null : 'toggle';
           },
           message: 'Add jest for Unit Testing?',
           initial: false,
@@ -885,10 +864,7 @@ async function init() {
       );
 
       // babel.config.js
-      fs.writeFileSync(
-        path.resolve(root, 'babel.config.js'),
-        generateBabelConfig({ uiFramework, needsTypeScript })
-      );
+      fs.writeFileSync(path.resolve(root, 'babel.config.js'), generateBabelConfig({ uiFramework, needsTypeScript }));
     } else {
       // vite
 
@@ -899,10 +875,7 @@ async function init() {
       );
 
       // build/vite/plugin/index.js
-      fs.writeFileSync(
-        path.resolve(root, 'build/vite/plugin/index.js'),
-        generateVitePlugin({ framework })
-      );
+      fs.writeFileSync(path.resolve(root, 'build/vite/plugin/index.js'), generateVitePlugin({ framework }));
     }
 
     // router.interceptor.js
