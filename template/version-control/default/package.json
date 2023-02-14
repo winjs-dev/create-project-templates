@@ -3,7 +3,7 @@
     "prepare": "husky install && npm run format",
     "gen:log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "lint:ls-lint": "ls-lint",
-    "lint:lint-staged": "line-staged -c .husky/line-staged.js"
+    "lint:lint-staged": "lint-staged -c .husky/lint-staged.js"
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "^1.9.2",
