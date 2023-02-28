@@ -621,8 +621,9 @@ async function init() {
       render('framework/miniprogram/uniapp');
     } else if (miniFramework === 'hola') {
       render('framework/miniprogram/hola');
+    } else {
+      render('framework/miniprogram/taro');
     }
-    render('framework/miniprogram/taro');
   } else {
     // vue2 vue3
     // Render base template

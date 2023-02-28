@@ -2,6 +2,10 @@ import axios from 'axios';
 import qs from 'qs';
 import { combineURLs } from '@winner-fed/cloud-utils/dist/cloud-utils.esm';
 import autoMatchBaseUrl from './autoMatchBaseUrl';
+// settle：根据 HTTP 响应状态，改变 Promise 的状态，引入省去自己处理
+import settle from 'axios/lib/core/settle';
+// buildURL：在 get 请求时，会使用这个把请求的数据以指定序列化方式拼接到 URL 上
+import buildURL from 'axios/lib/helpers/buildURL';
 
 export const requestInstance = axios.create({});
 
@@ -9,17 +13,9 @@ export const requestInstance = axios.create({});
 // 返回一个 promise 并应用一个有效的响应
 requestInstance.defaults.adapter = (config) => {
   return new Promise((resolve, reject) => {
-    // settle：根据 HTTP 响应状态，改变 Promise 的状态，引入省去自己处理
-    const settle = require('axios/lib/core/settle');
-    // buildURL：在 get 请求时，会使用这个把请求的数据以指定序列化方式拼接到 URL 上
-    const buildURL = require('axios/lib/helpers/buildURL');
-
     uni.request({
       method: config.method.toUpperCase(),
-      url: combineURLs(
-        config.baseURL,
-        buildURL(config.url, config.params, config.paramsSerializer)
-      ),
+      url: combineURLs(config.baseURL, buildURL(config.url, config.params, config.paramsSerializer)),
       header: config.headers,
       data: config.data,
       dataType: config.dataType,
@@ -46,9 +42,7 @@ requestInstance.interceptors.request.use(
     console.log('请求拦截成功');
     // 检查 responseType 是否合法
     if (!['text', 'arraybuffer'].includes(config.responseType)) {
-      return Promise.reject(
-        `设置的响应类型 responseType:${config.responseType} 不合法，合法值：text、arraybuffer`
-      );
+      return Promise.reject(`设置的响应类型 responseType:${config.responseType} 不合法，合法值：text、arraybuffer`);
     }
 
     // 支付宝、快手、京东小程序不支持 POST、GET 以外的请求方式
