@@ -58,12 +58,7 @@ export function createVitePlugins(viteEnv, isBuild) {
       },
       imports: [
         'vue',
-        'vue-router',
-        {
-          '@/services': [
-            ['default', 'services']
-          ]
-        }
+        'vue-router'
       ]
     }),
     <%_ } _%>
