@@ -21,7 +21,7 @@ const isDocker = process.env.npm_config_dockerseepack === 'true';
 // 测试包：主要是提供给测试人员用的，包名是构建带时间串和gitcommitid的。如 hscs-company-web-docker-V202101-00-000-20211201092557.ea48d3ef.zip
 // 生产包：主要是用于生产环境部署的，包名不带时间串和gitcommitid的。如 hscs-company-web-docker-V202101-00-000.zip
 // 执行命令：npm run build:see prod 或 npm run build:see yes
-const isProduction = runtimeArgs[1] === 'prod' || runtimeArgs[1] === 'yes';
+const isProduction = [...runtimeArgs].includes('prod') || [...runtimeArgs].includes('yes');
 
 module.exports = {
   seeConfig: {

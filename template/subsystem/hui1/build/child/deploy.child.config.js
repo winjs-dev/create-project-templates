@@ -11,7 +11,7 @@
 const runtimeArgs = process.argv.slice(2);
 // 构建 docker 容器化发布物
 // 注意：windows 不区分大小写
-// 执行命令：npm run build:see -dockerSeePack
+// 执行命令：npm run build:see:child -dockerSeePack
 const isDocker = process.env.npm_config_dockerseepack === 'true';
 
 // 是否构建生产包
@@ -20,8 +20,8 @@ const isDocker = process.env.npm_config_dockerseepack === 'true';
 // 举个例子如下：
 // 测试包：主要是提供给测试人员用的，包名是构建带时间串和gitcommitid的。如 hscs-company-web-docker-V202101-00-000-20211201092557.ea48d3ef.zip
 // 生产包：主要是用于生产环境部署的，包名不带时间串和gitcommitid的。如 hscs-company-web-docker-V202101-00-000.zip
-// 执行命令：npm run build:see prod 或 npm run build:see yes
-const isProduction = runtimeArgs[1] === 'prod' || runtimeArgs[1] === 'yes';
+// 执行命令：npm run build:see:child prod 或 npm run build:see:child yes
+const isProduction = [...runtimeArgs].includes('prod') || [...runtimeArgs].includes('yes');
 
 module.exports = {
   seeConfig: {
