@@ -1,3 +1,10 @@
+# public path
+# https://cn.vitejs.dev/config/shared-options.html#base
+# 路径要以 / 结尾，eg. baseTest
+# /baseTest/ right
+# /baseTest wrong
+VITE_PUBLIC_PATH = ./
+
 # port
 VITE_PORT = 3100
 

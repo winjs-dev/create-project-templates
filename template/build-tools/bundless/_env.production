@@ -1,9 +1,3 @@
-# public path
-# 路径要以 / 结尾，eg. baseTest
-# /baseTest/ right
-# /baseTest wrong
-VITE_PUBLIC_PATH = /
-
 # Delete console
 VITE_DROP_CONSOLE = true
 
