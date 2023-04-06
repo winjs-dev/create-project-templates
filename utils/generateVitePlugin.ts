@@ -17,6 +17,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 <%_ } _%>
 import Components from 'unplugin-vue-components/vite';
 import svgLoader from 'vite-svg-loader';
+import Inspect from 'vite-plugin-inspect';
 
 import { configHtmlPlugin } from './html';
 import { configCompressPlugin } from './compress';
@@ -68,7 +69,11 @@ export function createVitePlugins(viteEnv, isBuild) {
     }),
     <%_ } _%>
     Components({}),
-    svgLoader()
+    svgLoader(),
+    Inspect({
+      build: true,
+      outputDir: '.vite-inspect'
+    })
   ];
 
   // @vitejs/plugin-legacy
@@ -117,7 +122,7 @@ export function createVitePlugins(viteEnv, isBuild) {
 
   // The following plugins only work in the production environment
   if (isBuild) {
-    //vite-plugin-imagemin
+    // vite-plugin-imagemin
     VITE_USE_IMAGEMIN && vitePlugins.push(configImageminPlugin());
 
     // rollup-plugin-gzip
