@@ -1,6 +1,6 @@
 {
   "name": "@winner-fed/create-project",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "An easy way to start a project",
   "type": "module",
   "main": "outfile.cjs",
