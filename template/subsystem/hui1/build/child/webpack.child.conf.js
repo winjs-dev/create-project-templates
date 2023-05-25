@@ -4,7 +4,7 @@ const path = require('path');
 const fse = require('fs-extra');
 const utils = require('./utils');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin-webpack5');
+const VueLoaderPlugin = require('@vue/vue-loader-v15/lib/plugin-webpack5');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // https://github.com/antfu/unplugin-vue2-script-setup
@@ -139,7 +139,7 @@ const webpackConfig = {
       {
         test: /\.vue$/,
         use: {
-          loader: 'vue-loader',
+          loader: require.resolve('@vue/vue-loader-v15'),
           options: {
             cacheDirectory: resolve('node_modules/.cache/vue-loader'),
             cacheIdentifier: 'vue'
