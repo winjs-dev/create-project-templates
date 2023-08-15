@@ -273,7 +273,7 @@ export default {
        "@vue/cli-service": "~5.0.0",
        "@vue/compiler-sfc": "^3.2.31",
        "@vue/runtime-dom": "^3.2.31",
-       "@winner-fed/f2elint": "^2.0.0",
+       "@winner-fed/f2elint": "^2.1.0",
        "@winner-fed/vue-cli-plugin-stylelint": "^1.0.2",
        "@winner-fed/deploy-cli": "^0.0.5",
        "add-asset-html-webpack-plugin": "^3.1.3",
