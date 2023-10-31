@@ -1,0 +1,6 @@
+**/*.svg
+output.js
+src/assets/
+dist/**
+public/**
+src/icons
