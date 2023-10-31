@@ -23,7 +23,6 @@ import { configHtmlPlugin } from './html';
 import { configCompressPlugin } from './compress';
 import { configStyleImportPlugin } from './styleImport';
 import { configVisualizerConfig } from './visualizer';
-import { configImageminPlugin } from './imagemin';
 import { configSvgIconsPlugin } from './svgSprite';
 
 const browserslistConfig = browserslist.loadConfig({ path: '.' });
