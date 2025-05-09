@@ -8,7 +8,8 @@
     "report": "vue-cli-service build --report"
   },
   "dependencies": {
-    "core-js": "^3.8.3"
+    "core-js": "^3.8.3",
+    "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
