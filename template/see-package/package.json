@@ -3,6 +3,6 @@
     "build:see": "npm run build && deploy-cli see"
   },
   "devDependencies": {
-    "@winner-fed/deploy-cli": "^0.0.5"
+    "@winner-fed/deploy-cli": "^0.1.6"
   }
 }

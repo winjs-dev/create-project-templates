@@ -275,7 +275,7 @@ export default {
        "@vue/runtime-dom": "^3.2.31",
        "@winner-fed/f2elint": "^2.1.0",
        "@winner-fed/vue-cli-plugin-stylelint": "^1.0.2",
-       "@winner-fed/deploy-cli": "^0.0.5",
+       "@winner-fed/deploy-cli": "^0.1.6",
        "add-asset-html-webpack-plugin": "^3.1.3",
        "archiver": "^3.0.0",
        "babel-eslint": "^10.1.0",
