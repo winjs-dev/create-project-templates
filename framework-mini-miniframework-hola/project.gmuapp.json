@@ -1,0 +1,9 @@
+{
+  "project": "holaMyApp",
+  "version": "0.0.1",
+  "desc": "Just For Fun",
+  "type": "miniprogram",
+  "dist": "build",
+  "plugins": ["miniprogram2", "native"],
+  "link_id": ""
+}
